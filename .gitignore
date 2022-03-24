@@ -75,3 +75,8 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+.idea
+
+!.apks
+!.demo_release.apk
