@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 
 
 include ':app',':core',':common',':base'
-rootProject.name = "The-MVVM"
+rootProject.name = "QMUI-MVVM"
