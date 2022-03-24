@@ -98,7 +98,9 @@ fun LoadService<*>.showEmpty(
 }
 
 fun ICore.showSuccessPage() {
-    getLoadSir()?.showSuccess()
+    loadSirRegisterView()?.post {
+        getLoadSir()?.showSuccess()
+    }
 }
 
 fun ICore.showLoadingPage(message: String = "加载中") {
@@ -111,12 +113,16 @@ fun ICore.showErrorPage(
     message: String?,
     imageRes: Int = R.drawable.status_loading_view_loading_fail
 ) {
-    getLoadSir()?.showError(message, imageRes)
+    loadSirRegisterView()?.post {
+        getLoadSir()?.showError(message, imageRes)
+    }
 }
 
 fun ICore.showEmptyPage(
     message: String = "",
     imageRes: Int = R.drawable.status_search_result_empty
 ) {
-    getLoadSir()?.showEmpty(message, imageRes)
+    loadSirRegisterView()?.post {
+        getLoadSir()?.showEmpty(message, imageRes)
+    }
 }
