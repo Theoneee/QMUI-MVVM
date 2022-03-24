@@ -22,12 +22,12 @@ allprojects {
 dependencies {
     // 二选一
     // 1.core  包含了base + common
-    implementation 'com.github.Theoneee.QMUI-MVVM:core:1.0.0'
+    implementation "com.github.Theoneee.QMUI-MVVM:core:1.0.0"
     // 2.单独使用
     // 只使用 base
-    implementation 'com.github.Theoneee.QMUI-MVVM:base:1.0.0'
+    implementation "com.github.Theoneee.QMUI-MVVM:base:1.0.0"
     // 或者 common
-    implementation 'com.github.Theoneee.QMUI-MVVM:common:1.0.0'
+    implementation "com.github.Theoneee.QMUI-MVVM:common:1.0.0"
 }
 ```
 
@@ -37,7 +37,7 @@ dependencies {
 
 ![APK下载](https://qr.api.cli.im/newqr/create?data=http%3A%2F%2Ffile.cudag.com%2F2022%2F03%2F24%2Fff9f53ed40de26de809f51f45f3ec478.apk&level=H&transparent=false&bgcolor=%23FFFFFF&forecolor=%23000&blockpixel=12&marginblock=2&logourl=&logoshape=no&size=300&bgimg=&text=&fontsize=30&fontcolor=&fontfamily=msyh.ttf&incolor=%231694e3&outcolor=&qrcode_eyes=pin-3.png&background=images%2Fbackground%2Fbg25.png&wper=0.84&hper=0.84&tper=0.08&lper=0.08&eye_use_fore=&qrpad=10&embed_text_fontfamily=simhei.ttc&body_type=0&qr_rotate=0&logo_pos=0&kid=cliim&key=18c7cb0b9b49f0123750f48a3c0478e6)
 
-<img src="https://images.gitee.com/uploads/images/2021/0331/102531_dd1b7778_2286054.png" width="120" height="180" alt="微信小首页"/><br/>
+<img src="https://images.gitee.com/uploads/images/2021/0331/102531_dd1b7778_2286054.png" width="180" height="230" alt="首页"/><br/>
 
 ![项目](https://images.gitee.com/uploads/images/2021/0331/102553_02e4fe39_2286054.png "S10331-10010060(1).png")
 
