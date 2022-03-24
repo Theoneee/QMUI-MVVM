@@ -13,7 +13,7 @@ import com.qmuiteam.qmui.qqface.QMUIQQFaceView
 import com.qmuiteam.qmui.util.QMUIColorHelper
 import com.qmuiteam.qmui.util.QMUIResHelper
 import com.theone.common.ext.dp2px
-import com.theone.common.ext.invisibleViews
+import com.theone.common.ext.invisible
 import com.theone.common.ext.showViews
 import com.theone.demo.R
 import com.theone.demo.app.widget.OffsetLinearLayoutManager
@@ -53,7 +53,7 @@ import com.zhpan.bannerview.constants.IndicatorGravity
  * @email 625805189@qq.com
  * @remark
  */
-class HomeFragment : BaseArticleFragment<HomeViewModel>(), View.OnClickListener {
+class HomeFragment : BaseArticleFragment<HomeViewModel>() {
 
     private fun showBanner(): Boolean = true
 
@@ -74,6 +74,8 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>(), View.OnClickListener 
 
     override fun translucentFull(): Boolean = showBanner()
 
+    override fun isLazyLoadData(): Boolean = false
+
     override fun getItemSpace(): Int = 0
 
     override fun initView(root: View) {
@@ -87,9 +89,15 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>(), View.OnClickListener 
         getTopBar()?.run {
             mTitleView = setTitle("首页")
             mSearchBtn =
-                addRightImageButton(R.drawable.mz_titlebar_ic_search_light, R.id.topbar_search)
-            mSearchBtn?.setOnClickListener(this@HomeFragment)
-            invisibleViews(mSearchBtn)
+                addRightImageButton(
+                    R.drawable.mz_titlebar_ic_search_light,
+                    R.id.topbar_search
+                ).apply {
+                    setOnClickListener {
+                        startFragment(SearchFragment())
+                    }
+                    invisible()
+                }
             if (showBanner())
                 setBackgroundAlpha(0)
         }
@@ -117,7 +125,7 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>(), View.OnClickListener 
                     // 数据不相同时才刷新
                     if (data.size != response.size) {
                         // 第一次设置时才去改变状态栏
-                        if (data.size == 0){
+                        if (data.size == 0) {
                             setStatusBarMode(false)
                         }
                         create(response)
@@ -216,14 +224,6 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>(), View.OnClickListener 
                     }
                 }
             })
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.topbar_search -> {
-                startFragment(SearchFragment())
-            }
-        }
     }
 
     /**
