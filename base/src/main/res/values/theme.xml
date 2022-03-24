@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 背景颜色 -->
+    <attr name="app_skin_main_background_color" format="color"/>
+
+    <style name="BaseTheme" parent="QMUI.Compat.NoActionBar">
+        <item name="app_skin_main_background_color">@color/qmui_config_color_white</item>
+    </style>
+
+</resources>

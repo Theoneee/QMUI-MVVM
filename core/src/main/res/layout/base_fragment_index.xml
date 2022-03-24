@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <com.qmuiteam.qmui.widget.QMUIViewPager
+            android:id="@+id/mQMUIViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="?attr/qmui_skin_segment_tab_height_size"
+            android:overScrollMode="never" />
+
+        <com.qmuiteam.qmui.widget.tab.QMUITabSegment
+            android:id="@+id/mTabSegment"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/qmui_skin_segment_tab_height_size"
+            android:layout_gravity="bottom"
+            app:qmui_tab_mode="fixed"
+            android:textSize="12sp"
+            app:qmui_tab_icon_position="top"
+            app:qmui_topDividerColor="?attr/qmui_skin_support_color_separator"
+            app:qmui_topDividerHeight="1px" />
+
+    </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+</layout>

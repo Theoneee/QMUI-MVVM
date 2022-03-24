@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+apply from: '../maven.gradle'
+
+android {
+
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    }
+}
+
+dependencies {
+    api project(path: ':base')
+    api project(path: ':common')
+    api "androidx.multidex:multidex:$multidexVersion"
+    api "com.zhy:okhttputils:$okhttpUtilVersion"
+    // okhttp
+    api "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    // RxHttp
+    api "com.github.liujingxing.rxhttp:rxhttp:$rxhttpVersion"
+    api "com.github.liujingxing.rxhttp:converter-fastjson:$rxhttpVersion"
+    // cookie
+    api "com.github.franmontiel:PersistentCookieJar:$cookieJarVersion"
+    api "com.github.lzyzsd:jsbridge:$jsbridgeVersion"
+    // 权限申请
+    api "com.hjq:xxpermissions:$xxpermissions"
+    //Glide
+    api "com.github.bumptech.glide:glide:$glideVersion"
+    api 'com.github.bumptech.glide:okhttp3-integration:4.9.0' // 新增
+    api 'jp.wasabeef:glide-transformations:3.3.0'
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    // 图片选择器
+    api "io.github.lucksiege:pictureselector:$PictureSelectorVersion"
+    // 指示器
+    api "com.github.hackware1993:MagicIndicator:$MagicIndicatorVersion"
+    // 适配器
+    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelperVersion"
+    api "com.github.getActivity:ToastUtils:$toastVersion"
+    api "com.tencent:mmkv-static:$mmkvVersion"
+    api "cat.ereza:customactivityoncrash:$crashCatchVersion"
+}

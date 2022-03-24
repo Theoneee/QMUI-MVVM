@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleTextView">
+        <attr name="storkColor" format="color" />
+        <attr name="backColor" format="color" />
+        <attr name="storkWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="wh_max_text_size" format="dimension"/>
+        <attr name="wh_min_text_size" format="dimension"/>
+        <attr name="wh_max_text_alpha" format="integer"/>
+        <attr name="wh_min_text_alpha" format="integer"/>
+        <attr name="wh_text_color" format="color|dimension"/>
+        <attr name="wh_selected_text_color" format="color|dimension"/>
+        <attr name="wh_text_space_ratio" format="float"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="NumberButton">
+        <attr name="editable" format="boolean"/>
+        <attr name="buttonWidth" format="dimension" />
+        <attr name="editextWidth" format="dimension" />
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColorr" format="color"/>
+        <attr name="backgroud" format="reference"/>
+        <attr name="individer" format="reference"/>
+        <attr name="addBackground" format="reference"/>
+        <attr name="subBackground" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressButton">
+        <attr name="progressbtn_radius" format="float" />
+        <attr name="progressbtn_backgroud_color" format="color" />
+        <attr name="progressbtn_backgroud_second_color" format="color" />
+        <attr name="progressbtn_text_color" format="color" />
+        <attr name="progressbtn_text_covercolor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CrashLayout">
+        <attr format="integer" name="crash_drawable"/>
+        <attr format="string" name="crash_title"/>
+        <attr format="string" name="crash_restart" />
+        <attr format="string" name="crash_report_tip"/>
+        <attr format="string" name="crash_show_info"/>
+    </declare-styleable>
+
+</resources>

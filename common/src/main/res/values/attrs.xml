@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="common_edittext_cursor_color"/>
+
+    <declare-styleable name="TheSelectImageView">
+        <attr name="isSelected" format="boolean" />
+        <!-- 普通状态下的图片 -->
+        <attr name="img_normal" format="reference" />
+        <!-- 选中状态下的图片 -->
+        <attr name="img_selected" format="reference" />
+        <!-- 动画时间 -->
+        <attr name="animal_duration" format="integer" />
+        <!-- 动画开关 -->
+        <attr name="animal_enable" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TheNineGridLayout">
+        <attr name="space" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressButton">
+        <attr name="progressbtn_radius" format="float" />
+        <attr name="progressbtn_backgroud_color" format="color" />
+        <attr name="progressbtn_backgroud_second_color" format="color" />
+        <attr name="progressbtn_text_color" format="color" />
+        <attr name="progressbtn_text_covercolor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="wh_max_text_size" format="dimension"/>
+        <attr name="wh_min_text_size" format="dimension"/>
+        <attr name="wh_max_text_alpha" format="integer"/>
+        <attr name="wh_min_text_alpha" format="integer"/>
+        <attr name="wh_text_color" format="color|dimension"/>
+        <attr name="wh_selected_text_color" format="color|dimension"/>
+        <attr name="wh_text_space_ratio" format="float"/>
+    </declare-styleable>
+
+</resources>

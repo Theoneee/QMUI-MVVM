@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 主色调 -->
+    <attr name="app_skin_primary_color" format="reference|color"/>
+    <!-- 主字体颜色 -->
+    <attr name="app_skin_text_color_1"  format="color|reference"/>
+    <!-- 次字体颜色 -->
+    <attr name="app_skin_text_color_2" format="color|reference"/>
+
+    <!-- StatusLayout -->
+    <attr name="app_skin_status_layout_bg_color" format="reference|color"/>
+    <attr name="app_skin_status_layout_loading_text" format="reference|string"/>
+    <attr name="app_skin_status_layout_loading_text_color" format="reference|color"/>
+    <attr name="app_skin_status_layout_btn_background_color" format="color|reference"/>
+    <attr name="app_skin_status_layout_btn_text_color" format="color|reference"/>
+    <attr name="app_skin_status_layout_btn_text_size" format="dimension|reference"/>
+    <attr name="app_skin_status_layout_content_size" format="dimension|reference"/>
+    <attr name="app_skin_status_layout_content_color" format="color|reference"/>
+    <attr name="app_skin_status_layout_loading_tips_size" format="dimension|reference"/>
+    <attr name="app_skin_status_layout_error_drawable" format="reference"/>
+    <attr name="app_skin_status_layout_empty_drawable" format="reference"/>
+    <attr name="app_skin_status_layout_net_error_drawable" format="reference"/>
+    <attr name="app_skin_status_layout_no_net_drawable" format="reference"/>
+
+    <!--                          App更新界面                              -->
+    <!-- 水平间距 -->
+    <attr name="app_update_horizontal_space" format="dimension|reference"/>
+    <!-- 垂直间距 -->
+    <attr name="app_update_vertical_space" format="dimension|reference"/>
+    <attr name="app_update_container_padding" format="dimension|reference"/>
+    <!-- LOGO -->
+    <attr name="app_update_logo_resource" format="reference"/>
+    <!-- LOGO HEIGHT -->
+    <attr name="app_update_logo_height" format="dimension|reference"/>
+    <!-- LOGO WIDTH -->
+    <attr name="app_update_logo_width" format="dimension|reference">
+        <enum name="fill_parent" value="-1" />
+        <enum name="match_parent" value="-1" />
+        <enum name="wrap_content" value="-2" />
+    </attr>
+    <!-- LOGO 一半的高度 -->
+    <attr name="app_update_logo_half_height" format="dimension|reference"/>
+    <!-- 版本号间距 -->
+    <attr name="app_update_version_margin" format="dimension|reference"/>
+    <!-- 版本号字体大小-->
+    <attr name="app_update_version_text_size" format="dimension|reference"/>
+    <!-- 版本号字体颜色-->
+    <attr name="app_update_version_text_color" format="color|reference"/>
+    <!-- 标题文字-->
+    <attr name="app_update_title_text" format="string|reference"/>
+    <!-- 标题字体大小-->
+    <attr name="app_update_title_text_size" format="dimension|reference"/>
+    <!-- 标题字体颜色-->
+    <attr name="app_update_title_text_color" format="color|reference"/>
+    <!-- 内容字体大小-->
+    <attr name="app_update_content_text_size" format="dimension|reference"/>
+    <!-- 内容字体颜色-->
+    <attr name="app_update_content_text_color" format="color|reference"/>
+    <!-- 进度条字体大小 -->
+    <attr name="app_update_progress_btn_text_size" format="reference|dimension"/>
+    <!-- 进度条字体padding -->
+    <attr name="app_update_progress_btn_padding" format="reference|dimension"/>
+    <!-- 关闭按钮TopMargin -->
+    <attr name="app_update_close_image_top_margin" format="reference|dimension"/>
+    <!-- 关闭按钮 -->
+    <attr name="app_update_close_image_src" format="reference"/>
+
+
+    <!-- WebView字体大小-->
+    <attr name="app_skin_webview_text_zoom_size" format="integer"/>
+
+    <attr name="app_skin_btn_gray_background_color" format="reference|color"/>
+    <attr name="app_skin_btn_tips_background_color" format="reference|color"/>
+
+    <!--数量选择器按钮背景-->
+    <attr name="app_skin_number_picker_btn_background_color" format="reference|color"/>
+    <attr name="app_skin_number_picker_btn_text_color" format="reference|color"/>
+
+    <!--TAB指示器字体大小-->
+    <attr name="app_skin_tab_indicator_text_size" format="reference|dimension"/>
+    <attr name="app_skin_tab_indicator_normal_color" format="reference|color"/>
+    <attr name="app_skin_tab_indicator_select_color" format="reference|color"/>
+
+    <!-- 自定义加载更多 -->
+    <attr name="app_skin_loadmore_text_color" format="reference|color"/>
+    <attr name="app_skin_loadmore_complete_text" format="reference|string"/>
+    <attr name="app_skin_loadmore_fail_text" format="reference|string"/>
+    <attr name="app_skin_loadmore_end_text" format="reference|string"/>
+    <attr name="app_skin_loadmore_loading_text" format="reference|string"/>
+    <attr name="app_skin_loadmore_text_size" format="reference|dimension"/>
+    <attr name="app_skin_loadmore_separator_color" format="reference|color"/>
+    <attr name="app_skin_loadmore_separator_margin" format="dimension|reference"/>
+
+    <!--TheCheckBox选中的颜色 - 默认和主色调一样-->
+    <attr name="app_skin_checked_color" format="reference|color" />
+    <!--Glide加载错误图片-->
+    <attr name="app_skin_glide_fail_drawable" format="reference"/>
+
+    <!--QMUI-->
+    <attr name="qmui_skin_support_topbar_separator_height" format="dimension"/>// TopBar分割线高度
+    <attr name="qmui_skin_support_topbar_back_drawable" format="reference"/>// 返回按钮图标
+    <attr name="qmui_skin_support_tab_size" format="reference|dimension"/>// TabSegment字体大小
+    <attr name="qmui_skin_segment_tab_height_size" format="reference|dimension"/> // QMUISegment高度
+
+    <!--ProgressDialog-->
+    <attr name="app_progress_dialog_width" format="dimension|reference"/>
+    <attr name="app_progress_dialog_height" format="dimension|reference"/>
+    <attr name="app_progress_dialog_background_color" format="color|reference"/>
+    <attr name="app_progress_dialog_radius" format="dimension|reference"/>
+    <attr name="app_progress_dialog_progressbar_size" format="dimension|reference"/>
+    <attr name="app_progress_dialog_progressbar_text_size" format="dimension|reference"/>
+    <attr name="app_progress_dialog_progressbar_text_color" format="color|reference"/>
+    <attr name="app_progress_dialog_progress_background_color" format="color|reference"/>
+    <attr name="app_progress_dialog_progress_color" format="color|reference"/>
+    <attr name="app_progress_dialog_progressbar_stroke_width" format="dimension|reference"/>
+    <attr name="app_progress_dialog_text_size" format="dimension|reference"/>
+    <attr name="app_progress_dialog_text_color" format="color|reference"/>
+    <attr name="app_progress_dialog_text_margin_top" format="dimension|reference"/>
+
+
+    <!-- 基础的相同的配置 -->
+    <style name="CoreTheme" parent="BaseTheme">
+
+        <!--App-->
+        <item name="app_skin_primary_color">@color/app_color_theme_6</item>
+        <item name="colorAccent">?attr/app_skin_primary_color</item>
+        <item name="colorPrimary">@color/qmui_config_color_gray_5</item>
+        <item name="app_skin_checked_color">?attr/app_skin_primary_color</item>
+        <item name="app_skin_text_color_1">@color/qmui_config_color_gray_1</item>
+        <item name="app_skin_text_color_2">@color/qmui_config_color_gray_3</item>
+        <item name="app_skin_glide_fail_drawable">@drawable/svg_image_fail</item>
+
+        <item name="app_skin_status_layout_bg_color">@color/white</item>
+        <item name="app_skin_status_layout_loading_text">@string/loading</item>
+        <item name="app_skin_status_layout_loading_text_color">@color/qmui_config_color_gray_2</item>
+        <item name="app_skin_status_layout_btn_background_color">@color/qmui_config_color_gray_7</item>
+        <item name="app_skin_status_layout_btn_text_color">@color/qmui_config_color_white</item>
+        <item name="app_skin_status_layout_btn_text_size">15sp</item>
+        <item name="app_skin_status_layout_content_color">@color/qmui_config_color_gray_4</item>
+        <item name="app_skin_status_layout_content_size">16sp</item>
+        <item name="app_skin_status_layout_loading_tips_size">14sp</item>
+        <item name="app_skin_status_layout_error_drawable">@drawable/status_loading_view_loading_fail</item>
+        <item name="app_skin_status_layout_empty_drawable">@drawable/status_search_result_empty</item>
+        <item name="app_skin_status_layout_net_error_drawable">@drawable/status_loading_view_network_error</item>
+        <item name="app_skin_status_layout_no_net_drawable">@drawable/status_loading_view_no_network</item>
+
+        <item name="app_skin_btn_gray_background_color">@color/qmui_config_color_gray_6</item>
+        <item name="app_skin_btn_tips_background_color">@color/qmui_config_color_red</item>
+
+        <item name="app_skin_number_picker_btn_background_color">@color/qmui_config_color_background</item>
+        <item name="app_skin_number_picker_btn_text_color">@color/qmui_config_color_gray_2</item>
+
+        <!--  LoadMore  -->
+        <item name="app_skin_loadmore_loading_text">@string/loadmore_loading</item>
+        <item name="app_skin_loadmore_complete_text">@string/loadmore_compelete</item>
+        <item name="app_skin_loadmore_end_text">@string/loadmore_end</item>
+        <item name="app_skin_loadmore_fail_text">@string/loadmore_fail</item>
+        <item name="app_skin_loadmore_text_size">14sp</item>
+        <item name="app_skin_loadmore_text_color">@color/qmui_config_color_gray_3</item>
+        <item name="app_skin_loadmore_separator_color">@color/qmui_config_color_separator</item>
+        <item name="app_skin_loadmore_separator_margin">20dp</item>
+
+        <!--  UpdateLayout  -->
+        <item name="app_update_horizontal_space">10dp</item>
+        <item name="app_update_vertical_space">20dp</item>
+        <item name="app_update_logo_resource">@drawable/ic_update_apk_logo</item>
+        <item name="app_update_logo_height">140dp</item>
+        <item name="app_update_logo_width">wrap_content</item>
+        <item name="app_update_logo_half_height">70dp</item>
+        <item name="app_update_version_margin">12dp</item>
+        <item name="app_update_container_padding">20dp</item>
+        <item name="app_update_version_text_size">15sp</item>
+        <item name="app_update_version_text_color">@color/app_update_version_color</item>
+        <item name="app_update_title_text">@string/app_find_new_version</item>
+        <item name="app_update_title_text_size">20sp</item>
+        <item name="app_update_title_text_color">@color/app_update_version_color</item>
+        <item name="app_update_content_text_size">15sp</item>
+        <item name="app_update_content_text_color">@color/qmui_config_color_gray_1</item>
+        <item name="app_update_progress_btn_text_size">14sp</item>
+        <item name="app_update_progress_btn_padding">15dp</item>
+        <item name="app_update_close_image_top_margin">40dp</item>
+        <item name="app_update_close_image_src">@drawable/ic_picture_selector_image_delete</item>
+
+
+        <!--  ProgressDialog  -->
+        <item name="app_progress_dialog_width">190dp</item>
+        <item name="app_progress_dialog_height">130dp</item>
+        <item name="app_progress_dialog_background_color">@color/white</item>
+        <item name="app_progress_dialog_radius">5dp</item>
+        <item name="app_progress_dialog_progressbar_size">60dp</item>
+        <item name="app_progress_dialog_progressbar_text_size">13sp</item>
+        <item name="app_progress_dialog_progressbar_text_color">@color/qmui_config_color_gray_3</item>
+        <item name="app_progress_dialog_progress_color">?attr/app_skin_primary_color</item>
+        <item name="app_progress_dialog_progress_background_color">@color/qmui_config_color_background</item>
+        <item name="app_progress_dialog_progressbar_stroke_width">6dp</item>
+        <item name="app_progress_dialog_text_size">16sp</item>
+        <item name="app_progress_dialog_text_color">@color/qmui_config_color_gray_1</item>
+        <item name="app_progress_dialog_text_margin_top">12dp</item>
+
+        <!--  TabIndicator  -->
+        <item name="app_skin_tab_indicator_text_size">15sp</item>
+        <item name="app_skin_tab_indicator_normal_color">@color/qmui_config_color_gray_2</item>
+        <item name="app_skin_tab_indicator_select_color">?attr/app_skin_primary_color</item>
+
+        <!--  Web  -->
+        <item name="app_skin_webview_text_zoom_size">100</item>
+
+        <!--  Common  -->
+        <item name="common_edittext_cursor_color">?attr/app_skin_primary_color</item>
+
+        <!--QMUI-->
+        <item name="qmui_topbar_height">50dp</item>
+        <item name="qmui_dialog_min_width">300dp</item>
+        <item name="qmui_dialog_max_width">350dp</item>
+        <item name="qmui_skin_support_tab_size">12sp</item>
+        <item name="qmui_skin_support_topbar_separator_height">1px</item>
+        <item name="qmui_skin_support_topbar_back_drawable">@drawable/mz_titlebar_ic_back_dark</item>
+        <item name="qmui_skin_support_tab_sign_count_view_bg_color">@color/qmui_config_color_red</item>
+        <item name="qmui_skin_support_tab_sign_count_view_text_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_tab_bg">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_progress_color">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_common_list_icon_tint_color">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_color_background_pressed">@color/qmui_config_color_gray_7</item>
+        <item name="qmui_skin_support_tab_normal_color">@color/qmui_config_color_gray_2</item>
+        <item name="qmui_skin_support_tab_selected_color">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_empty_view_btn_bg_color">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_empty_view_btn_text_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_segment_tab_height_size">@dimen/home_tab_height</item>
+        <item name="QMUITopBarStyle">@style/BaseTopBarStyle</item>
+        <item name="QMUITabSegmentStyle">@style/BaseSegmentStyle</item>
+
+        <!--QMUIDialog-->
+        <item name="qmui_dialog_radius">7dp</item>
+        <item name="qmui_dialog_title_style">@style/CoreDialogThemeTitleStyle</item>
+        <item name="qmui_dialog_action_style">@style/CoreDialogThemeActionStyle</item>
+        <item name="qmui_skin_support_dialog_positive_action_text_color">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_dialog_negative_action_text_color">?attr/qmui_config_color_red</item>
+
+    </style>
+
+    <style name="TopBarWhiteTheme" parent="CoreTheme">
+        <!--QMUI-->
+        <item name="qmui_skin_support_topbar_bg">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_title_color">@color/qmui_config_color_gray_1</item>
+        <item name="qmui_skin_support_topbar_subtitle_color">@color/qmui_config_color_gray_2</item>
+        <item name="qmui_skin_support_topbar_text_btn_color_state_list">?attr/app_skin_primary_color</item>
+        <item name="qmui_skin_support_topbar_image_tint_color">@color/qmui_config_color_gray_1</item>
+        <item name="qmui_skin_support_topbar_separator_color">@color/qmui_config_color_transparent</item>
+        <item name="qmui_skin_support_topbar_back_drawable">@drawable/mz_titlebar_ic_back_dark</item>
+    </style>
+
+    <style name="TopBarDarkTheme" parent="CoreTheme">
+        <!--QMUI-->
+        <item name="qmui_skin_support_topbar_title_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_subtitle_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_image_tint_color">@color/qmui_config_color_white</item>
+        <item name="qmui_skin_support_topbar_separator_color">@color/qmui_config_color_transparent</item>
+        <item name="qmui_skin_support_topbar_back_drawable">@drawable/mz_titlebar_ic_back_light</item>
+    </style>
+
+</resources>

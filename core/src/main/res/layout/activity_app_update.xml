@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.theone.mvvm.core.ui.viewmodel.AppUpdateViewModel" />
+
+        <variable
+            name="click"
+            type="com.theone.mvvm.core.ui.activity.AppUpdateActivity.ClickProxy" />
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUIConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.qmuiteam.qmui.layout.QMUIConstraintLayout
+            android:id="@+id/center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="?attr/app_update_container_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:qmui_radius="10dp"
+            tools:padding="18dp"
+            tools:layout_marginHorizontal="30dp">
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.verCode}"
+                android:textColor="?attr/app_update_version_text_color"
+                android:textSize="?attr/app_update_version_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintTop_toTopOf="@id/center"
+                tools:text="Ver 1.0.0"
+                tools:textColor="#42c6a6"
+                tools:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:text="?attr/app_update_title_text"
+                android:textColor="?attr/app_update_title_text_color"
+                android:textSize="?attr/app_update_title_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintStart_toStartOf="@id/center"
+                app:layout_constraintTop_toTopOf="@id/center"
+                tools:text="@string/app_find_new_version"
+                tools:textColor="#42c6a6"
+                tools:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="100dp"
+                android:minHeight="100dp"
+                android:scrollbars="vertical"
+                android:singleLine="false"
+                android:text="@{vm.updateInfo}"
+                android:textColor="?attr/app_update_content_text_color"
+                android:textSize="?attr/app_update_content_text_size"
+                app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintStart_toStartOf="@id/center"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                android:layout_marginVertical="?attr/app_update_container_padding"
+                tools:layout_marginVertical="20dp"
+                tools:text="【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门"
+                tools:textColor="#4b4b4b"
+                tools:textSize="14sp" />
+
+            <com.theone.common.widget.ProgressButton
+                android:id="@+id/tv_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="?attr/app_update_vertical_space"
+                android:gravity="center"
+                android:onClick="@{()->click.download()}"
+                android:padding="?attr/app_update_progress_btn_padding"
+                android:textSize="?attr/app_update_progress_btn_text_size"
+                app:layout_constraintEnd_toEndOf="@id/center"
+                app:layout_constraintStart_toStartOf="@id/center"
+                app:layout_constraintTop_toBottomOf="@id/tv_content"
+                app:progressbtn_backgroud_color="#42c6a6"
+                app:progressbtn_backgroud_second_color="@color/qmui_config_color_gray_8"
+                app:progressbtn_radius="50"
+                app:progressbtn_text_color="@color/qmui_config_color_white"
+                tools:layout_margin="20dp"
+                tools:padding="12dp" />
+
+
+        </com.qmuiteam.qmui.layout.QMUIConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="@{()->click.close()}"
+            android:padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/center"
+            android:src="?attr/app_update_close_image_src"
+            app:visible="@{!vm.isForce()}" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="?attr/app_update_logo_width"
+            android:layout_height="?attr/app_update_logo_height"
+            android:src="?attr/app_update_logo_resource"
+            app:layout_constraintBottom_toTopOf="@id/center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/center"
+            tools:layout_height="140dp"
+            tools:layout_width="wrap_content"
+            tools:src="@drawable/ic_update_apk_logo" />
+
+    </com.qmuiteam.qmui.layout.QMUIConstraintLayout>
+</layout>

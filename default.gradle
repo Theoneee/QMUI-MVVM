@@ -1,0 +1,50 @@
+apply from: "../base.gradle"
+
+// 通用配置
+android {
+
+    defaultConfig {
+        multiDexEnabled true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->  // each 改为 all
+            def fileName = "demo_release.apk"
+            def outFile = output.outputFile
+            if (outFile != null && outFile.name.endsWith('.apk')) {
+                outputFileName = fileName  //  output.outputFile 改为 outputFileName
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("..\\keystore\\theone.jks")
+            storePassword "areyoutheone"
+            keyAlias "areyou"
+            keyPassword "areyoutheone"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            // Zipalign优化
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':core')
+    kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttpVersion"
+}

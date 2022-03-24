@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.theone.demo.app.widget.TypeTextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            tools:text="you are the one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2>
+</layout>

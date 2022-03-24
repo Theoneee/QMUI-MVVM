@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <com.luck.picture.lib.photoview.PhotoView
+            android:id="@+id/photo_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView
+            android:id="@+id/longImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.qmuiteam.qmui.widget.QMUIProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:qmui_background_color="@color/qmui_config_color_background"
+            app:qmui_progress_color="?attr/app_skin_primary_color"
+            app:qmui_stroke_width="3dp"
+            app:qmui_type="type_circle" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/picture_icon_video_play"
+            android:layout_gravity="center" />
+
+
+    </FrameLayout>
+</layout>

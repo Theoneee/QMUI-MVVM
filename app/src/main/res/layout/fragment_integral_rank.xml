@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.theone.demo.viewmodel.IntegralRankViewModel" />
+        <variable
+            name="bean"
+            type="com.theone.demo.data.model.bean.IntegralResponse" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include layout="@layout/item_integral_rank"
+            app:visible="@{vm.showMineRank}"
+            app:item="@{bean}"/>
+
+<!--        <com.qmuiteam.qmui.layout.QMUILinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:qmui_borderColor="@color/qmui_config_color_background"-->
+<!--            app:qmui_general_shadow_alpha="0.35"-->
+<!--            app:qmui_radius="5dp"-->
+<!--            app:qmui_shadowElevation="10dp"-->
+<!--            android:background="@color/white"-->
+<!--            app:qmui_showBorderOnlyBeforeL="false"-->
+<!--            android:padding="15dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="@{String.valueOf(bean.rank)}"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="15sp"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:text="@{bean.username}"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="15sp"-->
+<!--                android:text="@{String.valueOf(bean.coinCount)}"/>-->
+
+<!--        </com.qmuiteam.qmui.layout.QMUILinearLayout>-->
+
+    </LinearLayout>
+</layout>

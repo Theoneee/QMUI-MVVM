@@ -1,0 +1,22 @@
+<resources>
+    <string-array name="setting_list_animations">
+        <item>无</item>
+        <item>渐显</item>
+        <item>缩放</item>
+        <item>从下到上</item>
+        <item>从左到右</item>
+        <item>从右到左</item>
+    </string-array>
+
+    <string-array name="nonsenses">
+        <item>you are the one</item>
+        <item>年轻时，\n你做了一个决定，\n要将生命献给爱情。\n后来，\n你没死，\n年轻替你抵了命。</item>
+        <item>我们会深情拥抱，\n我们会一直到老。</item>
+        <item>太阳靠近赤道，\n我靠近你。</item>
+        <item>春来夏往，秋收冬藏。</item>
+        <item>一场春雨，\n一缕清风，\n一簇花开。</item>
+        <item>你与晚霞一样温暖，\n你与星光一样浪漫。</item>
+        <item>我知你遥远如月亮，\n但又好贴近我心脏。</item>
+        <item>有些事，\n说出来显得我不大度，\n但我确实不开心，\n如果你不懂我，\n那错的都是我。</item>
+    </string-array>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.theone.mvvm.core.app.widge.layout.QMUISquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/qmui_config_color_background"
+    app:qmui_radius="2dp"
+    android:layout_height="wrap_content">
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView2
+        android:id="@+id/iv_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
+
+    <FrameLayout
+        android:id="@+id/delete_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="4dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_picture_selector_image_delete" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        tools:ignore="RtlSymmetry"
+        tools:text="00:00" />
+
+</com.theone.mvvm.core.app.widge.layout.QMUISquareRelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.theone.demo.data.model.bean.NavigationResponse" />
+
+        <variable
+            name="fragment"
+            type="com.theone.demo.ui.fragment.category.NavFragment" />
+
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:qmui_borderColor="@color/qmui_config_color_background"
+        app:qmui_general_shadow_alpha="0.35"
+        app:qmui_radius="5dp"
+        app:qmui_shadowElevation="10dp"
+        app:qmui_showBorderOnlyBeforeL="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.name}"
+            tools:text="知识星球"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/qmui_config_color_gray_2"/>
+
+        <com.qmuiteam.qmui.widget.QMUIFloatLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:fragment="@{fragment}"
+            app:treeChildData="@{item.articles}"/>
+
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+</layout>

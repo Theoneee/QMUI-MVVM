@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="common_search_bg_color">#F4F5F7</color>
+
+    <color name="common_price_color">#FA3A3A</color>
+
+</resources>

@@ -1,0 +1,66 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "configs.gradle"
+
+buildscript {
+    ext {
+        minSdkVersion = 21
+        targetSdkVersion = 31
+        compileSdkVersion = 31
+
+        kotlin_version = "1.6.10"
+        ktx_version = "1.7.0"
+
+    }
+    repositories {
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/central/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+/*****   使用Gradle assembleRelease 打包，以下代码为将打包好的APK文件复制到项目目录下的apks文件夹下  *******/
+
+subprojects(){
+    // 这里获取到assembleRelease和assembleDebug的task任务
+    //注意这里使用tasks.getByName("assembleRelease")会报错，找不到这个task
+    def releaseTasks = project.getTasksByName("assembleRelease",false)
+    copyApkFile(releaseTasks, project)
+}
+
+def copyApkFile(Set<Task> tasks , Project project) {
+    for (task in tasks) {
+        def projectPath = project.getProjectDir().getAbsolutePath() // 项目地址
+        def copyPath = projectPath + "\\build\\outputs\\apk\\release" // 复制的地址
+        def target = rootProject.getProjectDir().getAbsolutePath() + "\\apks"  // 目标地址
+        println "=================== assemble release path = $copyPath"
+        def file = new File(copyPath)
+        //在生成此apk之前，如果先将之前存在生成的apk则删除
+        if (file.exists()) {
+            def result = delete(copyPath)
+            println "=================== clear before create $copyPath + ---- $result"
+        }
+        task.doLast {
+            if (file.exists()) {
+                //将生成的apk拷贝出来
+                copy{ //copy是gradle中的project提供的方法，用于拷贝，里面有两个特定的属性
+                    //from srcDir ， into desDir （当这个目录不存在的时候会尝试创建这个文件夹）
+                    println "=================== copy file from ---- "+copyPath+" to ---- "+target
+                    from copyPath
+                    into target
+                }
+                println "=================== delete after copy -------------------$copyPath "
+                // 拷贝完后删除
+                delete(copyPath)
+            }
+        }
+    }
+}

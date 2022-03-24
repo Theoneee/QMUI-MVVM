@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="main_container" type="id"/>
+
+    <item name="empty_button" type="id"/>
+
+    <item name="topbar_right_about_button" type="id"/>
+    <item name="topbar_right_change_button" type="id"/>
+
+    <item name="topbar_left_view" type="id"/>
+    <item name="topbar_left_button" type="id"/>
+    <item name="topbar_left_text" type="id"/>
+    <item name="topbar_right_view" type="id"/>
+    <item name="topbar_right_text" type="id"/>
+    <item name="topbar_right_button1" type="id"/>
+    <item name="topbar_right_button2" type="id"/>
+
+    <item name="topbar_search" type="id"/>
+
+    <item name="search_layout_delete" type="id"/>
+</resources>

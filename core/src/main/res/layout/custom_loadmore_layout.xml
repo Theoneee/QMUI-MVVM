@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/load_more_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.theone.mvvm.core.app.widge.ProgressWheel
+            xmlns:wheel="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/loading_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:clickable="false"
+            wheel:matProg_barColor="?attr/app_skin_primary_color"
+            wheel:matProg_barWidth="3dp"
+            wheel:matProg_progressIndeterminate="true"
+            wheel:matProg_rimColor="@color/qmui_config_color_gray_9"
+            wheel:matProg_rimWidth="2dp" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="?attr/app_skin_loadmore_loading_text"
+            android:textColor="?attr/app_skin_loadmore_text_color"
+            app:qmui_skin_text_color="?attr/app_skin_loadmore_text_color"
+            android:textSize="?attr/app_skin_loadmore_text_size"
+            tools:ignore="MissingPrefix" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/load_more_load_complete_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_load_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="?attr/app_skin_loadmore_complete_text"
+            android:textSize="?attr/app_skin_loadmore_text_size"
+            android:textColor="?attr/app_skin_loadmore_text_color"
+            app:qmui_skin_text_color="?attr/app_skin_loadmore_text_color"
+            tools:ignore="MissingPrefix" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/load_more_load_fail_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_load_more_fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="?attr/app_skin_loadmore_fail_text"
+            android:textSize="?attr/app_skin_loadmore_text_size"
+            android:textColor="?attr/app_skin_loadmore_text_color"
+            app:qmui_skin_text_color="?attr/app_skin_loadmore_text_color"
+            tools:ignore="MissingPrefix" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/load_more_load_end_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginStart="?attr/app_skin_loadmore_separator_margin"
+        android:layout_marginEnd="?attr/app_skin_loadmore_separator_margin"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="?attr/app_skin_loadmore_separator_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="?attr/app_skin_loadmore_separator_margin"
+            android:layout_marginEnd="?attr/app_skin_loadmore_separator_margin"
+            android:text="?attr/app_skin_loadmore_end_text"
+            android:textSize="?attr/app_skin_loadmore_text_size"
+            android:textColor="?attr/app_skin_loadmore_text_color"
+            app:qmui_skin_text_color="?attr/app_skin_loadmore_text_color"
+            tools:ignore="MissingPrefix" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="?attr/app_skin_loadmore_separator_color" />
+
+    </LinearLayout>
+
+</FrameLayout>

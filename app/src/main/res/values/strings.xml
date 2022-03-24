@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TheBase</string>
+
+    <string name="app_test">TEST</string>
+    <string name="home_tag_top">置顶</string>
+    <string name="home_tag_new">新</string>
+    <string name="login_input_account">请输入账号</string>
+    <string name="login_input_password">请输入密码</string>
+    <string name="login_input_repassword">请确认密码</string>
+    <string name="rank">排名</string>
+    <string name="score">积分</string>
+    <string name="plz_login_first">请先登录</string>
+    <string name="search_clear_history">清空</string>
+    <string name="search_history">搜索记录</string>
+    <string name="search">搜索</string>
+    <string name="search_hot_words">热门搜索</string>
+    <string name="search_hint">请输入关键词</string>
+    <string name="login">登  录</string>
+    <string name="register">注  册</string>
+    <string name="article_title">标题</string>
+    <string name="article_url">链接</string>
+    <string name="article_publisher">发布者</string>
+    <string name="share_article_rules" tools:ignore="TypographyEllipsis">
+        1. 只要是任何好文都可以分享哈，并不一定要是原创！投递的文章会进入广场 tab;\n
+        2. CSDN，掘金，简书等官方博客站点会直接通过，不需要审核;\n
+        3. 其他个人站点会进入审核阶段，不要投递任何无效链接，测试的请尽快删除，否则可能会对你的账号产生一定影响;\n
+        4. 目前处于测试阶段，如果你发现500等错误，可以向我提交日志，让我们一起使网站变得更好。\n
+        5. 由于本站只有我一个人开发与维护，会尽力保证24小时内审核，当然有可能哪天太累，会延期，请保持佛系...\n
+    </string>
+
+
+    <string name="crash_title">很抱歉，程序崩溃了</string>
+    <string name="show_error_msg">查看错误信息</string>
+    <string name="long_fruit_name">这是一个超长的水果名称这是一个超长的水果名称这是一个超长的水果名称</string>
+</resources>

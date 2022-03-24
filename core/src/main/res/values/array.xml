@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <array name="mc_colorful_round" translatable="false">
+        <item>#43b56b</item>
+        <item>#44aff9</item>
+        <item>#f56455</item>
+        <item>#5ecddf</item>
+        <item>#f6b944</item>
+        <item>#bd713b</item>
+    </array>
+    
+</resources>

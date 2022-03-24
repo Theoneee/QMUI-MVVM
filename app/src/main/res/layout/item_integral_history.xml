@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.theone.demo.data.model.bean.IntegralHistoryResponse" />
+
+        <variable
+            name="format"
+            type="com.theone.common.util.DateFormatUtils" />
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:qmui_borderColor="@color/qmui_config_color_background"
+        app:qmui_general_shadow_alpha="0.35"
+        app:qmui_radius="5dp"
+        app:qmui_shadowElevation="10dp"
+        app:qmui_showBorderOnlyBeforeL="false">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.getDes}"
+                android:textColor="@color/qmui_config_color_gray_1"
+                android:textSize="15sp"
+                tools:text="【签到】 积分：10 + 14" />
+
+            <TextView
+                app:longDate="@{item.date}"
+                app:type="@{format.FORMAT_TYPE_PERSONAL_FOOTPRINT}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/qmui_config_color_gray_3"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/coin_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:text='@{"+"+item.coinCount}'
+            android:textColor="?attr/app_skin_primary_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="+100" />
+
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+</layout>

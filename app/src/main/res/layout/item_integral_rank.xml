@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.theone.demo.data.model.bean.IntegralResponse" />
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:qmui_borderColor="@color/qmui_config_color_background"
+        app:qmui_general_shadow_alpha="0.35"
+        app:qmui_radius="5dp"
+        app:qmui_shadowElevation="10dp"
+        android:background="@color/white"
+        app:qmui_showBorderOnlyBeforeL="false"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@{String.valueOf(item.rank)}"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginStart="15dp"
+            android:text="@{item.username}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@{String.valueOf(item.coinCount)}"/>
+
+    </com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout>
+</layout>

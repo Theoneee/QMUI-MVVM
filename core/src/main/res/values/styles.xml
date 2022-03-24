@@ -1,0 +1,128 @@
+<resources>
+
+    <style name="BaseTopBarStyle" parent="QMUI.TopBar">
+        <item name="qmui_bottomDividerHeight">?attr/qmui_skin_support_topbar_separator_height</item>
+        <item name="qmui_topbar_left_back_drawable_id">
+            ?attr/qmui_skin_support_topbar_back_drawable
+        </item>
+    </style>
+
+    <style name="BaseSegmentStyle" parent="QMUI.TabSegment">
+        <item name="qmui_tab_normal_text_size">?attr/qmui_skin_support_tab_size</item>
+        <item name="qmui_tab_selected_text_size">?attr/qmui_skin_support_tab_size</item>
+    </style>
+
+    <style name="CoreDialogThemeTitleStyle" parent="QMUI.Dialog.Title">
+        <item name="android:textColor">@color/qmui_config_color_gray_1</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="CoreDialogThemeActionContainerStyle">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="qmui_dialog_action_container_justify_content">stretch</item>
+        <item name="qmui_dialog_action_height">56dp</item>
+        <item name="qmui_dialog_action_space">8dp</item>
+        <item name="qmui_topDividerHeight">1px</item>
+    </style>
+
+    <style name="CoreDialogThemeActionStyle" parent="QMUI.Dialog.Action">
+        <item name="android:textColor">@color/qmui_config_color_gray_2</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <style name="match_wrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wrap_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wrap_match">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="match_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="StartAppTheme" parent="CoreTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="TranslucentTheme" parent="CoreTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="NoTitleTheme" parent="CoreTheme">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="ActivityTransparentTheme" parent="StartAppTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <!-- 主背景设置透明，这个一定要放在最后面-->
+        <item name="app_skin_main_background_color">@color/qmui_config_color_transparent</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <style name="PopAnimStyle">
+        <item name="android:windowEnterAnimation">@anim/anim_from_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_from_top_out</item>
+    </style>
+
+    <style name="custom_bottom_text_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/qmui_config_color_blue</item>
+    </style>
+
+    <style name="DateTimePickerDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="crash_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

@@ -1,0 +1,71 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="CoreTheme">
+        <!-- Customize your theme here. -->
+        <item name="qmui_skin_support_common_list_separator_color">@color/white</item>
+        <item name="qmui_content_padding_horizontal">20dp</item>
+        <item name="qmui_topbar_height">60dp</item>
+
+        <item name="app_skin_main_background_color">@color/qmui_config_color_background</item>
+
+    </style>
+
+
+    <style name="AppUpdateTheme" parent="ActivityTransparentTheme">
+        <item name="app_skin_main_background_color">@color/qmui_config_color_transparent</item>
+    </style>
+
+    <style name="home_tag_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:textColor">@color/qmui_config_color_red</item>
+    </style>
+
+    <style name="login_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:textCursorDrawable">@drawable/common_edit_text_cursor</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textColor">@color/qmui_config_color_gray_2</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/login_edittext_bg</item>
+    </style>
+
+    <style name="mine_tips_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textColor">@color/qmui_config_color_gray_3</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="article_add_title_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/qmui_config_color_gray_3</item>
+    </style>
+
+    <style name="article_add_edittext_style" parent="login_edittext_style">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="launcher_text_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

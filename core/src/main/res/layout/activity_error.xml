@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_error_crash"
+            tools:ignore="VectorDrawableCompat" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/sendError"
+            style="@style/crash_btn_style"
+            android:onClick="sendErrorMsg"
+            android:text="@string/crash_report_tip"
+            app:qmui_backgroundColor="?attr/app_skin_primary_color"
+            app:qmui_borderWidth="0dp" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/restart"
+            style="@style/crash_btn_style"
+            android:onClick="restart"
+            android:text="@string/crash_restart"
+            app:qmui_backgroundColor="@color/qmui_config_color_gray_7"
+            app:qmui_borderWidth="0dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/showErrorInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:onClick="showErrorMsg"
+        android:text="@string/crash_show_info"
+        android:textColor="@color/qmui_config_color_gray_3"
+        android:textSize="14sp" />
+
+</RelativeLayout>

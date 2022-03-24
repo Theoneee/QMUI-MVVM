@@ -1,0 +1,171 @@
+package com.theone.mvvm.base.fragment
+
+import android.content.Context
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.*
+import com.qmuiteam.qmui.arch.QMUIFragment
+import com.qmuiteam.qmui.util.QMUIKeyboardHelper
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
+import com.theone.mvvm.base.ViewConstructor
+import com.theone.mvvm.base.IQMUI
+import com.theone.mvvm.base.ViewConstructorImpl
+import com.theone.mvvm.ext.qmui.*
+
+
+//  ┏┓　　　┏┓
+//┏┛┻━━━┛┻┓
+//┃　　　　　　　┃
+//┃　　　━　　　┃
+//┃　┳┛　┗┳　┃
+//┃　　　　　　　┃
+//┃　　　┻　　　┃
+//┃　　　　　　　┃
+//┗━┓　　　┏━┛
+//    ┃　　　┃                  神兽保佑
+//    ┃　　　┃                  永无BUG！
+//    ┃　　　┗━━━┓
+//    ┃　　　　　　　┣┓
+//    ┃　　　　　　　┏┛
+//    ┗┓┓┏━┳┓┏┛
+//      ┃┫┫　┃┫┫
+//      ┗┻┛　┗┻┛
+/**
+ * @author The one
+ * @date 2021/2/22 0022
+ * @describe BaseFragment
+ * @email 625805189@qq.com
+ * @remark 懒加载+TopBar+状态栏等的封装
+ */
+abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
+
+    protected val TAG: String = this.javaClass.simpleName
+
+    lateinit var mActivity: AppCompatActivity
+
+    /**
+     * 是否为根Fragment： getParentFragment() == null
+     * 可作为一些默认情况的判断依据
+     */
+    private var isIndexFragment = false
+
+    /**
+     * 是否第一次加载
+     */
+    private var mIsFirstLayInit = true
+
+    private val mViewConstructor: ViewConstructor by lazy {
+        ViewConstructorImpl(mActivity, getContentViewFactory(), showTopBar())
+    }
+
+    override fun getViewConstructor(): ViewConstructor = mViewConstructor
+
+    override fun getContentViewFactory(): ViewConstructor.Factory {
+        return ViewConstructor.DefaultFactory(getLayoutId())
+    }
+
+    /**
+     * 是否需要TopBar(默认为根Fragment才需要)
+     * 子类重写此方法进行修改
+     */
+    override fun showTopBar(): Boolean = isIndexFragment
+
+    /**
+     * 提供一个方法供子类获取TopBar
+     */
+    override fun getTopBar(): QMUITopBarLayout? = getViewConstructor().getTopBar()
+
+    /**
+     * true -> 内容层将充满整个屏幕，直接延伸至状态栏
+     *
+     * false ->内容层将有一个向上的TopBar高度的间距
+     */
+    protected open fun translucentFull(): Boolean = false
+
+
+    /**
+     * @return 是否要进行对状态栏的处理
+     * @remark 默认当为根fragment时才进行处理
+     */
+    override fun isNeedChangeStatusBarMode(): Boolean = isIndexFragment
+
+    /**
+     * @return 是否设置状态栏LightMode true 深色图标 false 白色背景
+     * @remark 根据自己APP的配色，给定一个全局的默认模式。
+     *         建议用TopBar的背景颜色做判断。或者在自己的BaseFragment里提供一个全局默认的模式。
+     */
+    override fun isStatusBarLightMode(): Boolean = true
+
+    override fun onCreateView(): View = getViewConstructor().createView(translucentFull())
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as AppCompatActivity
+        isIndexFragment = null == parentFragment
+    }
+
+    override fun onViewCreated(rootView: View) {
+        mIsFirstLayInit = true
+        initView(rootView)
+    }
+
+    /**
+     * 当为 BaseFragmentActivity 的 DefaultFirstFragment 时，[isIndexFragment] = True , 但是并不会走 onEnterAnimationEnd()
+     * 所以现在全部以界面可见时为懒加载时机
+     */
+    abstract fun onLazyInit()
+
+    /**
+     * 界面对用户可见状态
+     */
+    protected open fun onLazyResume(){
+        if (isNeedChangeStatusBarMode()) {
+            updateStatusBarMode(isStatusBarLightMode())
+        }
+    }
+
+    /**
+     * 检查是否需要延迟初始化
+     */
+    private fun checkLazyInit() {
+        if (lifecycle.currentState == Lifecycle.State.STARTED) {
+            onLazyResume()
+            if (mIsFirstLayInit) {
+                mIsFirstLayInit = false
+                view?.post {
+                    onLazyInit()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkLazyInit()
+    }
+
+    /**
+     * 显示加载框
+     * @param msg String? 提示语
+     * @remark 这了提供了默认的加载效果，如果需要更改，重写此方法以及[hideLoading]
+     */
+    override fun showLoading(msg: String?) {
+        context?.showLoadingDialog(msg)
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    override fun hideLoading() {
+        hideLoadingDialog()
+    }
+
+    /**
+     * 向外提供的关闭方法
+     */
+    open fun finish() {
+        onBackPressed()
+    }
+
+}

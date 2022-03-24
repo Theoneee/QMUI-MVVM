@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.theone.demo.viewmodel.state.StringExtViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_background"
+        tools:ignore="MissingDefaultResource">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    app:qmui_skin_text_color="?attr/app_skin_text_color_1"
+                    android:text="使用drawableEnd设置"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/long_fruit_name"
+                    android:textColor="@color/qmui_config_color_gray_3"
+                    android:textSize="14sp"
+                    tools:ignore="MissingPrefix"
+                    app:drawableEndCompat="@drawable/ic_food_status_up" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    app:qmui_skin_text_color="?attr/app_skin_text_color_1"
+                    android:text="使用SpannableString设置"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{vm.fruitName}"
+                    android:textColor="@color/qmui_config_color_gray_3"
+                    android:textSize="14sp"
+                    tools:ignore="MissingPrefix" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{vm.price}"
+                    android:textColor="@color/qmui_config_color_gray_1"
+                    android:textSize="16sp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_superscript"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:text="@{vm.superscript}"
+                        app:qmui_skin_text_color="?attr/app_skin_text_color_2"
+                        android:textSize="15sp"
+                        tools:ignore="MissingPrefix" />
+
+                    <TextView
+                        android:id="@+id/tv_subscript"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:text="@{vm.subscript}"
+                        app:qmui_skin_text_color="?attr/app_skin_text_color_2"
+                        android:textSize="15sp"
+                        tools:ignore="MissingPrefix" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                android:id="@+id/groupListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
+
+

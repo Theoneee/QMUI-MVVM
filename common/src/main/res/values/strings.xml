@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spanUtils_rmb">¥</string><!-- ¥相当于&#xA5 -->
+
+    <string name="common_search_hint">搜索</string>
+    <string name="downloaded">&#160;%s %%</string>
+
+    <string name="date_picker_title">请选择时间</string>
+    <string name="date_picker_year">年</string>
+    <string name="date_picker_month">月</string>
+    <string name="date_picker_day">日</string>
+    <string name="date_picker_hour">时</string>
+    <string name="date_picker_minute">分</string>
+</resources>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.theone.demo.data.model.bean.ArticleResponse" />
+
+        <import
+            alias="textUtils"
+            type="android.text.TextUtils" />
+
+        <import
+            alias="html"
+            type="android.text.Html" />
+
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:qmui_borderColor="@color/qmui_config_color_background"
+        app:qmui_general_shadow_alpha="0.35"
+        app:qmui_radius="5dp"
+        app:qmui_shadowElevation="10dp"
+        app:qmui_showBorderOnlyBeforeL="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                style="@style/home_tag_style"
+                app:visible="@{item.type == 1}"
+                android:text="@string/home_tag_top"
+                app:qmui_borderColor="@color/qmui_config_color_red"
+                app:qmui_isRadiusAdjustBounds="false"
+                app:qmui_radius="2dp" />
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                style="@style/home_tag_style"
+                app:visible="@{item.fresh}"
+                android:text="@string/home_tag_new"
+                app:qmui_borderColor="@color/qmui_config_color_red"
+                app:qmui_isRadiusAdjustBounds="false"
+                app:qmui_radius="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text='@{"#"+(textUtils.isEmpty(item.author)?item.shareUser:item.author)}'
+                android:textColor="?attr/app_skin_primary_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView2
+                app:imageUrl="@{item.envelopePic}"
+                app:placeHolder="@{@drawable/image_place_holder}"
+                app:visible="@{!textUtils.isEmpty(item.envelopePic)}"
+                app:qmui_corner_radius="2dp"
+                app:qmui_border_color="@color/qmui_config_color_background"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="12dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="@{html.fromHtml(item.title)}"
+                    android:textColor="@color/qmui_config_color_gray_2"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    tools:text="Java “优雅”地中断线程(原理篇)" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxHeight="120dp"
+                    app:visible="@{!textUtils.isEmpty(item.desc)}"
+                    android:text="@{html.fromHtml(item.desc)}"
+                    android:textColor="@color/qmui_config_color_gray_4"
+                    android:textSize="14sp"
+                    tools:text="Java “优雅”地中断线程(原理篇)" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                style="@style/home_tag_style"
+                app:visible="@{item.showTags()}"
+                android:text='@{item.showTags()?item.tags.get(0).name:""}'
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:qmui_backgroundColor="@color/qmui_config_color_gray_5"
+                app:qmui_borderColor="@color/qmui_config_color_gray_5"
+                app:qmui_isRadiusAdjustBounds="false"
+                app:qmui_radius="2dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@{item.niceDate}"
+                android:textColor="@color/qmui_config_color_gray_3"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/collection"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@{item.collect? @drawable/svg_collection_select: @drawable/svg_collection_normal}" />
+        </LinearLayout>
+
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+</layout>

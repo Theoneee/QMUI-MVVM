@@ -1,0 +1,5 @@
+<vector android:height="24dp" android:viewportHeight="1024"
+    android:viewportWidth="1024" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/qmui_config_color_red" android:pathData="M568.98,724.41L777.44,927.7c33.91,33.07 90.9,9.04 90.9,-38.32V231.62c0,-84.11 -68.18,-152.29 -152.29,-152.29h-406.1c-84.11,0 -152.29,68.18 -152.29,152.29v656.67c0,47.52 57.31,71.48 91.13,38.09l204.26,-201.62c32.1,-31.67 83.65,-31.83 115.93,-0.35z"/>
+    <path android:fillColor="#FFFFFF" android:pathData="M513,175.08l55.85,113.17 124.89,18.14 -90.37,88.09 21.33,124.38L513,460.14l-111.7,58.72 21.33,-124.38 -90.37,-88.09 124.89,-18.14z"/>
+</vector>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.theone.mvvm.core.app.widge.ProgressWheel
+        android:id="@+id/progressWheel"
+        xmlns:wheel="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/pull_fresh_flyme_progress_wheel_size"
+        android:layout_height="@dimen/pull_fresh_flyme_progress_wheel_size"
+        android:clickable="false"
+        wheel:matProg_barWidth="@dimen/pull_fresh_flyme_progress_bar_width"
+        wheel:matProg_rimWidth="@dimen/pull_fresh_flyme_progress_rim_width"
+        wheel:matProg_rimColor="@color/pull_fresh_flyme_progress_rim_color" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pull_fresh_flyme_tips_text_top_margin"
+        android:textSize="@dimen/pull_fresh_flyme_tips_text_size"
+        android:textColor="@color/pull_fresh_flyme_tips_color"
+        tools:text="下拉刷新"/>
+
+</LinearLayout>
