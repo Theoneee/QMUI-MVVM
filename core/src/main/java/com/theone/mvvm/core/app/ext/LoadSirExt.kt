@@ -86,25 +86,20 @@ fun LoadService<*>.showError(
     showCallback(ErrorCallback::class.java)
 }
 
-/**
- * 设置错误布局
- * @param message 错误布局显示的提示内容
- */
-fun LoadService<*>.showEmpty(
-    message: String = "暂无此内容",
-    imageRes: Int = R.drawable.status_search_result_empty
-) {
-    showError(message, imageRes)
+private fun ICore.postShow(show:()->Unit){
+    loadSirRegisterView()?.post {
+        show.invoke()
+    }
 }
 
 fun ICore.showSuccessPage() {
-    loadSirRegisterView()?.post {
+    postShow {
         getLoadSir()?.showSuccess()
     }
 }
 
 fun ICore.showLoadingPage(message: String = "加载中") {
-    loadSirRegisterView()?.post {
+    postShow {
         getLoadSir()?.showLoading(message)
     }
 }
@@ -113,16 +108,14 @@ fun ICore.showErrorPage(
     message: String?,
     imageRes: Int = R.drawable.status_loading_view_loading_fail
 ) {
-    loadSirRegisterView()?.post {
+    postShow {
         getLoadSir()?.showError(message, imageRes)
     }
 }
 
 fun ICore.showEmptyPage(
-    message: String = "",
+    message: String = "暂无此内容",
     imageRes: Int = R.drawable.status_search_result_empty
 ) {
-    loadSirRegisterView()?.post {
-        getLoadSir()?.showEmpty(message, imageRes)
-    }
+    showErrorPage(message, imageRes)
 }

@@ -93,9 +93,7 @@ abstract class BasePagerAdapterFragment
      */
     override fun onFirstLoadSuccess(data: List<T>) {
         onRefreshSuccess(data)
-        if (getLoadSir()?.currentCallback != SuccessCallback::class.java) {
-            showSuccessPage()
-        }
+        showSuccessPage()
     }
 
     /**
