@@ -71,6 +71,11 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
     override fun showTopBar(): Boolean = isIndexFragment
 
     /**
+     * @return 是否要进行对状态栏的处理
+     */
+    override fun isNeedChangeStatusBarMode(): Boolean  = isIndexFragment
+
+    /**
      * 提供一个方法供子类获取TopBar
      */
     override fun getTopBar(): QMUITopBarLayout? = getViewConstructor().getTopBar()
