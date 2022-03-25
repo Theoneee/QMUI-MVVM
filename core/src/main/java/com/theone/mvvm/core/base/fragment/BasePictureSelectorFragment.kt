@@ -15,6 +15,7 @@ import com.theone.mvvm.core.data.entity.ImagePreviewBean
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.app.ext.startImagePreview
 import com.theone.mvvm.core.app.util.PictureSelectorUtil
+import com.theone.mvvm.core.base.loader.LoaderStatus
 import java.util.*
 
 //  ┏┓　　　┏┓
@@ -45,6 +46,8 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
     BasePagerAdapterFragment<LocalMedia, VM, DB>(),
     OnResultCallbackListener<LocalMedia> {
 
+    override fun loaderDefaultStatus(): LoaderStatus = LoaderStatus.SUCCESS
+
     protected open fun getMaxSelectNum(): Int = 9
 
     override fun getLayoutManagerType(): LayoutManagerType = LayoutManagerType.GRID
@@ -52,9 +55,6 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
     override fun getSpanCount(): Int = 3
 
     override fun getItemSpace(): Int = 6
-
-    override fun onLazyInit() {
-    }
 
     override fun createAdapter(): BaseQuickAdapter<LocalMedia, *> = PictureSelectorAdapter().apply {
         mSelectMax = getMaxSelectNum()

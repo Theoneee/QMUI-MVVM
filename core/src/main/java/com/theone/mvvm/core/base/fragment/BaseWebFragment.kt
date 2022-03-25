@@ -363,17 +363,11 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     }
 
-    override fun initData() {
-    }
-
-    override fun createObserver() {
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         getWebContainer().destroy()
     }
 
-    fun getWebView(): WebView? = mWebView
+    fun getWebView(): WebView = mWebView
 
 }
