@@ -45,6 +45,8 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
 
     private var curStatus: LoaderStatus = LoaderStatus.SUCCESS
 
+    private var loaderParams: ViewGroup.LayoutParams? = null
+
     private fun getContentView() = constructor.getContentView()
 
     abstract fun getLoadingLayout(): Int
@@ -63,19 +65,28 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
         registerView: View?,
         defaultStatus: LoaderStatus = LoaderStatus.SUCCESS
     ) {
-        if (null != loading) {
+        if (null != loaderParams) {
             throw RuntimeException("Loader已经注册,请勿重复注册...")
         }
-        with(constructor) {
-            loading = getLayoutInflater().inflate(getLoadingLayout(), getRootView(), false)
-            error = getLayoutInflater().inflate(getErrorLayout(), getRootView(), false)
-            getRootView().run {
-                val lp = registerView?.layoutParams ?: match_match
-                addView(loading, lp)
-                addView(error, lp)
+        loaderParams = registerView?.layoutParams ?: match_match
+        show(defaultStatus)
+    }
+
+    private fun ensureLoadingView() {
+        if (null == loading) {
+            with(constructor) {
+                loading = getLayoutInflater().inflate(getLoadingLayout(), getRootView(), false)
+                getRootView().addView(loading, loaderParams)
             }
-            goneViews(loading,error)
-            show(defaultStatus)
+        }
+    }
+
+    private fun ensureErrorView() {
+        if (null == error) {
+            with(constructor) {
+                error = getLayoutInflater().inflate(getErrorLayout(), getRootView(), false)
+                getRootView().addView(error, loaderParams)
+            }
         }
     }
 
@@ -91,11 +102,13 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
                 getErrorView()?.invisible()
             }
             LoaderStatus.LOADING -> {
+                ensureLoadingView()
                 getLoadingView()?.visible()
                 getContentView().gone()
                 getErrorView()?.gone()
             }
             LoaderStatus.ERROR -> {
+                ensureErrorView()
                 getLoadingView()?.gone()
                 getContentView().gone()
                 getErrorView()?.visible()
