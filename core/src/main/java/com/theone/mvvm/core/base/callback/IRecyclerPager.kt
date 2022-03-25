@@ -101,20 +101,19 @@ interface IRecyclerPager<T> {
     fun onAutoRefresh()
 
     /**
-     * 刷新失败
-     */
-    fun onRefreshError(errorMsg:String?)
-
-    /**
      * 刷新完成
      */
     fun onRefreshSuccess(data:List<T>)
 
     /**
+     * 刷新失败
+     */
+    fun onRefreshError(errorMsg:String?)
+
+    /**
      * 空数据
      */
     fun onEmptyData()
-
 
     /**
      * 加载更多

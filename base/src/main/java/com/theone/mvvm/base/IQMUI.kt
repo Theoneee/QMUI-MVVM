@@ -45,17 +45,17 @@ interface IQMUI {
     /**
      * 获取布局
      */
-    fun getLayoutId(): Int
+    fun getLayoutId(): Int = -1
 
     /**
      * 提供一个方法供子类获取TopBar
      */
-    fun getTopBar(): QMUITopBarLayout?
+    fun getTopBar(): QMUITopBarLayout? = null
 
     /**
      * 是否需要TopBar
      */
-    fun showTopBar(): Boolean
+    fun showTopBar(): Boolean = true
 
     /**
      * 布局初始化
@@ -88,11 +88,17 @@ interface IQMUI {
     /**
      * @return 是否设置状态栏LightMode true 深色图标 false 白色背景
      */
-    fun isStatusBarLightMode():Boolean
+    fun isStatusBarLightMode():Boolean = true
 
     /**
      * @return 是否要进行对状态栏的处理
      */
-    fun isNeedChangeStatusBarMode():Boolean
+    fun isNeedChangeStatusBarMode():Boolean = true
+
+    /**
+     * true -> 内容层将充满整个屏幕，直接延伸至状态栏
+     * false ->内容层将有一个向上的TopBar高度的间距
+     */
+    fun translucentFull(): Boolean = false
 
 }

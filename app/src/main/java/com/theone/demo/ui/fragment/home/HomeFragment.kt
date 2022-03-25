@@ -24,6 +24,7 @@ import com.theone.demo.ui.fragment.base.BaseArticleFragment
 import com.theone.demo.ui.fragment.search.SearchFragment
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.HomeViewModel
+import com.theone.mvvm.core.base.loader.LoaderStatus
 import com.theone.mvvm.ext.qmui.updateStatusBarMode
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity
@@ -75,6 +76,8 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>() {
     override fun translucentFull(): Boolean = showBanner()
 
     override fun isLazyLoadData(): Boolean = false
+
+    override fun loaderDefaultStatus(): LoaderStatus = LoaderStatus.SUCCESS
 
     override fun getItemSpace(): Int = 0
 

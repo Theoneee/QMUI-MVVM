@@ -83,27 +83,27 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
      * 是否需要延迟加载数据
      * @return Boolean
      */
-    protected open fun isLazyLoadData():Boolean = true
+    protected open fun isLazyLoadData(): Boolean = true
 
     /**
      * 在初始化之后的操作
      */
     protected open fun afterInit() {}
 
-    override fun loadSirRegisterView(): View? = if(isTabFromNet()) getViewConstructor().getRootView() else null
+    override fun loaderRegisterView(): View?  = if(isTabFromNet()) getViewConstructor().getRootView() else null
 
     override fun initView(root: View) {
         root.setBackgroundColor(getColor(mActivity, R.color.qmui_config_color_transparent))
         // 如果Tab的内容不是从网络获取，是否也需要延迟初始化？
         if (!isTabFromNet()) {
             startInit()
-        }else if(!isLazyLoadData()){
+        } else if (!isLazyLoadData()) {
             getRequestViewModel()?.requestServer()
         }
     }
 
     override fun onLazyInit() {
-        if (isTabFromNet()&&isLazyLoadData()) {
+        if (isTabFromNet() && isLazyLoadData()) {
             onPageReLoad()
         }
     }
@@ -120,7 +120,9 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
                 startInit()
             })
             getErrorLiveData().observe(this@BaseTabFragment, Observer {
-                showErrorPage(it)
+                showErrorPage(it) {
+                    onPageReLoad()
+                }
             })
         }
     }

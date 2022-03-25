@@ -104,13 +104,15 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
         mRequestVm.run {
             getResponseLiveData().observe(this@MineFragment) {
                 setUserIntegral(it)
-                getDataBinding().swipeRefresh.isEnabled = true
             }
             getErrorLiveData().observe(this@MineFragment) {
                 showFailTipsDialog(it)
             }
             getFinallyLiveData().observe(this@MineFragment) {
-                getDataBinding().swipeRefresh.isRefreshing = false
+                getDataBinding().swipeRefresh.run {
+                    isRefreshing = false
+                    isEnabled = true
+                }
                 mRequestVm.isFirst = false
             }
         }

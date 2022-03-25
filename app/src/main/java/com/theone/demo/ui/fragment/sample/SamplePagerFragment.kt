@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.theone.common.ext.delay
 import com.theone.demo.R
-import com.theone.demo.app.ext.delay
 import com.theone.demo.app.ext.setAdapterAnimation
 import com.theone.demo.data.model.bean.ArticleResponse
 import com.theone.demo.ui.adapter.ArticleAdapter

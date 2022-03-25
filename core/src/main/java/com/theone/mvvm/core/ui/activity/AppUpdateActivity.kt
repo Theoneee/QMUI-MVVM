@@ -53,7 +53,7 @@ import java.io.File
  * @remark
  */
 
-class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdateBinding>() {
+ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdateBinding>() {
 
     private val mUpdate: IApkUpdate by getValueNonNull(BundleConstant.DATA)
     private val mFilter: IntentFilter by lazy {

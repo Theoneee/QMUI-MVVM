@@ -1,6 +1,5 @@
 package com.theone.mvvm.core.base.activity
 
-import android.util.SparseArray
 import android.view.KeyEvent
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -10,9 +9,9 @@ import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.app.ext.hideProgressDialog
-import com.theone.mvvm.core.app.ext.registerLoadSir
+import com.theone.mvvm.core.app.ext.registerLoader
 import com.theone.mvvm.core.app.ext.showProgressDialog
-import com.theone.mvvm.core.app.widge.loadsir.core.LoadService
+import com.theone.mvvm.core.base.loader.LoaderView
 import com.theone.mvvm.entity.ProgressBean
 
 //  ┏┓　　　┏┓
@@ -42,19 +41,16 @@ import com.theone.mvvm.entity.ProgressBean
 abstract class BaseCoreActivity<VM : BaseViewModel, DB : ViewDataBinding>:BaseVmDbActivity<VM,DB>(),
     ICore {
 
-    /**
-     * 界面状态管理者
-     */
-    var mLoadSir: LoadService<Any>?=null
+    private val mLoader:LoaderView by lazy {
+        LoaderView(getViewConstructor())
+    }
 
-    override fun getLoadSir(): LoadService<Any>? = mLoadSir
+    override fun getLoader(): LoaderView?  = if(loaderRegisterView()!=null) mLoader else null
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
-        mLoadSir = registerLoadSir()
+        registerLoader()
     }
-
-    override fun loadSirRegisterView(): View? = null
 
     override fun showProgress(progress: ProgressBean) {
         showProgressDialog(progress)
@@ -63,14 +59,6 @@ abstract class BaseCoreActivity<VM : BaseViewModel, DB : ViewDataBinding>:BaseVm
     override fun hideProgress() {
         hideProgressDialog()
     }
-
-    override fun SparseArray<Any>.applyBindingParams() {}
-
-    override fun initData() {}
-
-    override  fun onPageReLoad() {}
-
-    override fun isExitPage(): Boolean = false
 
     override fun showExitTips() {
         ToastUtils.show(R.string.core_exit_tips)

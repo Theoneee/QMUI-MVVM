@@ -88,11 +88,7 @@ abstract class BaseWebActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     private lateinit var mUrl: String
     private var isFirstLoad: Boolean = true
 
-    override fun loadSirRegisterView(): View = getWebContainer()
-
     private fun needDispatchSafeAreaInset(): Boolean = false
-
-    override fun showTopBar(): Boolean = false
 
     abstract fun getWebContainer(): QMUIWebViewContainer
     abstract fun getProgressBar(): QMUIProgressBar

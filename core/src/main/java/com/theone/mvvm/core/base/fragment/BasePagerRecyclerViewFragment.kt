@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.theone.mvvm.core.app.ext.*
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 import com.theone.mvvm.core.data.enum.LayoutManagerType
-import com.theone.mvvm.core.app.widge.loadsir.callback.SuccessCallback
 import com.theone.mvvm.core.base.callback.IRecyclerPager
+import com.theone.mvvm.core.base.loader.LoaderStatus
 import com.theone.mvvm.ext.qmui.showInfoTipsDialog
 
 //  ┏┓　　　┏┓
@@ -37,12 +37,13 @@ import com.theone.mvvm.ext.qmui.showInfoTipsDialog
 abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : ViewDataBinding> :
     BaseCoreFragment<VM, DB>(), IRecyclerPager<T> {
 
+    override fun getViewModelIndex(): Int = 1
 
-    override fun getViewModelIndex(): Int  = 1
+    override fun getDataBindingIndex(): Int = 2
 
-    override fun getDataBindingIndex(): Int  = 2
+    override fun loaderRegisterView(): View = getViewConstructor().getContentView()
 
-    override fun loadSirRegisterView(): View?  = getViewConstructor().getContentView()
+    override fun loaderDefaultStatus(): LoaderStatus = LoaderStatus.LOADING
 
     /**
      * 获取 RecyclerView.LayoutManager 类型
@@ -108,7 +109,7 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
      * 2.界面已经存在数据，此时需要调用头部刷新 onRefresh()
      */
     override fun onAutoRefresh() {
-        if (getLoadSir()?.currentCallback == SuccessCallback::class.java) {
+        if (getLoader()?.getCurrentStatus() == LoaderStatus.SUCCESS) {
             onRefreshDirectly()
         } else {
             onFirstLoading()
@@ -143,7 +144,9 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
     }
 
     override fun onFirstLoadError(errorMsg: String?) {
-        showErrorPage(errorMsg)
+        showErrorPage(errorMsg) {
+            onPageReLoad()
+        }
         setRefreshLayoutEnabled(false)
     }
 
@@ -164,6 +167,7 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
      */
     override fun onRefreshError(errorMsg: String?) {
         showInfoTipsDialog(errorMsg)
+        getViewModel().isFresh = false
         setRefreshLayoutEnabled(true)
     }
 
@@ -176,7 +180,9 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
     }
 
     override fun onEmptyData() {
-        showEmptyPage()
+        showEmptyPage {
+            onPageReLoad()
+        }
     }
 
 }

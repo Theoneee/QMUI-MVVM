@@ -47,29 +47,7 @@ abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : Base
 
     override fun getDataBinding(): DB = factory.getDataBinding()
 
-    override fun getDataBindingIndex(): Int = 1
-
-    override fun getDataBindingClass(): Class<DB> = getClazz(this, getDataBindingIndex())
-
-    /**
-     * 布局ID
-     */
     @Deprecated(message = "View通过DataBinding反射进行创建，这个不再需要", replaceWith = ReplaceWith(""))
     override fun getLayoutId(): Int = 0
-
-    /**
-     * 视图里绑定的ViewModel ID
-     */
-    override fun getBindingVmId(): Int = BR.vm
-
-    /**
-     * 视图里绑定的点击事件 ID
-     */
-    override fun getBindingClickId(): Int = BR.click
-
-    /**
-     * 视图里绑定的点击事件
-     */
-    override fun getBindingClick(): Any? = null
 
 }

@@ -43,13 +43,6 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseQMUIFragment(),
 
     override fun getViewModel(): VM = mViewModel
 
-    override fun getViewModelClass(): Class<VM> = getClazz(this, getViewModelIndex())
-
-    /**
-     * ViewModel的位置
-     */
-    override fun getViewModelIndex(): Int = 0
-
     override fun onViewCreated(rootView: View) {
         super.onViewCreated(rootView)
         addLoadingObserve(getViewModel())

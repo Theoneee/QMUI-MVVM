@@ -40,13 +40,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseQMUIActivity(),
 
     override fun getViewModel(): VM  = mViewModel
 
-    override fun getViewModelClass(): Class<VM>  = getClazz(this,getViewModelIndex())
-
-    /**
-     * ViewModel的位置
-     */
-    override fun getViewModelIndex(): Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 创建观察者

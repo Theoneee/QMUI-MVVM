@@ -2,6 +2,8 @@ package com.theone.mvvm.base
 
 import android.util.SparseArray
 import androidx.annotation.NonNull
+import com.theone.mvvm.BR
+import com.theone.mvvm.ext.getClazz
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -41,31 +43,31 @@ interface IDataBinding<DB> {
      * @remark 如果子类中没有了DB泛型，则需要重写[getDataBindingClass]直接指定Class
      *         例：很多界面都用的是一个DB，那么可以指定这个DB进行封装，子类重写后是没有DB的
      */
-    fun getDataBindingIndex():Int
+    fun getDataBindingIndex():Int = 1
 
     /**
      * DataBinding的class
      * @return Class<*>
      */
-    fun getDataBindingClass():Class<DB>
+    fun getDataBindingClass():Class<DB> = getClazz(this,getDataBindingIndex())
 
     /**
      * 视图绑定里ViewModel的ID
      * @return Int
      */
-    fun getBindingVmId():Int
+    fun getBindingVmId():Int = BR.vm
 
     /**
      * 视图绑定里Click的ID
      * @return Int
      */
-    fun getBindingClickId(): Int
+    fun getBindingClickId(): Int = BR.click
 
     /**
      * 视图绑定里的Click
      * @return Any?
      */
-    fun getBindingClick(): Any?
+    fun getBindingClick(): Any? = null
 
     /**
      * 向DataBinding注入值
@@ -76,6 +78,6 @@ interface IDataBinding<DB> {
      *   addParams(BR.item,data)
      *
      */
-    fun SparseArray<Any>.applyBindingParams()
+    fun SparseArray<Any>.applyBindingParams(){}
 
 }

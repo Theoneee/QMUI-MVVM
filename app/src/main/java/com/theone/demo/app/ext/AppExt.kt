@@ -37,12 +37,6 @@ import java.util.*
  * @remark
  */
 
-
-@MainThread
-fun delay(time:Long,action:()->Unit){
-    Handler(Looper.getMainLooper()).postDelayed(action,time)
-}
-
 fun getCacheMode(isFirst: Boolean): CacheMode {
     return if (isFirst)
         CacheMode.READ_CACHE_FAILED_REQUEST_NETWORK

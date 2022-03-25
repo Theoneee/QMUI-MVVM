@@ -38,7 +38,7 @@ import com.theone.mvvm.R
  * @email 625805189@qq.com
  * @remark
  */
-class ViewConstructorImpl(
+open class ViewConstructorImpl(
     context: Context,
     contentFactory: Factory,
     private val showTopBar: Boolean
