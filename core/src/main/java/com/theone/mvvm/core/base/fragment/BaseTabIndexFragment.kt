@@ -43,5 +43,4 @@ abstract class BaseTabIndexFragment<VM : BaseViewModel> : BaseTabFragment<VM, Ba
 
     override fun getTabSegment(): QMUITabSegment? = getDataBinding().mTabSegment
 
-
 }
