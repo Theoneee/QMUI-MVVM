@@ -37,7 +37,7 @@ enum class LoaderStatus {
     SUCCESS, LOADING, ERROR
 }
 
-abstract class BaseLoaderView(val constructor: ViewConstructor) {
+abstract class Loader(private val layoutInflater: LayoutInflater) {
 
     private var loading: View? = null
 
@@ -47,7 +47,11 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
 
     private var loaderParams: ViewGroup.LayoutParams? = null
 
-    private fun getContentView() = constructor.getContentView()
+    private var rootView: ViewGroup? = null
+
+    private var contentView:View?=null
+
+    private fun getContentView() = contentView
 
     abstract fun getLoadingLayout(): Int
 
@@ -65,27 +69,45 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
         registerView: View?,
         defaultStatus: LoaderStatus = LoaderStatus.SUCCESS
     ) {
-        if (null != loaderParams) {
+        if (null != contentView) {
             throw RuntimeException("Loader已经注册,请勿重复注册...")
         }
-        loaderParams = registerView?.layoutParams ?: match_match
+        val parent = registerView?.parent
+        rootView = when {
+            parent is ViewGroup -> {
+                contentView = registerView
+                parent
+            }
+            registerView is ViewGroup -> {
+                registerView
+            }
+            registerView is View ->{
+                throw RuntimeException("Loader registerView 不能为 View")
+            }
+            else -> {
+                throw RuntimeException("Loader registerView 不能为 null")
+            }
+        }
+        loaderParams = registerView.layoutParams ?: match_match
         show(defaultStatus)
     }
 
     private fun ensureLoadingView() {
         if (null == loading) {
-            with(constructor) {
-                loading = getLayoutInflater().inflate(getLoadingLayout(), getRootView(), false)
-                getRootView().addView(loading, loaderParams)
+            rootView?.run {
+                loading =
+                    layoutInflater.inflate(getLoadingLayout(), this, false)
+                addView(loading, loaderParams)
             }
         }
     }
 
     private fun ensureErrorView() {
         if (null == error) {
-            with(constructor) {
-                error = getLayoutInflater().inflate(getErrorLayout(), getRootView(), false)
-                getRootView().addView(error, loaderParams)
+            rootView?.run {
+                error =
+                    layoutInflater.inflate(getErrorLayout(), this, false)
+                addView(error, loaderParams)
             }
         }
     }
@@ -97,20 +119,20 @@ abstract class BaseLoaderView(val constructor: ViewConstructor) {
         curStatus = status
         when (status) {
             LoaderStatus.SUCCESS -> {
-                getContentView().visible()
+                getContentView()?.visible()
                 getLoadingView()?.invisible()
                 getErrorView()?.invisible()
             }
             LoaderStatus.LOADING -> {
                 ensureLoadingView()
                 getLoadingView()?.visible()
-                getContentView().gone()
+                getContentView()?.gone()
                 getErrorView()?.gone()
             }
             LoaderStatus.ERROR -> {
                 ensureErrorView()
                 getLoadingView()?.gone()
-                getContentView().gone()
+                getContentView()?.gone()
                 getErrorView()?.visible()
             }
         }

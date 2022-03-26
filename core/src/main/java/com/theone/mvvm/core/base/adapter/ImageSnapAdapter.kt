@@ -60,9 +60,9 @@ import java.io.File
 class ImageSnapAdapter<T : IImageUrl>(private val onImageSnapClickListener: OnImageSnapClickListener<T>? = null) :
     TheBaseQuickAdapter<T, ItemImageSnapBinding>(R.layout.item_image_snap) {
 
-    private val minScale = 1.0f // 最小缩放倍数
-    private val mediumScale = 3.0f // 中等缩放倍数
-    private val maxScale = 5.0f // 最大缩放倍数
+    private val minScale = 0.5f // 最小缩放倍数
+    private val mediumScale = 2.0f // 中等缩放倍数
+    private val maxScale = 3.0f // 最大缩放倍数
 
     var isWhiteBg: Boolean = true
 

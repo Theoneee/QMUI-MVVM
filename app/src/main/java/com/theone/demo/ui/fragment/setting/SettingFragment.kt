@@ -76,7 +76,7 @@ class SettingFragment : BaseCoreFragment<SettingViewModel, FragmentSettingBindin
                 R.drawable.svg_setting_author
             )
 
-            mTheDemo = createItem("项目地址", "TheDemo-MVVM", R.drawable.svg_setting_project)
+            mTheDemo = createItem("项目地址", "QMUI-MVVM", R.drawable.svg_setting_project)
 
             addToGroup(
                 mAnimation,
@@ -124,8 +124,8 @@ class SettingFragment : BaseCoreFragment<SettingViewModel, FragmentSettingBindin
             mTheDemo -> startFragment(
                 WebExplorerFragment.newInstance(
                     BannerResponse(
-                        title = "TheDemo-MVVM",
-                        url = "https://github.com/Theoneee/TheDemo-MVVM"
+                        title = "QMUI-MVVM",
+                        url = "https://github.com/Theoneee/QMUI-MVVM"
                     )
                 )
             )

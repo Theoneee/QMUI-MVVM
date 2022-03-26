@@ -68,6 +68,7 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
                 setTitle("").setTextColor(it)
                 setSubTitle("").setTextColor(it)
             }
+            updateBottomDivider(0,0,0,0)
             setBackgroundAlpha(0)
         }
     }

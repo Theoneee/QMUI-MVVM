@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.view.View
 import android.webkit.SslErrorHandler
@@ -99,7 +100,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         setTitleWitchBackBtn(mIWeb.getWebTitle())
     }
 
-    open fun setTopBarTitle(title: String?) {
+    protected open fun setTopBarTitle(title: String?) {
        getTopBar()?.setTitle(title)
     }
 
@@ -222,8 +223,6 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     }
 
-
-
     inner class ExplorerWebViewClient(webView: BridgeWebView, needDispatchSafeAreaInset: Boolean) :
         BridgeWebViewClient(webView,needDispatchSafeAreaInset, true) {
         override fun onPageStarted(
@@ -312,7 +311,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     }
 
     @SuppressLint("HandlerLeak")
-    inner class ProgressHandler : Handler() {
+    inner class ProgressHandler : Handler(Looper.getMainLooper()) {
 
         var mDstProgressIndex: Int = 0
         var mDuration: Int = 0
@@ -333,7 +332,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
                         duration = mDuration.toLong()
                         addListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator) {
-                                if (getProgressBar()?.progress == 100) {
+                                if (getProgressBar().progress == 100) {
                                     sendEmptyMessageDelayed(
                                         PROGRESS_GONE,
                                         500

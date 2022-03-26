@@ -2,7 +2,7 @@ package com.theone.mvvm.core.base.callback
 
 import android.view.View
 import com.theone.mvvm.core.base.loader.LoaderStatus
-import com.theone.mvvm.core.base.loader.LoaderView
+import com.theone.mvvm.core.base.loader.Loader
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -39,11 +39,11 @@ interface ICore {
      * 界面状态管理
      * @return LoaderView?
      */
-    fun getLoader():LoaderView? = null
+    fun getLoader():Loader? = null
 
     /**
      * 界面状态注册View, 显示的Loading界面将使用此界面的[LayoutParams]
-     * 为null将不会注册[LoaderView]
+     * 为null将不会注册[Loader]
      * @return View?
      */
     fun loaderRegisterView():View? = null

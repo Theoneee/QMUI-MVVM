@@ -31,7 +31,13 @@ import com.theone.mvvm.core.databinding.FragmentWebExploererBinding
  * @email 625805189@qq.com
  * @remark
  */
-class SampleWebFragment internal constructor():BaseWebFragment<BaseViewModel,FragmentWebExploererBinding>() {
+class SampleWebFragment internal constructor() :
+    BaseWebFragment<BaseViewModel, FragmentWebExploererBinding>() {
+
+    override fun getViewModelClass(): Class<BaseViewModel> = BaseViewModel::class.java
+
+    override fun getDataBindingClass(): Class<FragmentWebExploererBinding> =
+        FragmentWebExploererBinding::class.java
 
     override fun getWebContainer(): QMUIWebViewContainer = getDataBinding().mWebContainer
 

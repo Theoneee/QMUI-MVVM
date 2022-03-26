@@ -3,11 +3,10 @@ package com.theone.mvvm.core.app.ext
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.theone.mvvm.base.ViewConstructor
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.base.loader.LoaderStatus
-import com.theone.mvvm.core.base.loader.LoaderView
+import com.theone.mvvm.core.base.loader.Loader
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -62,14 +61,14 @@ fun ICore.showErrorPage(
     getLoader()?.showErrorPage(msg, imageRes, click)
 }
 
-fun LoaderView.showLoadingPage(msg: String? = null) {
+fun Loader.showLoadingPage(msg: String? = null) {
     show(LoaderStatus.LOADING)
     msg?.let {
         getLoadingView()?.findViewById<TextView>(R.id.loading_tips)?.text = it
     }
 }
 
-fun LoaderView.showErrorPage(
+fun Loader.showErrorPage(
     msg: String?,
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null

@@ -64,6 +64,10 @@ open class ImagePreviewFragment :
     protected var mClickData: ImagePreviewBean? = null
     private val TAG_SAVE = "下载"
 
+    override fun getDataBindingClass(): Class<BasePullFreshFragmentBinding>  =BasePullFreshFragmentBinding::class.java
+
+    override fun getViewModelClass(): Class<ImagePreviewViewModel> = ImagePreviewViewModel::class.java
+
     override fun translucentFull(): Boolean = true
 
     override fun isLazyLoadData(): Boolean = false
