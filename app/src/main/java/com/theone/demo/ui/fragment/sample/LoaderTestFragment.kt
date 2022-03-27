@@ -8,6 +8,10 @@ import com.theone.mvvm.core.app.ext.showErrorPage
 import com.theone.mvvm.core.app.ext.showLoadingPage
 import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
+import com.theone.mvvm.core.base.loader.Loader
+import com.theone.mvvm.core.base.loader.LoaderView
+import com.theone.mvvm.core.base.loader.callback.ErrorCallback
+import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -36,17 +40,37 @@ import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 
 class LoaderTestFragment : BaseCoreFragment<BaseViewModel, FragmentLoaderTestBinding>() {
 
-    override fun loaderRegisterView(): View  = getViewConstructor().getContentView()
+    override fun loaderRegisterView(): View? = null
+
+    private var mLoader: LoaderView? = null
+
+    override fun onViewCreated(rootView: View) {
+        mLoader = Loader.getDefault().register(getViewConstructor().getContentView())
+        super.onViewCreated(rootView)
+    }
 
     override fun initView(root: View) {
         getTopBar()?.setTitle("LoaderTestFragment")
-        getLoader()?.run {
+        getLoaderView()?.run {
             showLoadingPage("五十年以后")
             delay(2000) {
-                showErrorPage("你还能在我左右？"){
+                showErrorPage("你还能在我左右？") {
                     showLoadingPage("再试一次")
-                    delay(1000){
+                    delay(1000) {
                         showSuccessPage()
+                    }
+                }
+            }
+        }
+        mLoader?.run {
+            show(LoadingCallback::class.java)
+            delay(2000) {
+                show(ErrorCallback::class.java) { _, view ->
+                    view?.setOnClickListener {
+                        show(LoadingCallback::class.java)
+                        delay(1000) {
+                            showSuccessPage()
+                        }
                     }
                 }
             }

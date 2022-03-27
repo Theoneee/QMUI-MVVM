@@ -1,6 +1,5 @@
-package com.theone.mvvm.core.base.loader
+package com.theone.mvvm.core.base.loader.callback
 
-import android.view.LayoutInflater
 import com.theone.mvvm.core.R
 
 //  ┏┓　　　┏┓
@@ -22,15 +21,13 @@ import com.theone.mvvm.core.R
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2022-03-25 09:58
+ * @date 2022-03-27 10:10
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class DefaultLoader(layoutInflater: LayoutInflater) : Loader(layoutInflater) {
 
-    override fun getLoadingLayout() = R.layout.layout_loading
+class LoadingCallback:Callback() {
 
-    override fun getErrorLayout() = R.layout.layout_error
-
+    override fun layoutId(): Int = R.layout.layout_loading
 }

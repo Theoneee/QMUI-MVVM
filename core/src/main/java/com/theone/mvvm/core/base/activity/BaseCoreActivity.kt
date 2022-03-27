@@ -11,8 +11,8 @@ import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.app.ext.hideProgressDialog
 import com.theone.mvvm.core.app.ext.registerLoader
 import com.theone.mvvm.core.app.ext.showProgressDialog
-import com.theone.mvvm.core.base.loader.DefaultLoader
 import com.theone.mvvm.core.base.loader.Loader
+import com.theone.mvvm.core.base.loader.LoaderView
 import com.theone.mvvm.entity.ProgressBean
 
 //  ┏┓　　　┏┓
@@ -42,15 +42,13 @@ import com.theone.mvvm.entity.ProgressBean
 abstract class BaseCoreActivity<VM : BaseViewModel, DB : ViewDataBinding>:BaseVmDbActivity<VM,DB>(),
     ICore {
 
-    private val mLoader:Loader? by lazy {
-        if(loaderRegisterView()!=null) DefaultLoader(layoutInflater) else null
-    }
+    private var mLoader:LoaderView? = null
 
-    override fun getLoader(): Loader?  = mLoader
+    override fun getLoaderView(): LoaderView?  = mLoader
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
-        registerLoader()
+        mLoader = registerLoader()
     }
 
     override fun showProgress(progress: ProgressBean) {

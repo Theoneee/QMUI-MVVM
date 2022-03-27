@@ -15,7 +15,8 @@ import com.theone.mvvm.core.data.entity.ImagePreviewBean
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.app.ext.startImagePreview
 import com.theone.mvvm.core.app.util.PictureSelectorUtil
-import com.theone.mvvm.core.base.loader.LoaderStatus
+import com.theone.mvvm.core.base.loader.callback.Callback
+import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import java.util.*
 
 //  ┏┓　　　┏┓
@@ -46,7 +47,7 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
     BasePagerAdapterFragment<LocalMedia, VM, DB>(),
     OnResultCallbackListener<LocalMedia> {
 
-    override fun loaderDefaultStatus(): LoaderStatus = LoaderStatus.SUCCESS
+    override fun loaderDefaultCallback(): Class<out Callback>  = SuccessCallback::class.java
 
     protected open fun getMaxSelectNum(): Int = 9
 

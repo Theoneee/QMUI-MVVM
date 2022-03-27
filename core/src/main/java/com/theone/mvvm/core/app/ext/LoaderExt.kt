@@ -5,8 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.ICore
-import com.theone.mvvm.core.base.loader.LoaderStatus
 import com.theone.mvvm.core.base.loader.Loader
+import com.theone.mvvm.core.base.loader.LoaderView
+import com.theone.mvvm.core.base.loader.callback.ErrorCallback
+import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -33,16 +35,23 @@ import com.theone.mvvm.core.base.loader.Loader
  * @remark
  */
 
-fun ICore.registerLoader(){
-    getLoader()?.register(loaderRegisterView(),loaderDefaultStatus())
+fun ICore.registerLoader():LoaderView? {
+    return loaderRegisterView()?.let { registerView ->
+        with(Loader.getDefault()){
+            loaderDefaultCallback()?.let {
+                builder?.defaultCallback(it)
+            }
+            register(registerView)
+        }
+    }
 }
 
 fun ICore.showSuccessPage() {
-    getLoader()?.showSuccessPage()
+    getLoaderView()?.showSuccessPage()
 }
 
 fun ICore.showLoadingPage(msg: String? = null) {
-    getLoader()?.showLoadingPage(msg)
+    getLoaderView()?.showLoadingPage(msg)
 }
 
 fun ICore.showEmptyPage(
@@ -50,7 +59,7 @@ fun ICore.showEmptyPage(
     imageRes: Int = R.drawable.status_search_result_empty,
     click: ((View) -> Unit)? = null
 ) {
-    getLoader()?.showErrorPage(msg, imageRes, click)
+    getLoaderView()?.showErrorPage(msg, imageRes, click)
 }
 
 fun ICore.showErrorPage(
@@ -58,30 +67,33 @@ fun ICore.showErrorPage(
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null
 ) {
-    getLoader()?.showErrorPage(msg, imageRes, click)
+    getLoaderView()?.showErrorPage(msg, imageRes, click)
 }
 
-fun Loader.showLoadingPage(msg: String? = null) {
-    show(LoaderStatus.LOADING)
-    msg?.let {
-        getLoadingView()?.findViewById<TextView>(R.id.loading_tips)?.text = it
+fun LoaderView.showLoadingPage(msg: String? = null) {
+    show(LoadingCallback::class.java){_,view ->
+        msg?.let {
+            view?.findViewById<TextView>(R.id.loading_tips)?.text = it
+        }
     }
 }
 
-fun Loader.showErrorPage(
+fun LoaderView.showErrorPage(
     msg: String?,
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null
 ) {
-    show(LoaderStatus.ERROR)
-    getErrorView()?.run {
-        msg?.let {
-            findViewById<TextView>(R.id.stateContentTextView).text = it
-        }
-        val ivStatus = findViewById<ImageView>(R.id.stateImageView)
-        ivStatus.setImageResource(imageRes)
-        click?.let {
-            setOnClickListener(it)
+    show(ErrorCallback::class.java){_, view ->
+        view?.run {
+            msg?.let {
+                findViewById<TextView>(R.id.stateContentTextView).text = it
+            }
+            val ivStatus = findViewById<ImageView>(R.id.stateImageView)
+            ivStatus.setImageResource(imageRes)
+            click?.let {
+                setOnClickListener(it)
+            }
         }
     }
+
 }

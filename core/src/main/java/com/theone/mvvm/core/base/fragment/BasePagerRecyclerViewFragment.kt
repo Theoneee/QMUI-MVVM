@@ -7,7 +7,9 @@ import com.theone.mvvm.core.app.ext.*
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.base.callback.IRecyclerPager
-import com.theone.mvvm.core.base.loader.LoaderStatus
+import com.theone.mvvm.core.base.loader.callback.Callback
+import com.theone.mvvm.core.base.loader.callback.LoadingCallback
+import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import com.theone.mvvm.ext.qmui.showInfoTipsDialog
 
 //  ┏┓　　　┏┓
@@ -43,7 +45,7 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
 
     override fun loaderRegisterView(): View = getViewConstructor().getContentView()
 
-    override fun loaderDefaultStatus(): LoaderStatus = LoaderStatus.LOADING
+    override fun loaderDefaultCallback(): Class<out Callback> = LoadingCallback::class.java
 
     /**
      * 获取 RecyclerView.LayoutManager 类型
@@ -109,7 +111,7 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
      * 2.界面已经存在数据，此时需要调用头部刷新 onRefresh()
      */
     override fun onAutoRefresh() {
-        if (getLoader()?.getCurrentStatus() == LoaderStatus.SUCCESS) {
+        if (getLoaderView()?.getCurrentCallback() == SuccessCallback::class.java) {
             onRefreshDirectly()
         } else {
             onFirstLoading()
