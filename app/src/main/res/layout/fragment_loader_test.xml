@@ -45,5 +45,15 @@
             app:layout_constraintTop_toBottomOf="@id/content1"
             app:layout_constraintVertical_weight="1" />
 
+<!--        <ViewStub-->
+<!--            android:id="@+id/center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:background="@color/qmui_config_color_red"-->
+<!--            android:layout="@layout/layout_test_viewstub"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/content2"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/content1"-->
+<!--            app:layout_constraintVertical_weight="1" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,7 +9,7 @@ import com.theone.demo.ui.fragment.IndexFragment
 import com.theone.demo.ui.fragment.sample.LoaderTestFragment
 import com.theone.mvvm.base.activity.BaseFragmentActivity
 
-@DefaultFirstFragment(LoaderTestFragment::class)
+@DefaultFirstFragment(IndexFragment::class)
 class MainActivity : BaseFragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

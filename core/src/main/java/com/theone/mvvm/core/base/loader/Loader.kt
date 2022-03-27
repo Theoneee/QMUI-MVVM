@@ -44,7 +44,7 @@ class Loader private constructor(){
     var builder: Builder? = null
         private set
 
-    fun register(target:View?):LoaderView{
+    fun register(target:View):LoaderView{
        return LoaderView().register(target,builder)
     }
 

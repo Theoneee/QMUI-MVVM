@@ -40,13 +40,18 @@ import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 class LoaderTestFragment : BaseCoreFragment<BaseViewModel, FragmentLoaderTestBinding>() {
 
+//    override fun loaderRegisterView(): View? = null
 //    override fun loaderRegisterView(): View = getDataBinding().content1
 //    override fun loaderRegisterView(): View = getDataBinding().content2
-    override fun loaderRegisterView(): View = getDataBinding().center
+//    override fun loaderRegisterView(): View = getDataBinding().center
 //    override fun loaderRegisterView(): View = getDataBinding().root
+    override fun loaderRegisterView(): View = getViewConstructor().getRootView()
 
     override fun initView(root: View) {
         getTopBar()?.setTitle("LoaderTestFragment")
+//        delay(1000){
+//            getDataBinding().center.viewStub?.inflate()
+//        }
         getLoaderView()?.run {
             showLoadingPage("五十年以后")
             delay(2000) {
