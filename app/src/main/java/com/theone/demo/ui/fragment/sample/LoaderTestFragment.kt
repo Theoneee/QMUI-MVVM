@@ -40,14 +40,10 @@ import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 class LoaderTestFragment : BaseCoreFragment<BaseViewModel, FragmentLoaderTestBinding>() {
 
-    override fun loaderRegisterView(): View? = null
-
-    private var mLoader: LoaderView? = null
-
-    override fun onViewCreated(rootView: View) {
-        mLoader = Loader.getDefault().register(getViewConstructor().getContentView())
-        super.onViewCreated(rootView)
-    }
+//    override fun loaderRegisterView(): View = getDataBinding().content1
+//    override fun loaderRegisterView(): View = getDataBinding().content2
+    override fun loaderRegisterView(): View = getDataBinding().center
+//    override fun loaderRegisterView(): View = getDataBinding().root
 
     override fun initView(root: View) {
         getTopBar()?.setTitle("LoaderTestFragment")
@@ -58,19 +54,6 @@ class LoaderTestFragment : BaseCoreFragment<BaseViewModel, FragmentLoaderTestBin
                     showLoadingPage("再试一次")
                     delay(1000) {
                         showSuccessPage()
-                    }
-                }
-            }
-        }
-        mLoader?.run {
-            show(LoadingCallback::class.java)
-            delay(2000) {
-                show(ErrorCallback::class.java) { _, view ->
-                    view?.setOnClickListener {
-                        show(LoadingCallback::class.java)
-                        delay(1000) {
-                            showSuccessPage()
-                        }
                     }
                 }
             }

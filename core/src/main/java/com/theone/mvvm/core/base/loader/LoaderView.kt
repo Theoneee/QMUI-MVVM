@@ -36,9 +36,7 @@ import java.lang.RuntimeException
 
 class LoaderView {
 
-    private val callbackMap = mutableMapOf<Class<out Callback>, Callback>()
-
-    private var callbacks: List<Class<out Callback>>? = null
+    private val callbacks = mutableListOf<Callback>()
 
     private var curCallback: Class<out Callback> = SuccessCallback::class.java
 
@@ -76,7 +74,9 @@ class LoaderView {
         }
         loaderParams = target.layoutParams ?: match_match
         builder?.run {
-            callbacks = getCallbacks()
+            for (callback in getCallbacks()) {
+                callbacks.add(callback.newInstance())
+            }
             show(getDefaultCallback())
         }
         return this
@@ -100,29 +100,24 @@ class LoaderView {
         if (callback == null || callback == curCallback) {
             return
         }
-        callbacks?.let { callbacks ->
-            // 设置内容层
-            getContentView()?.visible(callback == SuccessCallback::class.java)
-            // 遍历循环，如果设置的是内容层，那么一定会走 TODO[2]
-            for (item in callbacks) {
-                val instance = if (callbackMap.containsKey(item)) {
-                    callbackMap[item]
+        val isSuccess = callback == SuccessCallback::class.java
+        // 设置内容层
+        getContentView()?.visible(isSuccess)
+        // 遍历循环，如果设置的是内容层，那么一定会走 TODO[2]
+        for (item in callbacks) {
+            with(item) {
+                if (javaClass == callback) {
+                    // TODO[1] 需要显示的时候才加载到[rootView]
+                    ensureCallback()
+                    view?.let {
+                        it.visible()
+                        transport?.invoke(it.context, it)
+                    }
                 } else {
-                    val instance = item.newInstance()
-                    callbackMap[item] = instance
-                    instance
-                }
-                instance?.run {
-                    if (javaClass == callback) {
-                        // TODO[1] 需要显示的时候才加载到[rootView]
-                        ensureCallback()
-                        view?.let {
-                            it.visible()
-                            transport?.invoke(it.context, it)
-                        }
-                    } else {
-                        // TODO[2] 将不是当前设置的状态全部
-                        view?.gone()
+                    // TODO[2] 将不是当前设置的状态全部
+                    view?.run {
+                        if(isSuccess) gone()
+                        else invisible()
                     }
                 }
             }
