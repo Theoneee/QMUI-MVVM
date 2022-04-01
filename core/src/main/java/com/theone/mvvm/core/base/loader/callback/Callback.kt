@@ -1,6 +1,8 @@
 package com.theone.mvvm.core.base.loader.callback
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -28,8 +30,23 @@ import android.view.View
  */
 abstract class Callback {
 
-    abstract fun layoutId():Int
+    abstract fun layoutId(): Int
 
-    var view: View?=null
+    var view: View? = null
+
+    fun ensureView(rootView: ViewGroup): View {
+        if (null == view) {
+            val layoutId = layoutId()
+            if (layoutId != 0) {
+                rootView.run {
+                    val inflater = LayoutInflater.from(context)
+                    view = inflater.inflate(layoutId, this, false)
+                }
+            } else {
+                throw IllegalArgumentException("${this.javaClass.simpleName} must have a valid layoutResource")
+            }
+        }
+        return view!!
+    }
 
 }

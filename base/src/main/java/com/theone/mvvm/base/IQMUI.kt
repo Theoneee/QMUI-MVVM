@@ -67,23 +67,23 @@ interface IQMUI {
      * 显示加载框
      * @param msg String?
      */
-    fun showLoading(msg:String?)
+    fun showLoading(msg:String?){}
 
     /**
      * 隐藏加载框
      */
-    fun hideLoading()
+    fun hideLoading(){}
 
     /**
      * 显示进度弹窗
      * @param progress ProgressUI
      */
-    fun showProgress(progress: ProgressBean)
+    fun showProgress(progress: ProgressBean){}
 
     /**
      * 隐藏进度弹窗
      */
-    fun hideProgress()
+    fun hideProgress(){}
 
     /**
      * @return 是否设置状态栏LightMode true 深色图标 false 白色背景

@@ -62,4 +62,9 @@ abstract class BaseCoreFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         return super.onKeyDown(keyCode, event)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mLoader = null
+    }
+
 }

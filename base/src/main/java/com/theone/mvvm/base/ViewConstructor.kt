@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import com.qmuiteam.qmui.kotlin.matchParent
-import com.qmuiteam.qmui.kotlin.wrapContent
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
-import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -34,7 +31,7 @@ import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
  * @email 625805189@qq.com
  * @remark
  */
-abstract class ViewConstructor(val context: Context, val factory: Factory) {
+abstract class ViewConstructor(val context: Context,private val factory: Factory) {
 
     private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -43,7 +40,7 @@ abstract class ViewConstructor(val context: Context, val factory: Factory) {
     }
 
     private val mContentView: View by lazy {
-        factory.create(mRootView, mLayoutInflater)
+        factory.create(getRootView(), getLayoutInflater())
     }
 
     private val mTopBar: QMUITopBarLayout? by lazy {

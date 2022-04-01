@@ -71,7 +71,7 @@ fun ICore.showErrorPage(
 }
 
 fun LoaderView.showLoadingPage(msg: String? = null) {
-    show(LoadingCallback::class.java){_,view ->
+    showCallbackView(LoadingCallback::class.java){_,view ->
         msg?.let {
             view?.findViewById<TextView>(R.id.loading_tips)?.text = it
         }
@@ -83,7 +83,7 @@ fun LoaderView.showErrorPage(
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null
 ) {
-    show(ErrorCallback::class.java){_, view ->
+    showCallbackView(ErrorCallback::class.java){_, view ->
         view?.run {
             msg?.let {
                 findViewById<TextView>(R.id.stateContentTextView).text = it

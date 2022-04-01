@@ -1,10 +1,8 @@
 package com.theone.mvvm.base
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import com.qmuiteam.qmui.kotlin.matchParent
 import com.qmuiteam.qmui.kotlin.wrapContent
 import com.qmuiteam.qmui.skin.QMUISkinHelper
@@ -66,21 +64,15 @@ open class ViewConstructorImpl(
                     R.attr.app_skin_main_background_color
                 )
             )
-            addView(getContentView())
+            val contentParams = ViewGroup.MarginLayoutParams(matchParent, matchParent)
             if (showTopBar && !translucentFull) {
                 val marginTop = QMUIResHelper.getAttrDimen(
                     context,
                     R.attr.qmui_topbar_height
                 ) + QMUIStatusBarHelper.getStatusbarHeight(context)
-                getContentView().run {
-                    layoutParams.let {
-                        if (it is ViewGroup.MarginLayoutParams) {
-                            it.setMargins(0, marginTop, 0, 0)
-                            requestLayout()
-                        }
-                    }
-                }
+                contentParams.topMargin = marginTop
             }
+            addView(getContentView(),contentParams)
             if (showTopBar) {
                 // TopBar要放在后面（布局的上一层），如果body充满整个父容器时，要保证TopBar是在上面的。
                 addView(getTopBar())
