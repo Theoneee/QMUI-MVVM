@@ -48,7 +48,7 @@ abstract class ViewConstructor(val context: Context,private val factory: Factory
     }
 
     abstract fun createRootView(): ViewGroup
-    abstract fun createView(translucentFull: Boolean = false): View
+    abstract fun createView(): View
     abstract fun createTopBar(): QMUITopBarLayout?
 
     fun getLayoutInflater() = mLayoutInflater

@@ -37,7 +37,7 @@ abstract class BaseQMUIActivity : QMUIActivity(), IQMUI {
     protected val TAG: String = this.javaClass.simpleName
 
     private val mViewConstructor: ViewConstructor by lazy {
-        ViewConstructorImpl(this,getContentViewFactory(),showTopBar())
+        ViewConstructorImpl(this,getContentViewFactory(),this)
     }
 
     override fun getViewConstructor(): ViewConstructor = mViewConstructor
@@ -53,7 +53,7 @@ abstract class BaseQMUIActivity : QMUIActivity(), IQMUI {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getViewConstructor().createView(translucentFull()).let {
+        getViewConstructor().createView().let {
             setContentView(it)
             initView(it)
         }

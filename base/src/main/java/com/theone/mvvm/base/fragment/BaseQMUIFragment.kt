@@ -56,7 +56,7 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
     private var mIsFirstLayInit = true
 
     private val mViewConstructor: ViewConstructor by lazy {
-        ViewConstructorImpl(mActivity, getContentViewFactory(), showTopBar())
+        ViewConstructorImpl(mActivity, getContentViewFactory(), this)
     }
 
     override fun getViewConstructor(): ViewConstructor = mViewConstructor
@@ -80,7 +80,7 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
      */
     override fun getTopBar(): QMUITopBarLayout? = getViewConstructor().getTopBar()
 
-    override fun onCreateView(): View = getViewConstructor().createView(translucentFull())
+    override fun onCreateView(): View = getViewConstructor().createView()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

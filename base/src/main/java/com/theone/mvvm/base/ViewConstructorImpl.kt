@@ -5,15 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+import androidx.core.content.ContextCompat
 import com.qmuiteam.qmui.kotlin.matchParent
 import com.qmuiteam.qmui.kotlin.wrapContent
 import com.qmuiteam.qmui.skin.QMUISkinHelper
-import com.qmuiteam.qmui.util.QMUIResHelper
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
-import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2
 import com.theone.mvvm.R
+import java.lang.RuntimeException
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -42,13 +41,13 @@ import com.theone.mvvm.R
 open class ViewConstructorImpl(
     context: Context,
     contentFactory: Factory,
-    private val showTopBar: Boolean
+    private val base: IQMUI
 ) : ViewConstructor(context, contentFactory) {
 
     override fun createRootView(): ViewGroup = QMUIWindowInsetLayout2(context)
 
     override fun createTopBar(): QMUITopBarLayout? {
-        return if (showTopBar) {
+        return if (base.showTopBar()) {
             QMUITopBarLayout(context).apply {
                 id = R.id.base_topbar
                 layoutParams = ConstraintLayout.LayoutParams(matchParent, wrapContent).apply {
@@ -63,29 +62,36 @@ open class ViewConstructorImpl(
         }
     }
 
-    override fun createView(translucentFull: Boolean): View {
+    override fun createView(): View {
         return getRootView().apply {
-            // 设置内容层背景颜色
-            setBackgroundColor(
-                QMUISkinHelper.getSkinColor(
-                    this,
-                    R.attr.app_skin_main_background_color
-                )
-            )
+            // 设置背景颜色
+            base.getRootBackgroundColor()?.let {
+                val color = when (resources.getResourceTypeName(it)) {
+                    "attr" -> {
+                        QMUISkinHelper.getSkinColor(this, it)
+                    }
+                    "color" -> {
+                        ContextCompat.getColor(context, it)
+                    }
+                    else -> {
+                        throw RuntimeException("The getRootBackgroundColor() method must return an attr or color resource.")
+                    }
+                }
+                setBackgroundColor(color)
+            }
             val contentParams = ConstraintLayout.LayoutParams(matchParent, 0).apply {
                 bottomToBottom = PARENT_ID
                 endToEnd = PARENT_ID
                 startToStart = PARENT_ID
-                topToTop= PARENT_ID
-            }
-            if (showTopBar && !translucentFull) {
-                contentParams.run {
-                    topToTop= ConstraintLayout.LayoutParams.UNSET
-                    topToBottom= R.id.base_topbar
+                // 当显示TopBar且内容层不是充满时内容层才在TopBar下方
+                if (base.showTopBar() && !base.translucentFull()) {
+                    topToBottom = R.id.base_topbar
+                } else {
+                    topToTop = PARENT_ID
                 }
             }
-            addView(getContentView(),contentParams)
-            if (showTopBar) {
+            addView(getContentView(), contentParams)
+            if (base.showTopBar()) {
                 // TopBar要放在后面（布局的上一层），如果body充满整个父容器时，要保证TopBar是在上面的。
                 addView(getTopBar())
             }

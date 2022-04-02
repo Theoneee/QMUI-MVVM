@@ -1,7 +1,9 @@
 package com.theone.mvvm.base
 
 import android.view.View
+import android.view.ViewGroup
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
+import com.theone.mvvm.R
 import com.theone.mvvm.entity.ProgressBean
 
 //  ┏┓　　　┏┓
@@ -48,9 +50,27 @@ interface IQMUI {
     fun getLayoutId(): Int = -1
 
     /**
+     * 根布局
+     * @return ViewGroup
+     */
+    fun getRootView(): ViewGroup = getViewConstructor().getRootView()
+
+    /**
+     * 内容层
+     * @return View
+     */
+    fun getContentView(): View = getViewConstructor().getRootView()
+
+    /**
      * 提供一个方法供子类获取TopBar
      */
-    fun getTopBar(): QMUITopBarLayout? = null
+    fun getTopBar(): QMUITopBarLayout? = getViewConstructor().getTopBar()
+
+    /**
+     * 主背景颜色
+     * @return Int
+     */
+    fun getRootBackgroundColor(): Int? = R.attr.app_skin_main_background_color
 
     /**
      * 是否需要TopBar
@@ -67,33 +87,33 @@ interface IQMUI {
      * 显示加载框
      * @param msg String?
      */
-    fun showLoading(msg:String?){}
+    fun showLoading(msg: String?) {}
 
     /**
      * 隐藏加载框
      */
-    fun hideLoading(){}
+    fun hideLoading() {}
 
     /**
      * 显示进度弹窗
      * @param progress ProgressUI
      */
-    fun showProgress(progress: ProgressBean){}
+    fun showProgress(progress: ProgressBean) {}
 
     /**
      * 隐藏进度弹窗
      */
-    fun hideProgress(){}
+    fun hideProgress() {}
 
     /**
      * @return 是否设置状态栏LightMode true 深色图标 false 白色背景
      */
-    fun isStatusBarLightMode():Boolean = true
+    fun isStatusBarLightMode(): Boolean = true
 
     /**
      * @return 是否要进行对状态栏的处理
      */
-    fun isNeedChangeStatusBarMode():Boolean = true
+    fun isNeedChangeStatusBarMode(): Boolean = true
 
     /**
      * true -> 内容层将充满整个屏幕，直接延伸至状态栏

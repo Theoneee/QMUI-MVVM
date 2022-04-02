@@ -39,7 +39,7 @@ abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : Base
 
     private val factory: ViewConstructor.DataBindingFactory<DB> by lazy {
         ViewConstructor.DataBindingFactory<DB>(getDataBindingClass()){
-            it.initDataBinding(this@BaseVmDbFragment,this@BaseVmDbFragment,getViewModel())
+            it.initDataBinding(this,this,getViewModel())
         }
     }
 
