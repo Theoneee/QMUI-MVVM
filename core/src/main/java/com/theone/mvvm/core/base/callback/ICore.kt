@@ -2,6 +2,7 @@ package com.theone.mvvm.core.base.callback
 
 import android.view.View
 import com.theone.mvvm.core.base.loader.LoaderService
+import com.theone.mvvm.core.base.loader.LoaderReplaceService
 import com.theone.mvvm.core.base.loader.callback.Callback
 
 //  ┏┓　　　┏┓
@@ -36,18 +37,20 @@ interface ICore {
      */
     fun getLoader(): LoaderService? = null
 
+    fun loaderServiceClass(): Class<out LoaderService> = LoaderReplaceService::class.java
+
     /**
-     * 界面状态注册View, 显示的Loading界面将使用此界面的[LayoutParams]
+     * 界面状态注册View
      * 为null将不会注册[LoaderService]
      * @return View?
      */
-    fun loaderRegisterView():View? = null
+    fun loaderRegisterView(): View? = null
 
     /**
      * 默认的状态
      * @return LoaderStatus
      */
-    fun loaderDefaultCallback():Class<out Callback>? = null
+    fun loaderDefaultCallback(): Class<out Callback>? = null
 
     /**
      * 错误、空界面重新
@@ -58,7 +61,7 @@ interface ICore {
      * 是否为退出界面
      * @return Boolean
      */
-    fun isExitPage():Boolean = false
+    fun isExitPage(): Boolean = false
 
     /**
      * 显示退出提示

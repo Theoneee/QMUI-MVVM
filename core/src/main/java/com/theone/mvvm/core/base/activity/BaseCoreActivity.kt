@@ -41,7 +41,7 @@ import com.theone.mvvm.entity.ProgressBean
 abstract class BaseCoreActivity<VM : BaseViewModel, DB : ViewDataBinding>:BaseVmDbActivity<VM,DB>(),
     ICore {
 
-    private var mLoader:LoaderService? = null
+    private var mLoader: LoaderService? = null
 
     override fun getLoader(): LoaderService?  = mLoader
 

@@ -44,8 +44,8 @@ class Loader private constructor(){
     var builder: Builder? = null
         private set
 
-    fun register(target:View):LoaderService{
-       return LoaderService().register(target,builder)
+    fun register(service: Class<out LoaderService>,target:View):LoaderService{
+       return service.newInstance().register(target,builder)
     }
 
     class Builder {

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.theone.mvvm.core.base.loader.callback.Callback
 import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 
-
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
 //┃　　　　　　　┃
@@ -27,31 +26,41 @@ import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2022-03-25 09:51
- * @describe LoaderService2
+ * @date 2022-04-02 14:54
+ * @describe TODO
  * @email 625805189@qq.com
- * TODO 将内容层remove/add的方式
+ * @remark
  */
-
-class LoaderService {
+abstract class LoaderService {
 
     private val TAG = this.javaClass.simpleName
 
-    private val callbacks = mutableListOf<Callback>()
+    val callbacks = mutableListOf<Callback>()
 
-    private var preCallback: Class<out Callback>? = null
+    var preCallback: Class<out Callback>? = null
 
-    private var curCallback: Class<out Callback> = SuccessCallback::class.java
+    var curCallback: Class<out Callback> = SuccessCallback::class.java
 
-    private var rootView: ViewGroup? = null
+    var rootView: ViewGroup? = null
 
-    private var successCallback: SuccessCallback? = null
+    var preView: View? = null
 
-    private var loaderParams: ViewGroup.LayoutParams? = null
+    var successCallback: SuccessCallback? = null
+
+    var loaderParams: ViewGroup.LayoutParams? = null
+
+    var loaderId: Int = 0
 
     fun getCurrentCallback() = curCallback
 
     fun showSuccessPage() = showCallbackView(SuccessCallback::class.java)
+
+    fun ensureRootView(): ViewGroup {
+        if (null == rootView) {
+            throw IllegalArgumentException("Loader must have a rootView")
+        }
+        return rootView as ViewGroup
+    }
 
     fun register(target: View, builder: Loader.Builder?): LoaderService {
         if (null != rootView) {
@@ -71,6 +80,7 @@ class LoaderService {
                 throw RuntimeException("Loader target must have a parent")
             }
         }
+        loaderId= target.id
         loaderParams = target.layoutParams
         builder?.run {
             for (callback in getCallbacks()) {
@@ -79,13 +89,6 @@ class LoaderService {
             showCallbackView(getDefaultCallback())
         }
         return this
-    }
-
-    private fun ensureRootView(): ViewGroup {
-        if (null == rootView) {
-            throw IllegalArgumentException("Loader must have a rootView")
-        }
-        return rootView as ViewGroup
     }
 
     fun showCallbackView(
@@ -114,19 +117,19 @@ class LoaderService {
 
     private fun show(
         status: Class<out Callback>,
-        transport: ((context: Context, view: View?) -> Unit)? = null
+        transport: ((context: Context, view: View?) -> Unit)?
     ) {
         for (item in callbacks) {
             if (item.javaClass == status) {
                 preCallback = status
                 if (status == SuccessCallback::class.java) {
                     successCallback?.view?.let {
-                         replaceContentWithView(it)
+                        showSuccessView(it)
                     }
                 } else {
                     with(item) {
                         ensureView(ensureRootView()).let {
-                            replaceContentWithView(it)
+                            showLoaderView(it)
                             transport?.invoke(it.context, it)
                         }
                     }
@@ -137,21 +140,8 @@ class LoaderService {
         curCallback = status
     }
 
-    private var preView: View? = null
+    abstract fun showSuccessView(view: View)
 
-    private fun replaceContentWithView(view: View) {
-        with(ensureRootView()) {
-            preView?.let {
-                // 设置id,解决ConstraintLayout布局问题
-                view.id =  it.id
-                val index = indexOfChild(it)
-                removeViewInLayout(it)
-                addView(view, index, successCallback?.view?.layoutParams)
-                // 某些机型addView后不执行此方法，这里手动执行下
-                requestApplyInsets()
-            }
-            preView = view
-        }
-    }
+    abstract fun showLoaderView(view: View)
 
 }

@@ -24,7 +24,7 @@ import com.theone.mvvm.entity.ProgressBean
 abstract class BaseCoreFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     BaseVmDbFragment<VM, DB>(), ICore {
 
-    private var mLoader:LoaderService? = null
+    private var mLoader: LoaderService? = null
 
     override fun getLoader(): LoaderService?  = mLoader
 
