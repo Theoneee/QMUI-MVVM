@@ -37,7 +37,7 @@ import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 fun ICore.registerLoader(): LoaderService? {
     return loaderRegisterView()?.let { registerView ->
-        Loader.getDefault().register(loaderServiceClass(),registerView)
+        Loader.getDefault().register(loaderServiceClass(),registerView,loaderDefaultCallback())
     }
 }
 

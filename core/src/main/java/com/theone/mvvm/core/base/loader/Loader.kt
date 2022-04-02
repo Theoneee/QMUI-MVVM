@@ -2,6 +2,7 @@ package com.theone.mvvm.core.base.loader
 
 import android.view.View
 import com.theone.mvvm.core.base.loader.callback.Callback
+import java.lang.RuntimeException
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -31,7 +32,7 @@ class Loader private constructor(){
 
     companion object {
 
-        val loader: Loader by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        private val loader: Loader by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             Loader()
         }
 
@@ -41,11 +42,14 @@ class Loader private constructor(){
 
     }
 
-    var builder: Builder? = null
+    private var builder: Builder? = null
         private set
 
-    fun register(service: Class<out LoaderService>,target:View):LoaderService{
-       return service.newInstance().register(target,builder)
+    fun register(service: Class<out LoaderService>,target:View,default: Class<out Callback>?):LoaderService{
+        if(null == builder){
+            throw RuntimeException("builder is null, please init it first.")
+        }
+       return service.newInstance().register(target,builder,default)
     }
 
     class Builder {
@@ -53,12 +57,17 @@ class Loader private constructor(){
         private val callbacks = mutableListOf<Class<out Callback>>()
         private var defaultCallback: Class<out Callback>? = null
 
-        fun addCallback(callback: Class<out Callback>):Builder {
+        fun addCallback(callback: Class<out Callback>): Builder {
+            for (cb in callbacks) {
+                if (cb == callback) {
+                    throw RuntimeException("${callback.name} have already added.")
+                }
+            }
             callbacks.add(callback)
             return this
         }
 
-        fun defaultCallback(default: Class<out Callback>?):Builder {
+        fun defaultCallback(default: Class<out Callback>?): Builder {
             defaultCallback = default
             return this
         }
@@ -68,6 +77,9 @@ class Loader private constructor(){
         fun getDefaultCallback() = defaultCallback
 
         fun commit() {
+            if (callbacks.isEmpty()) {
+                throw RuntimeException("callbacks is empty, please use addCallback method add your callback first.")
+            }
             getDefault().builder = this
         }
 

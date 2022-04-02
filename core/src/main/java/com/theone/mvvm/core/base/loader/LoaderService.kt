@@ -62,7 +62,7 @@ abstract class LoaderService {
         return rootView as ViewGroup
     }
 
-    fun register(target: View, builder: Loader.Builder?): LoaderService {
+    fun register(target: View, builder: Loader.Builder?,default:Class<out Callback>?): LoaderService {
         if (null != rootView) {
             throw RuntimeException("Loader has been registered.")
         }
@@ -86,7 +86,7 @@ abstract class LoaderService {
             for (callback in getCallbacks()) {
                 callbacks.add(callback.newInstance())
             }
-            showCallbackView(getDefaultCallback())
+            showCallbackView(default?:getDefaultCallback())
         }
         return this
     }
