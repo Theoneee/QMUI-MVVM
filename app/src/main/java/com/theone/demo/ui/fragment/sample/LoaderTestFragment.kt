@@ -4,14 +4,7 @@ import android.view.View
 import com.theone.common.ext.delay
 import com.theone.demo.databinding.FragmentLoaderTestBinding
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.mvvm.core.app.ext.showErrorPage
-import com.theone.mvvm.core.app.ext.showLoadingPage
-import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
-import com.theone.mvvm.core.base.loader.Loader
-import com.theone.mvvm.core.base.loader.LoaderView
-import com.theone.mvvm.core.base.loader.callback.ErrorCallback
-import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓

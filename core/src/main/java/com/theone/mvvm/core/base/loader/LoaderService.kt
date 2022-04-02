@@ -33,7 +33,7 @@ import com.theone.mvvm.core.base.loader.callback.SuccessCallback
  * @remark
  */
 
-class LoaderView {
+class LoaderService {
 
     private val TAG = this.javaClass.simpleName
 
@@ -49,40 +49,29 @@ class LoaderView {
 
     private var loaderParams: ViewGroup.LayoutParams? = null
 
-    private var loaderIndex = 1
-
     fun getCurrentCallback() = curCallback
 
     fun showSuccessPage() = showCallbackView(SuccessCallback::class.java)
 
-    fun register(target: View, builder: Loader.Builder?): LoaderView {
+    fun register(target: View, builder: Loader.Builder?): LoaderService {
         if (null != rootView) {
             throw RuntimeException("Loader has been registered.")
         }
         val parent = target.parent
-        rootView = when {
-            parent is ViewGroup -> {
+        rootView = when (parent) {
+            is ViewGroup -> {
                 successCallback = SuccessCallback().apply {
                     view = target
+                    callbacks.add(this)
                 }
-                loaderIndex = parent.childCount
                 preView = target
                 parent
-            }
-            target is ViewGroup -> {
-                target
             }
             else -> {
                 throw RuntimeException("Loader target must have a parent")
             }
         }
-        loaderParams = target.layoutParams ?: ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        successCallback?.let {
-            callbacks.add(it)
-        }
+        loaderParams = target.layoutParams
         builder?.run {
             for (callback in getCallbacks()) {
                 callbacks.add(callback.newInstance())
@@ -111,6 +100,9 @@ class LoaderView {
                 return
             }
         }
+        if (status == curCallback) {
+            return
+        }
         if (Looper.myLooper() == Looper.getMainLooper()) {
             show(status, transport)
         } else {
@@ -128,14 +120,8 @@ class LoaderView {
             if (item.javaClass == status) {
                 preCallback = status
                 if (status == SuccessCallback::class.java) {
-                    if (null == successCallback) {
-                        preView?.let {
-                            ensureRootView().removeViewInLayout(it)
-                        }
-                    } else {
-                        successCallback?.view?.let {
-                            replaceContentWithView(it)
-                        }
+                    successCallback?.view?.let {
+                        replaceContentWithView(it)
                     }
                 } else {
                     with(item) {
@@ -155,27 +141,20 @@ class LoaderView {
 
     private fun replaceContentWithView(view: View) {
         with(ensureRootView()) {
-            if (successCallback == null) {
-                preView?.let {
-                    removeViewInLayout(it)
+            preView?.let {
+                // 设置id,解决ConstraintLayout布局问题
+                val id = it.id
+                if (id > 0) {
+                    view.id = id
                 }
-                addView(view, loaderParams)
-            } else {
-                preView?.let {
-                    // 设置id,解决ConstraintLayout布局问题
-                    val id = it.id
-                    if (id > 0) {
-                        view.id = id
-                    }
-                    val index = indexOfChild(it)
-                    removeViewInLayout(it)
-                    addView(view, index, loaderParams)
-                    // 某些机型addView后不执行此方法，这里手动执行下
-                    requestApplyInsets()
-                }
+                val index = indexOfChild(it)
+                removeViewInLayout(it)
+                addView(view, index, it.layoutParams)
+                // 某些机型addView后不执行此方法，这里手动执行下
+                requestApplyInsets()
             }
-            preView = view
         }
+        preView = view
     }
 
 }

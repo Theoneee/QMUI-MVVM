@@ -111,7 +111,7 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
      * 2.界面已经存在数据，此时需要调用头部刷新 onRefresh()
      */
     override fun onAutoRefresh() {
-        if (getLoaderView()?.getCurrentCallback() == SuccessCallback::class.java) {
+        if (getLoader()?.getCurrentCallback() == SuccessCallback::class.java) {
             onRefreshDirectly()
         } else {
             onFirstLoading()

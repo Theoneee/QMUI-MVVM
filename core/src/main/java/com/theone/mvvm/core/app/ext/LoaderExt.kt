@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.base.loader.Loader
-import com.theone.mvvm.core.base.loader.LoaderView
+import com.theone.mvvm.core.base.loader.LoaderService
 import com.theone.mvvm.core.base.loader.callback.ErrorCallback
 import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
@@ -35,23 +35,18 @@ import com.theone.mvvm.core.base.loader.callback.LoadingCallback
  * @remark
  */
 
-fun ICore.registerLoader():LoaderView? {
+fun ICore.registerLoader():LoaderService? {
     return loaderRegisterView()?.let { registerView ->
-        with(Loader.getDefault()){
-            loaderDefaultCallback()?.let {
-                builder?.defaultCallback(it)
-            }
-            register(registerView)
-        }
+        Loader.getDefault().register(registerView)
     }
 }
 
 fun ICore.showSuccessPage() {
-    getLoaderView()?.showSuccessPage()
+    getLoader()?.showSuccessPage()
 }
 
 fun ICore.showLoadingPage(msg: String? = null) {
-    getLoaderView()?.showLoadingPage(msg)
+    getLoader()?.showLoadingPage(msg)
 }
 
 fun ICore.showEmptyPage(
@@ -59,7 +54,7 @@ fun ICore.showEmptyPage(
     imageRes: Int = R.drawable.status_search_result_empty,
     click: ((View) -> Unit)? = null
 ) {
-    getLoaderView()?.showErrorPage(msg, imageRes, click)
+    getLoader()?.showErrorPage(msg, imageRes, click)
 }
 
 fun ICore.showErrorPage(
@@ -67,10 +62,10 @@ fun ICore.showErrorPage(
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null
 ) {
-    getLoaderView()?.showErrorPage(msg, imageRes, click)
+    getLoader()?.showErrorPage(msg, imageRes, click)
 }
 
-fun LoaderView.showLoadingPage(msg: String? = null) {
+fun LoaderService.showLoadingPage(msg: String? = null) {
     showCallbackView(LoadingCallback::class.java){_,view ->
         msg?.let {
             view?.findViewById<TextView>(R.id.loading_tips)?.text = it
@@ -78,7 +73,7 @@ fun LoaderView.showLoadingPage(msg: String? = null) {
     }
 }
 
-fun LoaderView.showErrorPage(
+fun LoaderService.showErrorPage(
     msg: String?,
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null

@@ -48,7 +48,10 @@ class App : CoreApplication() {
         ThemeUtil.init(application)
         RxHttpManager.init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG)
 
-        Loader.beginBuilder().addCallback(LoadingCallback::class.java).addCallback(ErrorCallback::class.java).commit()
+        Loader.beginBuilder()
+            .addCallback(LoadingCallback::class.java)
+            .addCallback(ErrorCallback::class.java)
+            .commit()
 //        RxHttpManager.init(RxHttpBuilder(isNeedCookie = true,cookiejar = MyCookeJar(appContext))).setDebug(DEBUG)
     }
 }

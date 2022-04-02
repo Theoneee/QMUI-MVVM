@@ -6,13 +6,7 @@ import com.theone.demo.databinding.FragmentLoaderTestBinding
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.showErrorPage
 import com.theone.mvvm.core.app.ext.showLoadingPage
-import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
-import com.theone.mvvm.core.base.fragment.BaseCoreFragment
-import com.theone.mvvm.core.base.loader.Loader
-import com.theone.mvvm.core.base.loader.LoaderView
-import com.theone.mvvm.core.base.loader.callback.ErrorCallback
-import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -53,7 +47,7 @@ class LoaderTestActivity : BaseCoreActivity<BaseViewModel, FragmentLoaderTestBin
 //        delay(1000){
 //            getDataBinding().stub.viewStub?.inflate()
 //        }
-        getLoaderView()?.run {
+        getLoader()?.run {
             showLoadingPage("五十年以后")
             delay(2000) {
                 showErrorPage("你还能在我左右？") {
