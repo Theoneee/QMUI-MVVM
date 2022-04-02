@@ -69,6 +69,12 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     abstract fun getMagicIndicator(): MagicIndicator?
 
     /**
+     * 这个界面不再设置颜色
+     * @return Int?
+     */
+    override fun getRootBackgroundColor(): Int? = null
+
+    /**
      * 如果TAB数据是从网络获取，则返回一个请求的ViewModel，继承 BaseRequestViewModel
      */
     protected open fun getRequestViewModel(): BaseRequestViewModel<*>? = null
@@ -93,7 +99,6 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun loaderRegisterView(): View?  = if(isTabFromNet()) getViewConstructor().getRootView() else null
 
     override fun initView(root: View) {
-        root.setBackgroundColor(getColor(mActivity, R.color.qmui_config_color_transparent))
         // 如果Tab的内容不是从网络获取，是否也需要延迟初始化？
         if (!isTabFromNet()) {
             startInit()
