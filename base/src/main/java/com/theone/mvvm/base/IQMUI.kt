@@ -59,7 +59,7 @@ interface IQMUI {
      * 内容层
      * @return View
      */
-    fun getContentView(): View = getViewConstructor().getRootView()
+    fun getContentView(): View = getViewConstructor().getContentView()
 
     /**
      * 提供一个方法供子类获取TopBar
