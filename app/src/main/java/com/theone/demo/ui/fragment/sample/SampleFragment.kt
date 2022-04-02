@@ -43,6 +43,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     lateinit var mStringExt: QMUICommonListItemView
     lateinit var mCrash: QMUICommonListItemView
     lateinit var mCustomView: QMUICommonListItemView
+    lateinit var mLoader: QMUICommonListItemView
 
     override fun initView(root: View) {
         getTopBar()?.setTitleWithBackBtn("示例", this)
@@ -53,7 +54,8 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
             mTest = createItem("Test")
             mCrash = createItem("崩溃测试")
             mCustomView =  createItem("CustomView")
-            addToGroup(mPager, mGroupListView, title = "ui", listener = this@SampleFragment)
+            mLoader =  createItem("Loader")
+            addToGroup(mPager, mGroupListView,mLoader, title = "ui", listener = this@SampleFragment)
             addToGroup(mStringExt,mCrash, title = "工具", listener = this@SampleFragment)
             addToGroup(mCustomView, title = "widget", listener = this@SampleFragment)
             addToGroup(mTest, title = "其他",listener = this@SampleFragment)
@@ -75,6 +77,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
                 mGroupListView -> GroupListViewFragment()
                 mStringExt -> StringExtFragment()
                 mCustomView -> CustomViewFragment()
+                mLoader -> LoaderFragment()
                 else -> {
 //                    WebExplorerFragment.newInstance(
 //                        BannerResponse(

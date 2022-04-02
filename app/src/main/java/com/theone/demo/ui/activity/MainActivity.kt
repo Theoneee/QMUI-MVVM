@@ -6,7 +6,6 @@ import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.qmuiteam.qmui.arch.annotation.DefaultFirstFragment
 import com.theone.demo.ui.fragment.IndexFragment
-import com.theone.demo.ui.fragment.sample.LoaderTestFragment
 import com.theone.mvvm.base.activity.BaseFragmentActivity
 
 @DefaultFirstFragment(IndexFragment::class)
