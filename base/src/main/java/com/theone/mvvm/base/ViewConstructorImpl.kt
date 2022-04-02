@@ -3,6 +3,8 @@ package com.theone.mvvm.base
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import com.qmuiteam.qmui.kotlin.matchParent
 import com.qmuiteam.qmui.kotlin.wrapContent
 import com.qmuiteam.qmui.skin.QMUISkinHelper
@@ -10,6 +12,7 @@ import com.qmuiteam.qmui.util.QMUIResHelper
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2
 import com.theone.mvvm.R
 
 //  ┏┓　　　┏┓
@@ -42,12 +45,17 @@ open class ViewConstructorImpl(
     private val showTopBar: Boolean
 ) : ViewConstructor(context, contentFactory) {
 
-    override fun createRootView(): ViewGroup = QMUIWindowInsetLayout(context)
+    override fun createRootView(): ViewGroup = QMUIWindowInsetLayout2(context)
 
     override fun createTopBar(): QMUITopBarLayout? {
         return if (showTopBar) {
             QMUITopBarLayout(context).apply {
-                layoutParams = ViewGroup.LayoutParams(matchParent, wrapContent)
+                id = R.id.base_topbar
+                layoutParams = ConstraintLayout.LayoutParams(matchParent, wrapContent).apply {
+                    startToStart = PARENT_ID
+                    endToEnd = PARENT_ID
+                    topToTop = PARENT_ID
+                }
                 fitsSystemWindows = true
             }
         } else {
@@ -64,13 +72,17 @@ open class ViewConstructorImpl(
                     R.attr.app_skin_main_background_color
                 )
             )
-            val contentParams = ViewGroup.MarginLayoutParams(matchParent, matchParent)
+            val contentParams = ConstraintLayout.LayoutParams(matchParent, 0).apply {
+                bottomToBottom = PARENT_ID
+                endToEnd = PARENT_ID
+                startToStart = PARENT_ID
+                topToTop= PARENT_ID
+            }
             if (showTopBar && !translucentFull) {
-                val marginTop = QMUIResHelper.getAttrDimen(
-                    context,
-                    R.attr.qmui_topbar_height
-                ) + QMUIStatusBarHelper.getStatusbarHeight(context)
-                contentParams.topMargin = marginTop
+                contentParams.run {
+                    topToTop= ConstraintLayout.LayoutParams.UNSET
+                    topToBottom= R.id.base_topbar
+                }
             }
             addView(getContentView(),contentParams)
             if (showTopBar) {
