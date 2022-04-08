@@ -2,9 +2,9 @@ package com.theone.mvvm.core.app
 
 import android.app.Application
 import com.hjq.toast.ToastUtils
-import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager
 import com.theone.common.ext.LogInit
 import com.theone.mvvm.base.BaseApplication
+import com.theone.mvvm.core.app.ext.initLoaderDefault
 import com.theone.mvvm.core.app.util.MMKVUtil
 import com.theone.mvvm.core.app.util.NotificationManager
 
@@ -39,6 +39,7 @@ abstract class CoreApplication : BaseApplication() {
         LogInit(DEBUG)
         NotificationManager.getInstance().register()
         ToastUtils.init(this)
+        initLoaderDefault()
     }
 
 }

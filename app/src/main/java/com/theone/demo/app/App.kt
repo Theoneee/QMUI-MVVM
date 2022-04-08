@@ -9,9 +9,6 @@ import com.theone.mvvm.core.app.CoreApplication
 import com.theone.mvvm.core.data.entity.RxHttpBuilder
 import com.theone.mvvm.core.app.ext.initCrashConfig
 import com.theone.mvvm.core.app.util.RxHttpManager
-import com.theone.mvvm.core.base.loader.Loader
-import com.theone.mvvm.core.base.loader.callback.ErrorCallback
-import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
 
 //  ┏┓　　　┏┓
@@ -48,10 +45,6 @@ class App : CoreApplication() {
         ThemeUtil.init(application)
         RxHttpManager.init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG)
 
-        Loader.beginBuilder()
-            .addCallback(LoadingCallback::class.java)
-            .addCallback(ErrorCallback::class.java)
-            .commit()
 //        RxHttpManager.init(RxHttpBuilder(isNeedCookie = true,cookiejar = MyCookeJar(appContext))).setDebug(DEBUG)
     }
 }

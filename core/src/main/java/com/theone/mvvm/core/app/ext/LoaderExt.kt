@@ -35,9 +35,16 @@ import com.theone.mvvm.core.base.loader.callback.LoadingCallback
  * @remark
  */
 
+fun initLoaderDefault() {
+    Loader.beginBuilder()
+        .addCallback(LoadingCallback::class.java)
+        .addCallback(ErrorCallback::class.java)
+        .commit()
+}
+
 fun ICore.registerLoader(): LoaderService? {
     return loaderRegisterView()?.let { registerView ->
-        Loader.getDefault().register(loaderServiceClass(),registerView,loaderDefaultCallback())
+        Loader.getDefault().register(loaderServiceClass(), registerView, loaderDefaultCallback())
     }
 }
 
@@ -66,7 +73,7 @@ fun ICore.showErrorPage(
 }
 
 fun LoaderService.showLoadingPage(msg: String? = null) {
-    showCallbackView(LoadingCallback::class.java){_,view ->
+    showCallbackView(LoadingCallback::class.java) { _, view ->
         msg?.let {
             view?.findViewById<TextView>(R.id.loading_tips)?.text = it
         }
@@ -78,7 +85,7 @@ fun LoaderService.showErrorPage(
     imageRes: Int = R.drawable.status_loading_view_loading_fail,
     click: ((View) -> Unit)? = null
 ) {
-    showCallbackView(ErrorCallback::class.java){_, view ->
+    showCallbackView(ErrorCallback::class.java) { _, view ->
         view?.run {
             msg?.let {
                 findViewById<TextView>(R.id.stateContentTextView).text = it

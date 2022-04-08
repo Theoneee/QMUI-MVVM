@@ -44,10 +44,10 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseQMUIFragment(),
     override fun getViewModel(): VM = mViewModel
 
     override fun onViewCreated(rootView: View) {
-        super.onViewCreated(rootView)
         addLoadingObserve(getViewModel())
         createObserver()
         initData()
+        super.onViewCreated(rootView)
     }
 
     /**
