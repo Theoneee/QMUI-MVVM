@@ -49,14 +49,12 @@ abstract class BaseTabInTitleFragment<VM : BaseViewModel> :
     /**
      * TopBar两边可以增加返回按钮，搜索按钮之类的处理
      * 如：
-     *
-     *  getTopBar()?.run {
-     *       addLeftBackImageButton()
-     *       addRightImageButton(R.drawable.mz_titlebar_ic_search_dark,R.id.topbar_right_view)
-     *  }
-     *
+     * addLeftBackImageButton()
+     * addRightImageButton(R.drawable.mz_titlebar_ic_search_dark,R.id.topbar_right_view)
      */
-    protected open fun initTopBar(){}
+    override fun QMUITopBarLayout.initTopBar() {
+        setCenterView(getMagicIndicator())
+    }
 
     /**
      * 生成[MagicIndicator]的[RelativeLayout.LayoutParams]
@@ -82,23 +80,8 @@ abstract class BaseTabInTitleFragment<VM : BaseViewModel> :
      */
     override fun showTopBar(): Boolean = true
 
-    override fun initView(root: View) {
-        initTopBar()
-        // TODO 这个要放在super前面，Tab不是从网络获取时startInit会先执行。
-        getTopBar()?.run {
-            setCenterView(getMagicIndicator())
-            // 如果数据从网络获取先把TopBar隐藏掉
-            if (isTabFromNet())
-                invisible()
-        }
-        super.initView(root)
-    }
-
-    override fun afterInit() {
-        getTopBar()?.visible()
-    }
-
-    override fun getDataBindingClass(): Class<BaseTabInTitleLayoutBinding> = BaseTabInTitleLayoutBinding::class.java
+    override fun getDataBindingClass(): Class<BaseTabInTitleLayoutBinding> =
+        BaseTabInTitleLayoutBinding::class.java
 
     override fun getMagicIndicator(): MagicIndicator = mMagicIndicator
 

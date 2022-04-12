@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.getColor
@@ -16,9 +17,12 @@ import com.theone.mvvm.core.data.entity.QMUIItem
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
 import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
+import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.app.util.DownloadUtil
 import com.theone.mvvm.core.ui.viewmodel.ImagePreviewViewModel
 import com.theone.mvvm.core.app.widge.pullrefresh.PullRefreshLayout
+import com.theone.mvvm.core.base.loader.callback.Callback
+import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
 
 //  ┏┓　　　┏┓
@@ -61,35 +65,39 @@ open class ImagePreviewFragment :
 
     private val mData: ImagePreviewEvent by getValueNonNull(BundleConstant.DATA)
     private val mActions = mutableListOf<QMUIItem>()
-    protected var mClickData: ImagePreviewBean? = null
+    protected open var mClickData: ImagePreviewBean? = null
     private val TAG_SAVE = "下载"
 
-    override fun getDataBindingClass(): Class<BasePullFreshFragmentBinding>  =BasePullFreshFragmentBinding::class.java
+    override fun getDataBindingClass(): Class<BasePullFreshFragmentBinding> =
+        BasePullFreshFragmentBinding::class.java
 
-    override fun getViewModelClass(): Class<ImagePreviewViewModel> = ImagePreviewViewModel::class.java
+    override fun getViewModelClass(): Class<ImagePreviewViewModel> =
+        ImagePreviewViewModel::class.java
+
+    override fun loaderDefaultCallback(): Class<out Callback> = SuccessCallback::class.java
 
     override fun translucentFull(): Boolean = true
 
     override fun isLazyLoadData(): Boolean = false
 
-    override fun initView(root: View) {
-        super.initView(root)
-        initGridBottomItems(mActions)
-        addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_light)
-        getTopBar()?.run {
-            setBackgroundAlpha(0)
-            getColor(R.color.white).let {
-                setTitle("${mData.position + 1}/${mData.datas.size}").setTextColor(it)
-                setSubTitle("").setTextColor(it)
-            }
+    override fun QMUITopBarLayout.initTopBar() {
+        setBackgroundAlpha(0)
+        getColor(R.color.white).let {
+            setTitle("${mData.position + 1}/${mData.datas.size}").setTextColor(it)
+            setSubTitle("").setTextColor(it)
         }
+        addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_light)
     }
 
-    override fun requestServer() {
-        onFirstLoadSuccess(mData.datas)
-        setRefreshLayoutEnabled(false)
-        mAdapter.loadMoreModule.loadMoreEnd(true)
+    override fun initData() {
+        initGridBottomItems(mActions)
+        mAdapter.setList(mData.datas)
         getRecyclerView().scrollToPosition(mData.position)
+        setRefreshLayoutEnabled(false)
+    }
+
+    override fun onLoadMoreComplete() {
+        mAdapter.loadMoreModule.loadMoreEnd(true)
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

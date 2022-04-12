@@ -84,6 +84,12 @@ interface IQMUI {
     fun initView(root: View)
 
     /**
+     * TopBar初始化
+     * @receiver QMUITopBarLayout?
+     */
+    fun QMUITopBarLayout.initTopBar(){}
+
+    /**
      * 显示加载框
      * @param msg String?
      */

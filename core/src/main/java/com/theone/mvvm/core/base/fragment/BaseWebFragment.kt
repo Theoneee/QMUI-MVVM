@@ -21,6 +21,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.qmuiteam.qmui.util.QMUIResHelper
 import com.qmuiteam.qmui.widget.QMUIProgressBar
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.webview.QMUIWebView
 import com.qmuiteam.qmui.widget.webview.QMUIWebViewContainer
 import com.theone.common.constant.BundleConstant
@@ -92,11 +93,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     abstract fun getWebContainer(): QMUIWebViewContainer
     abstract fun getProgressBar(): QMUIProgressBar
 
-    override fun initView(root: View) {
-        initTopBar()
-    }
-
-    protected open fun initTopBar() {
+    override fun QMUITopBarLayout.initTopBar() {
         setTitleWitchBackBtn(mIWeb.getWebTitle())
     }
 

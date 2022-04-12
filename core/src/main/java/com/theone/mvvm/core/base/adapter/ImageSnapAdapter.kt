@@ -407,17 +407,17 @@ class ImageSnapAdapter<T : IImageUrl>(private val onImageSnapClickListener: OnIm
     }
 
     private fun View.loadBg(url:String){
-        Glide.with(context)
-            .load(url)
-            .transform(BlurTransformation(10, 25))
-            .into(object : SimpleTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    background = resource
-                }
-            })
+//        Glide.with(context)
+//            .load(url)
+//            .transform(BlurTransformation(10, 25))
+//            .into(object : SimpleTarget<Drawable>() {
+//                override fun onResourceReady(
+//                    resource: Drawable,
+//                    transition: Transition<in Drawable>?
+//                ) {
+//                    background = resource
+//                }
+//            })
     }
 
     private fun getFailDrawable(): Drawable? {

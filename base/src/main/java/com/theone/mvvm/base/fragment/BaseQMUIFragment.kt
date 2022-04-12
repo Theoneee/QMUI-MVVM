@@ -90,6 +90,7 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
 
     override fun onViewCreated(rootView: View) {
         mIsFirstLayInit = true
+        getTopBar()?.initTopBar()
         initView(rootView)
     }
 

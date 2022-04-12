@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.qmuiteam.qmui.util.QMUIDirection
 import com.qmuiteam.qmui.util.QMUIViewHelper
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.theone.common.callback.IImageUrl
 import com.theone.common.ext.getColor
 import com.theone.common.ext.isVisible
@@ -61,16 +62,13 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
 
     override fun createAdapter(): BaseQuickAdapter<T, *> = ImageSnapAdapter<T>(this)
 
-    override fun initView(root: View) {
-        super.initView(root)
-        getTopBar()?.run {
-            getColor(R.color.white).let {
-                setTitle("").setTextColor(it)
-                setSubTitle("").setTextColor(it)
-            }
-            updateBottomDivider(0,0,0,0)
-            setBackgroundAlpha(0)
+    override fun QMUITopBarLayout.initTopBar() {
+        getColor(R.color.white).let {
+            setTitle("").setTextColor(it)
+            setSubTitle("").setTextColor(it)
         }
+        updateBottomDivider(0,0,0,0)
+        setBackgroundAlpha(0)
     }
 
     override fun initAdapter() {

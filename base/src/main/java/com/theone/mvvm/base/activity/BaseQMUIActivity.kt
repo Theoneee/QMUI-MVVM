@@ -55,6 +55,7 @@ abstract class BaseQMUIActivity : QMUIActivity(), IQMUI {
         super.onCreate(savedInstanceState)
         getViewConstructor().createView().let {
             setContentView(it)
+            getTopBar()?.initTopBar()
             initView(it)
         }
     }

@@ -38,13 +38,6 @@ abstract class BaseTitleTabFragment<VM : BaseViewModel> :
 
     override fun getDataBindingClass(): Class<BaseTitleTabLayoutBinding> = BaseTitleTabLayoutBinding::class.java
 
-    abstract fun initTopBar()
-
-    override fun initView(root: View) {
-        initTopBar()
-        super.initView(root)
-    }
-
     override fun showTopBar(): Boolean = true
 
     override fun getViewPager(): QMUIViewPager = getDataBinding().viewPager

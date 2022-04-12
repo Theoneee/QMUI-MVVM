@@ -83,18 +83,13 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
      * TAB的内容是否来自网络
      * @return Boolean
      */
-    protected fun isTabFromNet(): Boolean = getRequestViewModel() != null
+    protected open fun isTabFromNet(): Boolean = getRequestViewModel() != null
 
     /**
      * 是否需要延迟加载数据
      * @return Boolean
      */
     protected open fun isLazyLoadData(): Boolean = true
-
-    /**
-     * 在初始化之后的操作
-     */
-    protected open fun afterInit() {}
 
     override fun loaderRegisterView(): View?  = if(isTabFromNet()) getViewConstructor().getRootView() else null
 
@@ -140,7 +135,6 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         initTabSegment()
         initMagicIndicator()
         showSuccessPage()
-        afterInit()
     }
 
     private fun initViewPager() {

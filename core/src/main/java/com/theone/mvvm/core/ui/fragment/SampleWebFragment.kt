@@ -1,5 +1,6 @@
 package com.theone.mvvm.core.ui.fragment
 
+import android.view.View
 import com.qmuiteam.qmui.widget.QMUIProgressBar
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.webview.QMUIWebViewContainer
@@ -44,5 +45,8 @@ class SampleWebFragment internal constructor() :
     override fun getProgressBar(): QMUIProgressBar = getDataBinding().progressbar
 
     override fun getTopBar(): QMUITopBarLayout = getDataBinding().topbar
+
+    override fun initView(root: View) {
+    }
 
 }
