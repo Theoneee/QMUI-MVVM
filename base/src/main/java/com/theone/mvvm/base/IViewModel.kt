@@ -53,7 +53,7 @@ interface IViewModel<VM : BaseViewModel> {
     fun getViewModelClass(): Class<VM> = getClazz(this, getViewModelIndex())
 
     /**
-     * 初始化数据
+     * 初始化数据、请求相关的在这个方法里进行，请勿在[initView]
      */
     fun initData() {}
 

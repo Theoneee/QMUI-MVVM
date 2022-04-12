@@ -75,6 +75,9 @@ abstract class BasePagerRecyclerViewFragment<T, VM : BaseListViewModel<T>, DB : 
         initAdapter()
         initRecyclerView()
         initRefreshView()
+    }
+
+    override fun initData() {
         if (!isLazyLoadData())
             requestServer()
     }

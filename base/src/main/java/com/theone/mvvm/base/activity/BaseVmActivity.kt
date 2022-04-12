@@ -1,6 +1,7 @@
 package com.theone.mvvm.base.activity
 
 import android.os.Bundle
+import android.view.View
 import com.theone.mvvm.base.IViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.ext.addLoadingObserveExt
@@ -40,8 +41,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseQMUIActivity(),
 
     override fun getViewModel(): VM  = mViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
         // 创建观察者
         addLoadingObserve(getViewModel())
         createObserver()
