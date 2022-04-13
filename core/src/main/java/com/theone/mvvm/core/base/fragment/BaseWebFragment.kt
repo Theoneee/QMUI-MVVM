@@ -107,6 +107,10 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         loadUrl()
     }
 
+    override fun initView(root: View) {
+
+    }
+
     private fun initWebView() {
         val needDispatchSafeAreaInset = needDispatchSafeAreaInset()
         getWebContainer().run {

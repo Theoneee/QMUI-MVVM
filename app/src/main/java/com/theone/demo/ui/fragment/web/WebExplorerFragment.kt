@@ -3,6 +3,7 @@ package com.theone.demo.ui.fragment.web
 
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.View
 import android.widget.RelativeLayout
 import com.qmuiteam.qmui.kotlin.matchParent
 import com.qmuiteam.qmui.kotlin.wrapContent
@@ -62,31 +63,29 @@ class WebExplorerFragment private constructor() :
 
     override fun getTopBar(): QMUITopBarLayout = getDataBinding().topbar
 
-    override fun initTopBar() {
-        getTopBar().run {
-            addLeftBackImageButton().setOnClickListener {
-                finish()
-            }
-            // QMUI的Title用的是QMUIQQFaceView，无法使用跑马灯效果，这里重新设置一个
-            mTitleView = TheMarqueeTextView(context).apply {
-                layoutParams = RelativeLayout.LayoutParams(matchParent, wrapContent).apply {
-                    addRule(RelativeLayout.RIGHT_OF, R.id.qmui_topbar_item_left_back)
-                    gravity = Gravity.START
-                    marginEnd = dp2px(20)
-                }
-                marqueeRepeatLimit = Int.MAX_VALUE
-                isFocusable = true
-                textSize = 17f
-                ellipsize = TextUtils.TruncateAt.MARQUEE
-                isSingleLine = true
-                setHorizontallyScrolling(true)
-                isFocusableInTouchMode = true
-                mIWeb.getWebTitle()?.let {
-                    text = it.toHtml()
-                }
-            }
-            setCenterView(mTitleView)
+    override fun QMUITopBarLayout.initTopBar() {
+        addLeftBackImageButton().setOnClickListener {
+            finish()
         }
+        // QMUI的Title用的是QMUIQQFaceView，无法使用跑马灯效果，这里重新设置一个
+        mTitleView = TheMarqueeTextView(context).apply {
+            layoutParams = RelativeLayout.LayoutParams(matchParent, wrapContent).apply {
+                addRule(RelativeLayout.RIGHT_OF, R.id.qmui_topbar_item_left_back)
+                gravity = Gravity.START
+                marginEnd = dp2px(20)
+            }
+            marqueeRepeatLimit = Int.MAX_VALUE
+            isFocusable = true
+            textSize = 17f
+            ellipsize = TextUtils.TruncateAt.MARQUEE
+            isSingleLine = true
+            setHorizontallyScrolling(true)
+            isFocusableInTouchMode = true
+            mIWeb.getWebTitle()?.let {
+                text = it.toHtml()
+            }
+        }
+        setCenterView(mTitleView)
     }
 
     override fun setTopBarTitle(title: String?) {
