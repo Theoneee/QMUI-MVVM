@@ -36,27 +36,28 @@ import java.util.concurrent.TimeUnit
  */
 object RxHttpManager {
 
-    private var mCacheFile: File? = null
-    var cookieJar: ClearableCookieJar? = null
+    private var mBuilder:RxHttpBuilder? = null
 
     fun init(builder: RxHttpBuilder = RxHttpBuilder()): RxHttpPlugins =
         with(builder) {
-            mCacheFile = File(cacheFilePath, cacheFileName)
+            mBuilder= builder
             val client = getDefaultClient()
             OkHttpUtils.initClient(client)
             RxHttpPlugins.init(client)
-                .setCache(mCacheFile, cacheMaxSize, cacheMode, cacheValidTime)
+                .setCache(File(cacheFilePath, cacheFileName), cacheMaxSize, cacheMode, cacheValidTime)
         }
 
-
     fun clearCache() {
-        mCacheFile?.deleteOnExit()
-        cookieJar?.clear()
+        mBuilder?.run {
+            File(cacheFilePath, cacheFileName).deleteOnExit()
+            if(isNeedCookie){
+                cookiejar.clear()
+            }
+        }
     }
 
     private fun RxHttpBuilder.getDefaultClient(): OkHttpClient = OkHttpClient().newBuilder().apply {
         if (isNeedCookie) {
-            this@RxHttpManager.cookieJar = cookiejar
             cookieJar(cookiejar)
         }
         connectTimeout(outTime, TimeUnit.SECONDS)
