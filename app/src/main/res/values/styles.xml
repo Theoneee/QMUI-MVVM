@@ -10,11 +10,6 @@
 
     </style>
 
-
-    <style name="AppUpdateTheme" parent="ActivityTransparentTheme">
-        <item name="app_skin_main_background_color">@color/qmui_config_color_transparent</item>
-    </style>
-
     <style name="home_tag_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

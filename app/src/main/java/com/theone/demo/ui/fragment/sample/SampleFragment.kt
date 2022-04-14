@@ -2,6 +2,7 @@ package com.theone.demo.ui.fragment.sample
 
 import android.view.View
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
+import com.theone.demo.app.util.AppUpdateUtil
 import com.theone.demo.databinding.FragmentSampleBinding
 import com.theone.mvvm.ext.qmui.addToGroup
 import com.theone.mvvm.base.viewmodel.BaseViewModel
@@ -44,21 +45,29 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     lateinit var mCrash: QMUICommonListItemView
     lateinit var mCustomView: QMUICommonListItemView
     lateinit var mLoader: QMUICommonListItemView
+    lateinit var mAppUpdate: QMUICommonListItemView
 
     override fun initView(root: View) {
         getTopBar()?.setTitleWithBackBtn("示例", this)
         getDataBinding().groupListView.run {
             mPager = createItem("BasePagerPullRefreshFragment")
             mGroupListView = createItem("QMUIGroupListView")
-            mStringExt=  createItem("StringExt")
+            mStringExt = createItem("StringExt")
             mTest = createItem("Test")
             mCrash = createItem("崩溃测试")
-            mCustomView =  createItem("CustomView")
-            mLoader =  createItem("Loader")
-            addToGroup(mPager, mGroupListView,mLoader, title = "ui", listener = this@SampleFragment)
-            addToGroup(mStringExt,mCrash, title = "工具", listener = this@SampleFragment)
+            mCustomView = createItem("CustomView")
+            mLoader = createItem("Loader")
+            mAppUpdate = createItem("AppUpdate")
+            addToGroup(
+                mPager,
+                mGroupListView,
+                mLoader,
+                title = "ui",
+                listener = this@SampleFragment
+            )
+            addToGroup(mAppUpdate, mStringExt, mCrash, title = "工具", listener = this@SampleFragment)
             addToGroup(mCustomView, title = "widget", listener = this@SampleFragment)
-            addToGroup(mTest, title = "其他",listener = this@SampleFragment)
+            addToGroup(mTest, title = "其他", listener = this@SampleFragment)
         }
     }
 
@@ -67,28 +76,23 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     }
 
     override fun onClick(v: View?) {
-        if(v == mCrash){
-             arrayListOf<String>()[1]
-            return
-        }
-        startFragment(
-            when (v) {
-                mPager -> SamplePagerFragment()
-                mGroupListView -> GroupListViewFragment()
-                mStringExt -> StringExtFragment()
-                mCustomView -> CustomViewFragment()
-                mLoader -> LoaderFragment()
-                else -> {
-//                    WebExplorerFragment.newInstance(
-//                        BannerResponse(
-//                            title = "",
-//                            url = Url.INTEGRAL_RULES
-//                        )
-//                    )
-                    TestFragment()
+        if (v == mCrash) {
+            arrayListOf<String>()[1]
+        } else if (v == mAppUpdate) {
+            AppUpdateUtil(mActivity,true).checkUpdate()
+        } else
+            startFragment(
+                when (v) {
+                    mPager -> SamplePagerFragment()
+                    mGroupListView -> GroupListViewFragment()
+                    mStringExt -> StringExtFragment()
+                    mCustomView -> CustomViewFragment()
+                    mLoader -> LoaderFragment()
+                    else -> {
+                        TestFragment()
+                    }
                 }
-            }
-        )
+            )
     }
 
     override fun createObserver() {

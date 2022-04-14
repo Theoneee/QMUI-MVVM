@@ -25,22 +25,22 @@
 
     <!--                          App更新界面                              -->
     <!-- 水平间距 -->
-    <attr name="app_update_horizontal_space" format="dimension|reference"/>
+    <attr name="app_update_horizontal_margin" format="dimension|reference"/>
     <!-- 垂直间距 -->
-    <attr name="app_update_vertical_space" format="dimension|reference"/>
+    <attr name="app_update_vertical_margin" format="dimension|reference"/>
     <attr name="app_update_container_padding" format="dimension|reference"/>
     <!-- LOGO -->
     <attr name="app_update_logo_resource" format="reference"/>
     <!-- LOGO HEIGHT -->
-    <attr name="app_update_logo_height" format="dimension|reference"/>
-    <!-- LOGO WIDTH -->
-    <attr name="app_update_logo_width" format="dimension|reference">
-        <enum name="fill_parent" value="-1" />
+    <attr name="app_update_logo_height" format="dimension|reference">
         <enum name="match_parent" value="-1" />
         <enum name="wrap_content" value="-2" />
     </attr>
-    <!-- LOGO 一半的高度 -->
-    <attr name="app_update_logo_half_height" format="dimension|reference"/>
+    <!-- LOGO WIDTH -->
+    <attr name="app_update_logo_width" format="dimension|reference">
+        <enum name="match_parent" value="-1" />
+        <enum name="wrap_content" value="-2" />
+    </attr>
     <!-- 版本号间距 -->
     <attr name="app_update_version_margin" format="dimension|reference"/>
     <!-- 版本号字体大小-->
@@ -53,6 +53,8 @@
     <attr name="app_update_title_text_size" format="dimension|reference"/>
     <!-- 标题字体颜色-->
     <attr name="app_update_title_text_color" format="color|reference"/>
+    <!-- 标题顶部的margin-->
+    <attr name="app_update_title_top_margin" format="dimension|reference"/>
     <!-- 内容字体大小-->
     <attr name="app_update_content_text_size" format="dimension|reference"/>
     <!-- 内容字体颜色-->
@@ -65,6 +67,8 @@
     <attr name="app_update_close_image_top_margin" format="reference|dimension"/>
     <!-- 关闭按钮 -->
     <attr name="app_update_close_image_src" format="reference"/>
+    <!-- 关闭按钮大小 -->
+    <attr name="app_update_close_image_size" format="reference|dimension"/>
 
 
     <!-- WebView字体大小-->
@@ -162,25 +166,26 @@
         <item name="app_skin_loadmore_separator_margin">20dp</item>
 
         <!--  UpdateLayout  -->
-        <item name="app_update_horizontal_space">10dp</item>
-        <item name="app_update_vertical_space">20dp</item>
+        <item name="app_update_horizontal_margin">30dp</item>
+        <item name="app_update_vertical_margin">25dp</item>
         <item name="app_update_logo_resource">@drawable/ic_update_apk_logo</item>
         <item name="app_update_logo_height">140dp</item>
         <item name="app_update_logo_width">wrap_content</item>
-        <item name="app_update_logo_half_height">70dp</item>
-        <item name="app_update_version_margin">12dp</item>
-        <item name="app_update_container_padding">20dp</item>
+        <item name="app_update_version_margin">14dp</item>
+        <item name="app_update_container_padding">22dp</item>
         <item name="app_update_version_text_size">15sp</item>
         <item name="app_update_version_text_color">@color/app_update_version_color</item>
         <item name="app_update_title_text">@string/app_find_new_version</item>
         <item name="app_update_title_text_size">20sp</item>
         <item name="app_update_title_text_color">@color/app_update_version_color</item>
+        <item name="app_update_title_top_margin">65dp</item>
         <item name="app_update_content_text_size">15sp</item>
         <item name="app_update_content_text_color">@color/qmui_config_color_gray_1</item>
         <item name="app_update_progress_btn_text_size">14sp</item>
         <item name="app_update_progress_btn_padding">15dp</item>
         <item name="app_update_close_image_top_margin">40dp</item>
         <item name="app_update_close_image_src">@drawable/ic_picture_selector_image_delete</item>
+        <item name="app_update_close_image_size">35dp</item>
 
 
         <!--  ProgressDialog  -->

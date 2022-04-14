@@ -86,6 +86,7 @@ open class ImagePreviewFragment :
             setTitle("${mData.position + 1}/${mData.datas.size}").setTextColor(it)
             setSubTitle("").setTextColor(it)
         }
+        updateBottomDivider(0,0,0,0)
         addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_light)
     }
 

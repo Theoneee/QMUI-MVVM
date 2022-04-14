@@ -1,6 +1,11 @@
-package com.theone.mvvm.core.base.callback
+package com.theone.demo.app.util
 
-import android.os.Parcelable
+import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
+import com.theone.common.ext.delay
+import com.theone.demo.data.model.bean.AppUpdate
+import com.theone.mvvm.core.app.util.BaseAppUpdateUtil
+import kotlinx.coroutines.delay
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -21,31 +26,17 @@ import android.os.Parcelable
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-05-08 11:29
+ * @date 2022-04-14 09:14
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-interface IApkUpdate:Parcelable {
+class AppUpdateUtil(context: AppCompatActivity, show:Boolean): BaseAppUpdateUtil<AppUpdate>(context,show){
 
-    fun isNewVersion(): Boolean
-
-    //获取版本号
-    fun getAppVersionCode(): Int
-
-    //是否强制更新
-    fun isForceUpdate(): Boolean
-
-    //版本号 描述作用
-    fun getAppVersionName(): String?
-
-    //新安装包的下载地址
-    fun getAppApkUrl(): String
-
-    //更新日志
-    fun getAppUpdateLog(): String?
-
-    //安装包大小 单位字节
-    fun getAppApkSize(): Long
+    override fun requestServe() {
+        delay(1000){
+            AppUpdate().onComplete()
+        }
+    }
 
 }

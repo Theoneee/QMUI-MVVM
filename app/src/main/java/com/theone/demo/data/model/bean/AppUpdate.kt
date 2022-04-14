@@ -1,6 +1,9 @@
-package com.theone.mvvm.core.base.callback
+package com.theone.demo.data.model.bean
 
+import android.os.Parcel
 import android.os.Parcelable
+import com.theone.mvvm.core.base.callback.IApkUpdate
+import kotlinx.parcelize.Parcelize
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -21,31 +24,26 @@ import android.os.Parcelable
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-05-08 11:29
+ * @date 2022-04-14 09:15
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-interface IApkUpdate:Parcelable {
+@Parcelize
+class AppUpdate() :IApkUpdate,Parcelable {
 
-    fun isNewVersion(): Boolean
+    override fun isNewVersion(): Boolean = true
 
-    //获取版本号
-    fun getAppVersionCode(): Int
+    override fun getAppVersionCode(): Int = 1
 
-    //是否强制更新
-    fun isForceUpdate(): Boolean
+    override fun isForceUpdate(): Boolean  = false
 
-    //版本号 描述作用
-    fun getAppVersionName(): String?
+    override fun getAppVersionName(): String = "1.0.0"
 
-    //新安装包的下载地址
-    fun getAppApkUrl(): String
+    override fun getAppApkUrl(): String = ""
 
-    //更新日志
-    fun getAppUpdateLog(): String?
+    override fun getAppUpdateLog(): String = "更新内容：\n xxxxx"
 
-    //安装包大小 单位字节
-    fun getAppApkSize(): Long
+    override fun getAppApkSize(): Long  = 0
 
 }

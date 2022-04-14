@@ -73,8 +73,10 @@ import java.io.File
 
     override fun showTopBar(): Boolean = false
 
+    override fun getRootBackgroundColor(): Int = R.color.qmui_config_color_transparent
+
     override fun initView(root: View) {
-        overridePendingTransition(R.anim.scale_enter, R.anim.slide_still)
+        overridePendingTransition(0, 0)
         getDataBinding().tvUpdate.run {
             buttonRadius = (height / 2).toFloat()
         }
@@ -121,14 +123,12 @@ import java.io.File
     private fun requestPermission() {
         XXPermissions.with(this)
             .constantRequest()
-            .permission(Permission.Group.STORAGE)
+            .permission(Permission.MANAGE_EXTERNAL_STORAGE)
             .request(object : OnPermission {
 
                 override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
                     if (all) {
                         doDownload()
-                    } else {
-                        requestPermission()
                     }
                 }
 
@@ -141,8 +141,6 @@ import java.io.File
                             setCanceledOnTouchOutside(false)
                             setOnKeyListener(OnKeyBackClickListener())
                         }
-                    } else {
-                        requestPermission()
                     }
                 }
 
@@ -232,7 +230,7 @@ import java.io.File
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.slide_still, R.anim.scale_exit)
+        overridePendingTransition(0, 0)
     }
 
 }

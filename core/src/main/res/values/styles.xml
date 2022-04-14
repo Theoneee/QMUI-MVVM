@@ -69,20 +69,17 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="ActivityTransparentTheme" parent="StartAppTheme">
+    <style name="ActivityTransparentTheme" parent="TranslucentTheme">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
-        <!-- 主背景设置透明，这个一定要放在最后面-->
-        <item name="app_skin_main_background_color">@color/qmui_config_color_transparent</item>
+        <item name="android:backgroundDimAmount">0.5</item>
     </style>
 
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>

@@ -37,13 +37,16 @@ abstract class BaseAppUpdateUtil<T: IApkUpdate>(val context:AppCompatActivity, v
 
     protected open fun getDownloadServiceName():String = ""
 
-    open fun checkUpdate(){
+    abstract fun requestServe()
+
+    fun checkUpdate(){
         if(isServiceExisted(context,getDownloadServiceName())){
             context.showFailTipsDialog("更新包正在下载中")
             return
         }else if (showCheck) {
             showCheckDialog()
         }
+        requestServe()
     }
 
     protected open fun T.onComplete(){
