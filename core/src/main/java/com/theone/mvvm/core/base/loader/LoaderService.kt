@@ -129,8 +129,8 @@ abstract class LoaderService {
                 } else {
                     with(item) {
                         ensureView(ensureRootView()).let {
-                            showLoaderView(it)
                             transport?.invoke(it.context, it)
+                            showLoaderView(it)
                         }
                     }
                 }
