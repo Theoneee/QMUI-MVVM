@@ -30,7 +30,7 @@ import kotlinx.parcelize.Parcelize
  * @remark
  */
 @Parcelize
-class AppUpdate() :IApkUpdate,Parcelable {
+class AppUpdate :IApkUpdate,Parcelable {
 
     override fun isNewVersion(): Boolean = true
 
@@ -40,9 +40,9 @@ class AppUpdate() :IApkUpdate,Parcelable {
 
     override fun getAppVersionName(): String = "1.0.0"
 
-    override fun getAppApkUrl(): String = ""
+    override fun getAppApkUrl(): String = "http://theone.0851zy.com/2022/04/13/97096d9c4094306a804f847f7c89d751.apk"
 
-    override fun getAppUpdateLog(): String = "更新内容：\n xxxxx"
+    override fun getAppUpdateLog(): String = "【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门"
 
     override fun getAppApkSize(): Long  = 0
 
