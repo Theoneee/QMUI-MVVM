@@ -43,9 +43,13 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseQMUIActivity(),
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
-        // 创建观察者
+        // 放在[initView]之前，不然错误的在[initView]方法里请求了，响应太快[createObserver]都没还没执行
         addLoadingObserve(getViewModel())
         createObserver()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initData()
     }
 

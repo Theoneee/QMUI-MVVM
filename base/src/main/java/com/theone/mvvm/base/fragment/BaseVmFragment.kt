@@ -44,11 +44,11 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseQMUIFragment(),
     override fun getViewModel(): VM = mViewModel
 
     override fun onViewCreated(rootView: View) {
-        // 放在[initView]和[initData]之前，不然错误的在[initView]方法里请求了，响应太快[createObserver]都没还没执行
+        // 放在[initView]之前，不然错误的在[initView]方法里请求了，响应太快[createObserver]都没还没执行
         addLoadingObserve(getViewModel())
         createObserver()
-        initData()
         super.onViewCreated(rootView)
+        initData()
     }
 
     /**
