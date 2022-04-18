@@ -45,10 +45,10 @@ data class RxHttpBuilder(
         )
     ),
     var cookieFileName: String = "RxHttpCookie",
-    var cookieFilePath: String = FileDirectoryManager.getCachePath(),
+    var cookieFilePath: String = appContext.cacheDir.absolutePath,
 
     var cacheFileName: String = "RxHttCache",
-    var cacheFilePath: String = FileDirectoryManager.getCachePath(),
+    var cacheFilePath: String = cookieFilePath,
     var cacheMaxSize: Long = 1000 * 100,
     var cacheMode: CacheMode = CacheMode.ONLY_NETWORK,
     var cacheValidTime: Long = -1,
