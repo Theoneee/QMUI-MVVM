@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.view.View
 import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
@@ -53,7 +54,7 @@ import java.io.File
  * @remark
  */
 
- class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdateBinding>() {
+class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdateBinding>() {
 
     private val mUpdate: IApkUpdate by getValueNonNull(BundleConstant.DATA)
     private val mFilter: IntentFilter by lazy {
@@ -83,7 +84,7 @@ import java.io.File
     }
 
     override fun initData() {
-       getViewModel().run {
+        getViewModel().run {
             updateInfo.set(mUpdate.getAppUpdateLog())
             verCode.set("Ver ${mUpdate.getAppVersionName()}")
             isForce.set(mUpdate.isForceUpdate())
@@ -92,7 +93,7 @@ import java.io.File
 
     override fun getBindingClick(): Any = ClickProxy()
 
-    inner class ClickProxy  {
+    inner class ClickProxy {
 
         fun download() {
             if (getDataBinding().tvUpdate.currentText.isNotEmpty()) {
@@ -100,7 +101,7 @@ import java.io.File
                     STATUS_INSTALL -> {
                         installApk(checkUpdateApkFile())
                     }
-                    STATUS_DOWNING->{
+                    STATUS_DOWNING -> {
 
                     }
                     else -> {
@@ -121,9 +122,14 @@ import java.io.File
     }
 
     private fun requestPermission() {
-        XXPermissions.with(this)
+        XXPermissions.with(this).run {
+            if(applicationInfo.targetSdkVersion >=30){
+                permission(Permission.MANAGE_EXTERNAL_STORAGE)
+            }else{
+                permission(Permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
             .constantRequest()
-            .permission(Permission.MANAGE_EXTERNAL_STORAGE)
             .request(object : OnPermission {
 
                 override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
@@ -134,10 +140,18 @@ import java.io.File
 
                 override fun noPermission(denied: MutableList<String>?, quick: Boolean) {
                     if (quick) {
-                        showMsgDialog("提示","权限被禁止，请在设置里打开权限",listener =  QMUIDialogAction.ActionListener { dialog, index ->
-                            dialog.dismiss()
-                            XXPermissions.startPermissionActivity(this@AppUpdateActivity, denied)
-                        },prop = QMUIDialogAction.ACTION_PROP_NEGATIVE ).run {
+                        showMsgDialog(
+                            "提示",
+                            "权限被禁止，请在设置里打开权限",
+                            listener = QMUIDialogAction.ActionListener { dialog, index ->
+                                dialog.dismiss()
+                                XXPermissions.startPermissionActivity(
+                                    this@AppUpdateActivity,
+                                    denied
+                                )
+                            },
+                            prop = QMUIDialogAction.ACTION_PROP_NEGATIVE
+                        ).run {
                             setCanceledOnTouchOutside(false)
                             setOnKeyListener(OnKeyBackClickListener())
                         }
@@ -194,7 +208,7 @@ import java.io.File
         val file = File(getApkDownloadPath(), getApkDownloadName())
         if (file.exists()) {
             // 判断服务器APK大小，可能没有返回大小
-            if(file.length()>0){
+            if (file.length() > 0) {
                 mUpdate.getAppApkSize().let {
                     if (it > 0 && it != file.length()) {
                         file.delete()
@@ -204,7 +218,7 @@ import java.io.File
                 // 当前安装包已经存在，直接点击安装
                 getDataBinding().tvUpdate.setCurrentText(STATUS_INSTALL)
                 return file
-            }else{
+            } else {
                 file.delete()
             }
         }
