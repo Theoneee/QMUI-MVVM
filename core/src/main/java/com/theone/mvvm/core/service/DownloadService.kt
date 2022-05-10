@@ -68,7 +68,7 @@ class DownloadService : Service() {
     }
 
     private var mDownload: DownloadBean? = null
-    private var NOTIFICATION_ID: Int = 0
+    private var NOTIFICATION_ID: Int = UUID.randomUUID().hashCode()
     private var mOldPercent: Int = 0
 
     private lateinit var mNotificationBuilder: NotificationCompat.Builder

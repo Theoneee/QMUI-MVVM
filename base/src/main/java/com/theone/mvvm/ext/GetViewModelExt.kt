@@ -23,7 +23,7 @@ inline fun <reified VM : BaseViewModel> AppCompatActivity.getAppViewModel(): VM 
         if (it == null) {
             throw NullPointerException("你的Application没有继承框架自带的BaseApp类，暂时无法使用getAppViewModel该方法")
         } else {
-            return it.getAppViewModelProvider().get(VM::class.java)
+            return it.getAppViewModelProvider()[VM::class.java]
         }
     }
 
@@ -38,7 +38,7 @@ inline fun <reified VM : BaseViewModel> Fragment.getAppViewModel(): VM {
         if (it == null) {
             throw NullPointerException("你的Application没有继承框架自带的BaseApp类，暂时无法使用getAppViewModel该方法")
         } else {
-            return it.getAppViewModelProvider().get(VM::class.java)
+            return it.getAppViewModelProvider()[VM::class.java]
         }
     }
 }
