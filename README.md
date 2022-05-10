@@ -22,14 +22,19 @@ allprojects {
 dependencies {
     // 二选一
     // 1.core  包含了base + common
-    implementation "com.github.Theoneee.QMUI-MVVM:core:1.0.0"
+    implementation "com.github.Theoneee.QMUI-MVVM:core:1.0.5"
     // 2.单独使用
     // 只使用 base
-    implementation "com.github.Theoneee.QMUI-MVVM:base:1.0.0"
+    implementation "com.github.Theoneee.QMUI-MVVM:base:1.0.5"
     // 或者 common
-    implementation "com.github.Theoneee.QMUI-MVVM:common:1.0.0"
+    implementation "com.github.Theoneee.QMUI-MVVM:common:1.0.5"
 }
 ```
+
+#项目示例
+
+[HifiNi](https://github.com/Theoneee/HifiNi)
+[动态壁纸](https://github.com/Theoneee/DynamicWallpaper-MVVM)
 
 # Demo演示
 
@@ -54,3 +59,4 @@ dependencies {
 ![积分记录](https://images.gitee.com/uploads/images/2021/0331/102748_1e0b447a_2286054.png "S10331-10013685(1).png")
 
 ![搜索](https://images.gitee.com/uploads/images/2021/0331/102759_3025f5e8_2286054.png "S10331-10015798(1).png")
+
