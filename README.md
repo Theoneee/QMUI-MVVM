@@ -33,9 +33,10 @@ dependencies {
 }
 ```
 
-#项目示例
+# 项目示例
 
 [HifiNi](https://github.com/Theoneee/HifiNi)
+
 [动态壁纸](https://github.com/Theoneee/DynamicWallpaper-MVVM)
 
 # Demo演示
