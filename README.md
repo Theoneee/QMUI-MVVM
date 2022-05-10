@@ -5,6 +5,8 @@
 
 QMUI + Jetpack 组件封装的一个MVVM框架
 
+[Gitee](https://gitee.com/theoneee/qmui-mvvm)
+
 ## 必须
 
 1、配置jitpack到项目的build.gradle文件中
