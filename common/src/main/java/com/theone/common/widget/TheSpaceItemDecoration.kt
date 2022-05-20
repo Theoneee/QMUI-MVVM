@@ -1,11 +1,13 @@
 package com.theone.common.widget
 
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.theone.common.ext.TAG
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -41,14 +43,13 @@ class TheSpaceItemDecoration(
 ) :
     RecyclerView.ItemDecoration() {
 
-    // 四边等宽的情况底部的间距就不要了
     constructor(column: Int, space: Int, headerNum: Int = 0) : this(
         column,
         headerNum,
         space,
         space,
         space,
-        0
+        space
     )
 
     override fun getItemOffsets(
@@ -59,7 +60,7 @@ class TheSpaceItemDecoration(
     ) {
         var columnIndex = 0
         val params = view.layoutParams as RecyclerView.LayoutParams
-        val position = params.absoluteAdapterPosition
+        val position = parent.getChildAdapterPosition(view)
         when (parent.layoutManager) {
             is StaggeredGridLayoutManager -> {
                 params as StaggeredGridLayoutManager.LayoutParams
@@ -81,9 +82,10 @@ class TheSpaceItemDecoration(
                 right = mRight
                 bottom = mBottom
                 // 但是只给第一个加上top间距
-                top = if (position == headerNum || headerNum == 0) mTop else 0
+                top = if (position == headerNum) mTop else 0
                 if (column > 1) {
                     // 只要不为一列，只考虑最左和最右项的差别
+                    Log.e(TAG, "getItemOffsets: columnIndex  $columnIndex" )
                     val curIndex = column - columnIndex
                     // 如果为多列时，给第一行的加上top.
                     // X != column 这个判断
@@ -107,6 +109,7 @@ class TheSpaceItemDecoration(
                         }
                     }
                 }
+                Log.e(TAG, "getItemOffsets: position: $position  left:  $left  top: $top  right:$right  bottom:$bottom     " )
             }
         }
 

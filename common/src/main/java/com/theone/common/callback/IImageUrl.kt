@@ -26,6 +26,12 @@ package com.theone.common.callback
  */
 interface IImageUrl {
 
+    enum class Type{
+        IMAGE,
+        VIDEO,
+        AUDIO
+    }
+
     /**
      * @return 图片地址
      */
@@ -41,10 +47,19 @@ interface IImageUrl {
      */
     fun getRefer(): String? = null
 
+    fun getFileName():String = ""
+
     /**
      * @return 是否为视频，如果为视频，视频播放图标会显示
      */
+    @Deprecated("使用mineType替代", replaceWith = ReplaceWith("mineType"))
     fun isVideo(): Boolean = false
+
+    /**
+     * 资源类型
+     * @return Type
+     */
+    fun resType():Type = if(isVideo()) Type.VIDEO else Type.IMAGE
 
     /**
      * 图片的宽度
@@ -57,5 +72,20 @@ interface IImageUrl {
      * @return
      */
     fun getHeight(): Int = 0
+
+    /**
+     * 设置宽度
+     * @param size Int
+     */
+    fun setWidth(size:Int){
+
+    }
+    /**
+     * 设置高度
+     * @param size Int
+     */
+    fun setHeight(size:Int){
+
+    }
 
 }

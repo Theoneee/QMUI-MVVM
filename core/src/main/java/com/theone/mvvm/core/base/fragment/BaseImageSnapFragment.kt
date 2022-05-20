@@ -1,12 +1,14 @@
 package com.theone.mvvm.core.base.fragment
 
 import android.view.View
+import android.view.animation.Animation
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
+import com.luck.picture.lib.interfaces.OnCallbackListener
 import com.qmuiteam.qmui.util.QMUIDirection
 import com.qmuiteam.qmui.util.QMUIViewHelper
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -14,7 +16,8 @@ import com.theone.common.callback.IImageUrl
 import com.theone.common.ext.getColor
 import com.theone.common.ext.isVisible
 import com.theone.mvvm.core.R
-import com.theone.mvvm.core.base.adapter.ImageSnapAdapter
+import com.theone.mvvm.core.base.adapter.ThePicturePreviewAdapter
+import com.theone.mvvm.core.base.adapter.holder.TheBasePreviewHolder
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 import com.theone.mvvm.ext.qmui.updateStatusBarMode
 
@@ -43,11 +46,11 @@ import com.theone.mvvm.ext.qmui.updateStatusBarMode
  * @remark
  */
 abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, DB : ViewDataBinding> :
-    BasePagerPullRefreshFragment<T, VM, DB>(),ImageSnapAdapter.OnImageSnapClickListener<T> {
+    BasePagerPullRefreshFragment<T, VM, DB>(), TheBasePreviewHolder.OnPreviewEventListener {
 
-    private var isLightModel:Boolean = true
+    private var isLightModel: Boolean = true
 
-    abstract fun onScrollChanged(item:T,position:Int,total:Int)
+    abstract fun onScrollChanged(item: T, position: Int, total: Int)
 
     /**
      * @return 滑动方向
@@ -60,20 +63,21 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
 
     override fun translucentFull(): Boolean = true
 
-    override fun createAdapter(): BaseQuickAdapter<T, *> = ImageSnapAdapter<T>(this)
+    override fun getRootBackgroundColor(): Int = R.color.qmui_config_color_pure_black
+
+    override fun createAdapter(): BaseQuickAdapter<T, *> = ThePicturePreviewAdapter<T>(this)
 
     override fun QMUITopBarLayout.initTopBar() {
         getColor(R.color.white).let {
             setTitle("").setTextColor(it)
             setSubTitle("").setTextColor(it)
         }
-        updateBottomDivider(0,0,0,0)
-        setBackgroundAlpha(0)
+        updateBottomDivider(0, 0, 0, 0)
     }
 
     override fun initAdapter() {
         with(mAdapter) {
-            if (this is LoadMoreModule){
+            if (this is LoadMoreModule) {
                 loadMoreModule.loadMoreView = getAdapterLoadMoreView()
                 loadMoreModule.setOnLoadMoreListener(this@BaseImageSnapFragment)
             }
@@ -102,7 +106,7 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val position = linearLayoutManager.findFirstVisibleItemPosition()
                 if (mAdapter.data.size > position) {
-                    onScrollChanged(mAdapter.getItem(position) as T,position,mAdapter.data.size)
+                    onScrollChanged(mAdapter.getItem(position) as T, position, mAdapter.data.size)
                 }
             }
 
@@ -119,25 +123,49 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
      */
     override fun onFetchTransitionConfig(): TransitionConfig = SCALE_TRANSITION_CONFIG
 
-    override fun onImageClick(data: T,position: Int) {
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
+    }
+
+    override fun onPreviewVideoTitle(videoName: String?) {
+    }
+
+    override fun onLongPressDownload(media: IImageUrl) {
+    }
+
+    override fun onLoadComplete(width: Int, height: Int, call: OnCallbackListener<Boolean>?) {
+    }
+
+    override fun onLoadError() {
+    }
+
+    override fun onPressed() {
         getTopBar()?.run {
-            if(isVisible()){
-                QMUIViewHelper.slideOut(this,500,null,true, QMUIDirection.BOTTOM_TO_TOP)
-            }else{
-                QMUIViewHelper.slideIn(this,500,null,true, QMUIDirection.TOP_TO_BOTTOM)
+            if (isVisible()) {
+                QMUIViewHelper.slideOut(this, 500, animationListener, true, QMUIDirection.BOTTOM_TO_TOP)
+            } else {
+                QMUIViewHelper.slideIn(this, 500, animationListener, true, QMUIDirection.TOP_TO_BOTTOM)
             }
         }
     }
 
-    override fun onVideoClick(data: T,position: Int) {
-
+    override fun onDestroy() {
+        (mAdapter as ThePicturePreviewAdapter).destroy()
+        super.onDestroy()
     }
 
-    override fun onImageLongClick(data: T,position: Int): Boolean {
-        return false
-    }
+    private val animationListener = object :Animation.AnimationListener{
+        override fun onAnimationStart(animation: Animation?) {
+        }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        override fun onAnimationEnd(animation: Animation?) {
+            getTopBar()?.let {
+                updateStatusBarMode(it.isVisible())
+            }
+        }
+
+        override fun onAnimationRepeat(animation: Animation?) {
+        }
 
     }
 

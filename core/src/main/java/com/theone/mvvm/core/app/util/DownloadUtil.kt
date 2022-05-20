@@ -68,7 +68,7 @@ object DownloadUtil {
             }
         } else if (isVideo) {
             suffix = "mp4"
-        } else if (PictureMimeType.isSuffixOfImage(url)) {
+        } else if (PictureMimeType.isUrlHasImage(url)) {
             try {
                 val position = url.lastIndexOf(".")
                 suffix = url.substring(position + 1)

@@ -43,4 +43,6 @@ dependencies {
     api "com.github.getActivity:ToastUtils:$toastVersion"
     api "com.tencent:mmkv-static:$mmkvVersion"
     api "cat.ereza:customactivityoncrash:$crashCatchVersion"
+
+    api "com.google.android.exoplayer:exoplayer:${exoplayer}"
 }

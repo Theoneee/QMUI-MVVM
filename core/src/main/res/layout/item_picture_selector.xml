@@ -3,30 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/qmui_config_color_background"
-    app:qmui_radius="2dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:qmui_radius="2dp">
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView2
         android:id="@+id/iv_filter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_centerInParent="true" />
+        android:layout_height="match_parent" />
 
-    <FrameLayout
+
+    <ImageView
         android:id="@+id/delete_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:padding="4dp">
+        android:layout_alignTop="@id/iv_filter"
+        android:layout_alignEnd="@id/iv_filter"
+        android:paddingStart="10dp"
+        android:paddingBottom="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_picture_selector_image_delete" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_picture_selector_image_delete" />
-
-    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_duration"
@@ -37,6 +33,7 @@
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:paddingStart="5dp"
+        android:background="@drawable/ps_ic_shadow_bg"
         android:paddingTop="8dp"
         android:textColor="@color/white"
         android:textSize="12sp"

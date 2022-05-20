@@ -8,9 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.luck.picture.lib.basic.PictureSelectionModel
 import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectMimeType.ofAudio
 import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.tools.DateUtils
+import com.luck.picture.lib.utils.DateUtils
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView2
 import com.theone.common.ext.*
 import com.theone.mvvm.core.R
@@ -76,10 +79,7 @@ class PictureSelectorAdapter :
     private fun convertAdd(holder: BaseViewHolder, position: Int) {
         with(holder) {
             getView<QMUIRadiusImageView2>(R.id.iv_filter).run {
-                setImageResource(R.drawable.icon_add_dark)
-                layoutParams = RelativeLayout.LayoutParams(wrapContent, wrapContent).apply {
-                    addRule(RelativeLayout.CENTER_IN_PARENT)
-                }
+                setImageResource(R.drawable.ic_add_image)
             }
             getView<View>(R.id.delete_layout).invisible()
         }
@@ -87,9 +87,7 @@ class PictureSelectorAdapter :
 
     override fun convert(holder: BaseViewHolder, item: LocalMedia) {
         with(holder) {
-            val cover = getView<QMUIRadiusImageView2>(R.id.iv_filter).apply {
-                layoutParams = RelativeLayout.LayoutParams(matchParent, matchParent)
-            }
+            val cover = getView<QMUIRadiusImageView2>(R.id.iv_filter)
             getView<View>(R.id.delete_layout).run {
                 visible()
                 setOnClickListener {
@@ -102,14 +100,14 @@ class PictureSelectorAdapter :
                 }
             }
             if (TextUtils.isEmpty(item.path)) return
-            val path = item.getShowPath()
+            val path = item.availablePath
             val isVideo = PictureMimeType.isHasVideo(item.mimeType)
-            val isAudio = item.chooseModel == PictureMimeType.ofAudio()
+            val isAudio = PictureMimeType.isHasAudio(item.mimeType)
             getView<TextView>(R.id.tv_duration).run {
                 if (isVideo || isAudio) {
                     visible()
                     setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        if (isVideo) R.drawable.picture_icon_video else R.drawable.picture_icon_audio,
+                       if (isVideo) R.drawable.ps_ic_video else R.drawable.ps_ic_audio,
                         0,
                         0,
                         0
@@ -120,25 +118,15 @@ class PictureSelectorAdapter :
                 }
             }
             if (isAudio) {
-                cover.setImageResource(R.drawable.picture_audio_placeholder)
+                cover.setImageResource(R.drawable.ps_ic_audio_placeholder)
             } else {
                 cover.load(
-                    if (PictureMimeType.isContent(path) && !item.isCut && !item.isCompressed) Uri.parse(
-                        path
-                    ) else path
+                    if (PictureMimeType.isContent(path) && !item.isCut && !item.isCompressed)
+                        Uri.parse(path)
+                    else path
                 )
             }
         }
     }
 
-}
-
-fun LocalMedia.getShowPath(): String {
-    return if (isCut && !isCompressed) {
-        cutPath
-    } else if (isCompressed ) {
-        compressPath
-    } else{
-        path
-    }
 }

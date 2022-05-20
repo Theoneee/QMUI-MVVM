@@ -2,22 +2,24 @@ package com.theone.mvvm.core.base.fragment
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectModeConfig
+import com.luck.picture.lib.decoration.GridSpacingItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.listener.OnResultCallbackListener
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import com.theone.common.ext.dp2px
 import com.theone.mvvm.core.base.adapter.PictureSelectorAdapter
-import com.theone.mvvm.core.base.adapter.getShowPath
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
-import com.theone.mvvm.core.data.entity.ImagePreviewBean
 import com.theone.mvvm.core.data.enum.LayoutManagerType
-import com.theone.mvvm.core.app.ext.startImagePreview
-import com.theone.mvvm.core.app.util.PictureSelectorUtil
+import com.theone.mvvm.core.app.util.glide.GlideEngine
 import com.theone.mvvm.core.base.loader.callback.Callback
 import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import java.util.*
+import kotlin.collections.ArrayList
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -47,22 +49,68 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
     BasePagerAdapterFragment<LocalMedia, VM, DB>(),
     OnResultCallbackListener<LocalMedia> {
 
-    override fun loaderDefaultCallback(): Class<out Callback>  = SuccessCallback::class.java
+    override fun getViewModelIndex(): Int = 0
+
+    override fun getDataBindingIndex(): Int = 1
+
+    override fun loaderDefaultCallback(): Class<out Callback> = SuccessCallback::class.java
 
     protected open fun getMaxSelectNum(): Int = 9
 
     override fun getLayoutManagerType(): LayoutManagerType = LayoutManagerType.GRID
 
-    override fun getSpanCount(): Int = 3
+    override fun getSpanCount(): Int = 4
 
-    override fun getItemSpace(): Int = 6
+    override fun getItemSpace(): Int = 10
+
+    protected open fun getSelectList(): ArrayList<LocalMedia> = mAdapter.data as ArrayList<LocalMedia>
 
     override fun createAdapter(): BaseQuickAdapter<LocalMedia, *> = PictureSelectorAdapter().apply {
         mSelectMax = getMaxSelectNum()
     }
 
-    protected open fun setMaxSelectNum(max:Int){
+    override fun getItemDecoration(): RecyclerView.ItemDecoration {
+        return GridSpacingItemDecoration(getSpanCount(),dp2px(getItemSpace()),false)
+    }
+
+    protected open fun setMaxSelectNum(max: Int) {
         (mAdapter as PictureSelectorAdapter).mSelectMax = max
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        if (adapter.getItemViewType(position) == PictureSelectorAdapter.TYPE_ADD) {
+            onAddPictureClick()
+        } else {
+            onSelectImageClick(adapter.getItem(position) as LocalMedia, position)
+        }
+    }
+
+    protected open fun onAddPictureClick() {
+        PictureSelector.create(this)
+            .openGallery(SelectMimeType.ofAll())
+            .setImageEngine(GlideEngine.createGlideEngine())
+            .forResult(this)
+    }
+
+    protected open fun onSelectImageClick(item: LocalMedia, position: Int) {
+        PictureSelector.create(mActivity).openPreview()
+            .setImageEngine(GlideEngine.createGlideEngine()).startFragmentPreview(
+                position, false,
+                getSelectList()
+            )
+    }
+
+
+    override fun onResult(result: ArrayList<LocalMedia>?) {
+        mAdapter.setList(result)
+    }
+
+    override fun onCancel() {
+
+    }
+
+    override fun onLazyInit() {
+
     }
 
     override fun initRefreshView() {
@@ -77,50 +125,5 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
 
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        if (adapter.getItemViewType(position) == PictureSelectorAdapter.TYPE_ADD) {
-            onAddPictureClick()
-        } else {
-            onSelectImageClick(adapter.getItem(position)as LocalMedia,position)
-        }
-    }
-
-    protected open fun onAddPictureClick() {
-        PictureSelectorUtil.initImageSelector(this,this,maxSelectNum =  getMaxSelectNum(),selectList = getSelectList())
-    }
-
-    protected open fun onSelectImageClick(item:LocalMedia,position:Int){
-        if (getSelectList().size > 0) {
-            val pictureType = item.mimeType
-            when (PictureMimeType.getMimeType(pictureType)) {
-                PictureConfig.TYPE_VIDEO ->                     // 预览视频
-                    PictureSelector.create(mActivity).externalPictureVideo(item.path)
-                PictureConfig.TYPE_AUDIO ->                     // 预览音频
-                    PictureSelector.create(mActivity).externalPictureAudio(item.path)
-                else -> {
-                    val images: ArrayList<ImagePreviewBean> =
-                        ArrayList<ImagePreviewBean>()
-                    for (media in getSelectList()) {
-                        val bean = ImagePreviewBean().apply {
-                            url = media.getShowPath()
-                            mIsVideo =false
-                        }
-                        images.add(bean)
-                    }
-                    startImagePreview(mActivity,images = images,position = position)
-                }
-            }
-        }
-    }
-
-    override fun onResult(result: List<LocalMedia>) {
-        mAdapter.setList(result)
-    }
-
-    override fun onCancel() {
-
-    }
-
-    protected open fun getSelectList(): MutableList<LocalMedia> = mAdapter.data
 
 }

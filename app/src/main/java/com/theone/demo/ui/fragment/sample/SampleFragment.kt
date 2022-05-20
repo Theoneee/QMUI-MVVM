@@ -46,6 +46,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     lateinit var mCustomView: QMUICommonListItemView
     lateinit var mLoader: QMUICommonListItemView
     lateinit var mAppUpdate: QMUICommonListItemView
+    lateinit var mPictureSelect: QMUICommonListItemView
 
     override fun initView(root: View) {
         getTopBar()?.setTitleWithBackBtn("示例", this)
@@ -58,10 +59,12 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
             mCustomView = createItem("CustomView")
             mLoader = createItem("Loader")
             mAppUpdate = createItem("AppUpdate")
+            mPictureSelect = createItem("PictureSelect")
             addToGroup(
                 mPager,
                 mGroupListView,
                 mLoader,
+                mPictureSelect,
                 title = "ui",
                 listener = this@SampleFragment
             )
@@ -88,6 +91,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
                     mStringExt -> StringExtFragment()
                     mCustomView -> CustomViewFragment()
                     mLoader -> LoaderFragment()
+                    mPictureSelect ->PictureSelectFragment()
                     else -> {
                         TestFragment()
                     }
