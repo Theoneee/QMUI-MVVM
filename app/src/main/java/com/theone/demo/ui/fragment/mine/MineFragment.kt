@@ -1,16 +1,12 @@
 package com.theone.demo.ui.fragment.mine
 
-import android.util.Log
 import android.view.View
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.theone.common.ext.notNull
 import com.theone.demo.R
 import com.theone.demo.app.ext.joinQQGroup
 import com.theone.demo.app.net.Url
 import com.theone.demo.app.ext.checkLogin
-import com.theone.demo.app.util.ColorUtil
 import com.theone.demo.data.model.bean.BannerResponse
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.data.model.bean.UserInfo
@@ -23,7 +19,6 @@ import com.theone.demo.ui.fragment.integral.IntegralHistoryFragment
 import com.theone.demo.ui.fragment.integral.IntegralRankFragment
 import com.theone.demo.ui.fragment.share.ShareArticleFragment
 import com.theone.demo.viewmodel.AppViewModel
-import com.theone.demo.viewmodel.request.MineRequestViewModel
 import com.theone.demo.viewmodel.state.MineViewModel
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.getAppViewModel
@@ -58,7 +53,7 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
 
     private val appVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
 
-    private val mRequestVm: MineRequestViewModel by viewModels()
+    //private val mRequestVm: MineRequestViewModel by viewModels()
 
     private lateinit var mShare: QMUICommonListItemView
     private lateinit var mCollection: QMUICommonListItemView
@@ -101,19 +96,21 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
     }
 
     override fun createObserver() {
-        mRequestVm.run {
+        getViewModel().mRequest.run {
             getResponseLiveData().observe(this@MineFragment) {
-                setUserIntegral(it)
+                setUserIntegral(it.getResponse()!!)
             }
             getErrorLiveData().observe(this@MineFragment) {
                 showFailTipsDialog(it)
             }
-            getFinallyLiveData().observe(this@MineFragment) {
-                getDataBinding().swipeRefresh.run {
-                    isRefreshing = false
-                    isEnabled = true
+            getStateLiveData().observe(this@MineFragment) {
+                if(!it){
+                    getDataBinding().swipeRefresh.run {
+                        isRefreshing = false
+                        isEnabled = true
+                    }
+                    getViewModel().mRequest.isFirst = false
                 }
-                mRequestVm.isFirst = false
             }
         }
         appVm.userInfo.observe(this) {
@@ -122,8 +119,10 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
     }
 
     private fun requestIntegral() {
-        getDataBinding().swipeRefresh.isRefreshing = !mRequestVm.isFirst
-        mRequestVm.requestServer()
+        getViewModel().run {
+            getDataBinding().swipeRefresh.isRefreshing = !mRequest.isFirst
+            requestData()
+        }
     }
 
     private fun setUserIntegral(data: IntegralResponse) {
@@ -145,8 +144,8 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
                     imageUrl.set(it.icon)
             }
         }, {
-            mRequestVm.isFirst = false
             getViewModel().run {
+                mRequest.isFirst = true
                 name.set("请先登录~")
                 id.set("ID")
                 integral.set("积分")
@@ -208,7 +207,7 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
          */
         fun integralRank() {
             checkLogin {
-                mRequestVm.getResponseLiveData().value?.let {
+                getViewModel().mRequest.getResponseLiveData().value?.getResponse()?.let {
                     startFragment(IntegralRankFragment.newInstance(it))
                 }
             }

@@ -1,11 +1,4 @@
-package com.theone.demo.viewmodel.request
-
-import com.theone.demo.data.model.bean.IntegralResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.app.ext.getCacheMode
-import com.theone.mvvm.core.app.ext.launch
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-
+package com.theone.mvvm.core.base.request
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -26,19 +19,16 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/4 0004
+ * @date 2022-05-27 10:14
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class MineRequestViewModel : BaseRequestViewModel<IntegralResponse>() {
+interface IResponse<T> {
 
-    var isFirst =  true
-
-
-    override fun requestServer() {
-        //requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
-    }
-
+    fun isSuccess():Boolean
+    fun getResponse():T?
+    fun getMsg():String?
+    fun getCode():Int?
 
 }

@@ -2,11 +2,15 @@ package com.theone.demo.data.repository
 
 import com.theone.demo.app.ext.getCacheMode
 import com.theone.demo.app.net.PagerResponse
+import com.theone.demo.app.net.Response
 import com.theone.demo.app.net.Url
 import com.theone.demo.data.model.bean.*
+import com.theone.mvvm.core.base.request.IResponse
 import rxhttp.wrapper.cahce.CacheMode
 import rxhttp.wrapper.coroutines.Await
+import rxhttp.wrapper.param.IRequest
 import rxhttp.wrapper.param.RxHttp
+import rxhttp.wrapper.param.toIResponse
 import rxhttp.wrapper.param.toResponse
 
 //  ┏┓　　　┏┓
@@ -162,11 +166,11 @@ class ApiRepository private constructor(){
      * @param cacheMode CacheMode
      * @return IntegralResponse?
      */
-    fun getUserCoin(cacheMode: CacheMode): Await<IntegralResponse> {
+    fun getUserCoin(cacheMode: CacheMode): Await<IResponse<IntegralResponse>> {
         return RxHttp.get(Url.USER_COIN)
             .setCacheMode(cacheMode)
             .setCacheValidTime(-1)
-            .toResponse<IntegralResponse>()
+            .toIResponse<IntegralResponse>()
     }
 
     /**

@@ -69,4 +69,12 @@ fun BaseViewModel.launch(
 }
 
 
+fun BaseViewModel.launch(
+    block: suspend CoroutineScope.() -> Unit,
+): Job {
+    return viewModelScope.launch {
+        block()
+    }
+}
+
 

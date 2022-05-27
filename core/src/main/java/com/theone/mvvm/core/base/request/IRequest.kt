@@ -1,11 +1,6 @@
-package com.theone.demo.viewmodel.request
+package com.theone.mvvm.core.base.request
 
-import com.theone.demo.data.model.bean.IntegralResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.app.ext.getCacheMode
-import com.theone.mvvm.core.app.ext.launch
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-
+import androidx.lifecycle.LiveData
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -26,19 +21,17 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/4 0004
+ * @date 2022-05-27 09:00
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class MineRequestViewModel : BaseRequestViewModel<IntegralResponse>() {
+interface IRequest<T> {
 
-    var isFirst =  true
+    suspend fun requestServer(vararg params:Any)
 
-
-    override fun requestServer() {
-        //requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
-    }
-
+    fun getResponseLiveData():LiveData<T>
+    fun getErrorLiveData():LiveData<String>
+    fun getStateLiveData():LiveData<Boolean>
 
 }

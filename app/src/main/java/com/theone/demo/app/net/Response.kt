@@ -1,5 +1,8 @@
 package com.theone.demo.app.net
 
+import com.google.gson.annotations.SerializedName
+import com.theone.mvvm.core.base.request.IResponse
+
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
 //┃　　　　　　　┃
@@ -28,4 +31,13 @@ data class Response<T>(
     val errorCode: Int,
     val errorMsg: String?,
     val data: T?
-)
+) : IResponse<T> {
+
+    override fun isSuccess(): Boolean = errorCode == 0
+
+    override fun getResponse(): T? = data
+
+    override fun getMsg(): String? = errorMsg
+
+    override fun getCode(): Int = errorCode
+}

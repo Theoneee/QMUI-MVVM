@@ -1,6 +1,7 @@
 package the.one.brand.net
 
 import com.theone.demo.app.net.Response
+import com.theone.mvvm.core.base.request.IResponse
 import rxhttp.wrapper.annotation.Parser
 import rxhttp.wrapper.exception.ParseException
 import rxhttp.wrapper.parse.TypeParser
@@ -35,15 +36,15 @@ import java.lang.reflect.Type
  * @remark
  */
 
-@Parser(name = "Response")
-open class ResponseParse<T> : TypeParser<T> {
+@Parser(name = "IResponse")
+open class IResponseParse<T> : TypeParser<IResponse<T>> {
 
     protected constructor() : super()
 
     constructor(type: Type) : super(type)
 
     @Throws(IOException::class)
-    override fun onParse(response: okhttp3.Response): T {
+    override fun onParse(response: okhttp3.Response): IResponse<T> {
         //第一步，解析code、msg字段，把data当成String对象
         val data: Response<String> = response.convertTo(Response::class, String::class.java)
         var t: T? = null
@@ -58,7 +59,7 @@ open class ResponseParse<T> : TypeParser<T> {
         if (data.getCode() != 0 || t == null) {
             throw ParseException(data.getCode().toString(), data.getMsg(), response)
         }
-        return t
+        return Response(data.getCode(),data.errorMsg,t)
     }
 
 }
