@@ -3,6 +3,7 @@ ext {
     TheBaseVersion = '1.2.0'
     TheCommonVersion = '1.0.8'
     TheCoreVersion = '1.2.0'
+    TheLoaderVersion = '0.0.3-beta'
 
     //net
     okhttpVersion = '4.9.0'

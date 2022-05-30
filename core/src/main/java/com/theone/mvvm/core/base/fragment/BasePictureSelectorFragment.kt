@@ -1,23 +1,21 @@
 package com.theone.mvvm.core.base.fragment
 
+import SuccessCallback
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.luck.picture.lib.basic.PictureSelector
-import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
-import com.luck.picture.lib.config.SelectModeConfig
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.theone.common.ext.dp2px
+import com.theone.loader.callback.Callback
 import com.theone.mvvm.core.base.adapter.PictureSelectorAdapter
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.app.util.glide.GlideEngine
-import com.theone.mvvm.core.base.loader.callback.Callback
-import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -3,13 +3,13 @@ package com.theone.demo.ui.fragment.sample
 import android.view.View
 import com.theone.common.ext.delay
 import com.theone.demo.databinding.FragmentLoaderTestBinding
+import com.theone.loader.LoaderService
+import com.theone.loader.LoaderVisibilityService
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.showErrorPage
 import com.theone.mvvm.core.app.ext.showLoadingPage
 import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
-import com.theone.mvvm.core.base.loader.LoaderService
-import com.theone.mvvm.core.base.loader.LoaderVisibilityService
 import com.theone.mvvm.ext.qmui.setTitleWitchBackBtn
 
 //  ┏┓　　　┏┓
@@ -45,8 +45,6 @@ class LoaderFragment : BaseCoreFragment<BaseViewModel, FragmentLoaderTestBinding
 //    override fun loaderRegisterView(): View = getDataBinding().center
 //    override fun loaderRegisterView(): View = getDataBinding().root
     override fun loaderRegisterView(): View = getContentView()
-
-    override fun loaderServiceClass(): Class<out LoaderService>  = LoaderVisibilityService::class.java
 
     override fun initView(root: View) {
         setTitleWitchBackBtn("LoaderFragment")

@@ -1,5 +1,6 @@
 package com.theone.demo.ui.fragment.home
 
+import SuccessCallback
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +25,7 @@ import com.theone.demo.ui.fragment.base.BaseArticleFragment
 import com.theone.demo.ui.fragment.search.SearchFragment
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.HomeViewModel
-import com.theone.mvvm.core.base.loader.callback.Callback
-import com.theone.mvvm.core.base.loader.callback.SuccessCallback
+import com.theone.loader.callback.Callback
 import com.theone.mvvm.ext.qmui.updateStatusBarMode
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity

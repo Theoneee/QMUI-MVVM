@@ -1,17 +1,18 @@
 package com.theone.mvvm.core.ui.fragment
 
+import SuccessCallback
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.luck.picture.lib.interfaces.OnCallbackListener
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet
 import com.theone.common.callback.IImageUrl
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.getColor
 import com.theone.common.ext.getValueNonNull
+import com.theone.loader.callback.Callback
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.fragment.BaseImageSnapFragment
 import com.theone.mvvm.core.data.entity.ImagePreviewBean
@@ -19,13 +20,9 @@ import com.theone.mvvm.core.data.entity.ImagePreviewEvent
 import com.theone.mvvm.core.data.entity.QMUIItem
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
-import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
-import com.theone.mvvm.core.app.ext.showSuccessPage
 import com.theone.mvvm.core.app.util.DownloadUtil
 import com.theone.mvvm.core.ui.viewmodel.ImagePreviewViewModel
 import com.theone.mvvm.core.app.widge.pullrefresh.PullRefreshLayout
-import com.theone.mvvm.core.base.loader.callback.Callback
-import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
 
 //  ┏┓　　　┏┓

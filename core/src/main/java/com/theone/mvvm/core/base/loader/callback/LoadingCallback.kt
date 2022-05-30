@@ -1,6 +1,7 @@
 package com.theone.mvvm.core.base.loader.callback
 
 import com.theone.mvvm.core.R
+import com.theone.loader.callback.Callback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓

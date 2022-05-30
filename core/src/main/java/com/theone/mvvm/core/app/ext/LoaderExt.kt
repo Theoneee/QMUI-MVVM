@@ -3,10 +3,10 @@ package com.theone.mvvm.core.app.ext
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.theone.loader.Loader
+import com.theone.loader.LoaderService
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.ICore
-import com.theone.mvvm.core.base.loader.Loader
-import com.theone.mvvm.core.base.loader.LoaderService
 import com.theone.mvvm.core.base.loader.callback.ErrorCallback
 import com.theone.mvvm.core.base.loader.callback.LoadingCallback
 
@@ -44,7 +44,7 @@ fun initLoaderDefault() {
 
 fun ICore.registerLoader(): LoaderService? {
     return loaderRegisterView()?.let { registerView ->
-        Loader.getDefault().register(loaderServiceClass(), registerView, loaderDefaultCallback())
+        Loader.getDefault().register(registerView, loaderDefaultCallback())
     }
 }
 

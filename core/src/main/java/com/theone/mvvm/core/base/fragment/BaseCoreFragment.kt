@@ -4,6 +4,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.hjq.toast.ToastUtils
+import com.theone.loader.LoaderService
 import com.theone.mvvm.base.fragment.BaseVmDbFragment
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.R
@@ -11,7 +12,6 @@ import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.app.ext.hideProgressDialog
 import com.theone.mvvm.core.app.ext.registerLoader
 import com.theone.mvvm.core.app.ext.showProgressDialog
-import com.theone.mvvm.core.base.loader.LoaderService
 import com.theone.mvvm.entity.ProgressBean
 
 /**

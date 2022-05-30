@@ -1,15 +1,15 @@
 package com.theone.mvvm.core.base.fragment
 
+import SuccessCallback
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.theone.loader.callback.Callback
 import com.theone.mvvm.core.app.ext.*
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.base.callback.IRecyclerPager
-import com.theone.mvvm.core.base.loader.callback.Callback
 import com.theone.mvvm.core.base.loader.callback.LoadingCallback
-import com.theone.mvvm.core.base.loader.callback.SuccessCallback
 import com.theone.mvvm.ext.qmui.showInfoTipsDialog
 
 //  ┏┓　　　┏┓

@@ -1,9 +1,9 @@
 package com.theone.mvvm.core.base.callback
 
 import android.view.View
-import com.theone.mvvm.core.base.loader.LoaderService
-import com.theone.mvvm.core.base.loader.LoaderReplaceService
-import com.theone.mvvm.core.base.loader.callback.Callback
+import com.theone.loader.LoaderReplaceService
+import com.theone.loader.LoaderService
+import com.theone.loader.callback.Callback
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -36,8 +36,6 @@ interface ICore {
      * @return LoaderView?
      */
     fun getLoader(): LoaderService? = null
-
-    fun loaderServiceClass(): Class<out LoaderService> = LoaderReplaceService::class.java
 
     /**
      * 界面状态注册View

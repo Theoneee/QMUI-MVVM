@@ -1,5 +1,6 @@
 package com.theone.mvvm.core.base.loader.callback
 
+import com.theone.loader.callback.Callback
 import com.theone.mvvm.core.R
 
 //  ┏┓　　　┏┓
@@ -27,7 +28,7 @@ import com.theone.mvvm.core.R
  * @remark
  */
 
-class ErrorCallback:Callback() {
+class ErrorCallback: Callback() {
 
     override fun layoutId(): Int = R.layout.layout_error
 
