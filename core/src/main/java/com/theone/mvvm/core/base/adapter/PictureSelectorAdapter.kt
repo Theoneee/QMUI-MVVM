@@ -99,7 +99,6 @@ class PictureSelectorAdapter :
                     }
                 }
             }
-            if (TextUtils.isEmpty(item.path)) return
             val path = item.availablePath
             val isVideo = PictureMimeType.isHasVideo(item.mimeType)
             val isAudio = PictureMimeType.isHasAudio(item.mimeType)
