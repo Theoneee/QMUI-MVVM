@@ -56,9 +56,6 @@ open class ResponseParse<T> : TypeParser<T> {
             //判断我们传入的泛型是String对象，就给t赋值""字符串，确保t不为null
             t = data.getMsg() as T
         }
-        if(data.getCode() == -1001){
-            CacheUtil.setUser(null)
-        }
         if (data.getCode() != 0 || t == null) {
             throw ParseException(data.getCode().toString(), data.getMsg(), response)
         }

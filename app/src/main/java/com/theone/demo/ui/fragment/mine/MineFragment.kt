@@ -102,11 +102,11 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
                 setUserIntegral(it)
             }
             getErrorLiveData().observe(this@MineFragment) {
-                if(it.contains("请先登录")){
+                if(it.code == -1001){
                     appVm.userInfo.value = null
                     CacheUtil.setUser(null)
                 }
-                showFailTipsDialog(it)
+                showFailTipsDialog(it.msg)
             }
             getStateLiveData().observe(this@MineFragment) {
                 if(!it){
