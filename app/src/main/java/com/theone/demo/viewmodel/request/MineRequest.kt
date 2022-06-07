@@ -29,7 +29,7 @@ import com.theone.mvvm.core.base.request.BaseRequest
  * @email 625805189@qq.com
  * @remark
  */
-class MineRequest:BaseRequest<IntegralResponse>() {
+class MineRequest: BaseRequest<IntegralResponse>() {
 
     var isFirst:Boolean = true
 

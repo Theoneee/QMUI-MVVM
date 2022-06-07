@@ -166,11 +166,11 @@ class ApiRepository private constructor(){
      * @param cacheMode CacheMode
      * @return IntegralResponse?
      */
-    fun getUserCoin(cacheMode: CacheMode): Await<IResponse<IntegralResponse>> {
+    fun getUserCoin(cacheMode: CacheMode): Await<IntegralResponse> {
         return RxHttp.get(Url.USER_COIN)
             .setCacheMode(cacheMode)
             .setCacheValidTime(-1)
-            .toIResponse<IntegralResponse>()
+            .toResponse<IntegralResponse>()
     }
 
     /**

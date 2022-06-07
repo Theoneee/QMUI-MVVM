@@ -52,9 +52,7 @@ abstract class BaseTabInTitleFragment<VM : BaseViewModel> :
      * addLeftBackImageButton()
      * addRightImageButton(R.drawable.mz_titlebar_ic_search_dark,R.id.topbar_right_view)
      */
-    override fun QMUITopBarLayout.initTopBar() {
-        setCenterView(getMagicIndicator())
-    }
+    override fun QMUITopBarLayout.initTopBar() {}
 
     /**
      * 生成[MagicIndicator]的[RelativeLayout.LayoutParams]
@@ -79,6 +77,11 @@ abstract class BaseTabInTitleFragment<VM : BaseViewModel> :
      * @return Boolean
      */
     override fun showTopBar(): Boolean = true
+
+    override fun initView(root: View) {
+        getTopBar()?.setCenterView(getMagicIndicator())
+        super.initView(root)
+    }
 
     override fun getDataBindingClass(): Class<BaseTabInTitleLayoutBinding> =
         BaseTabInTitleLayoutBinding::class.java

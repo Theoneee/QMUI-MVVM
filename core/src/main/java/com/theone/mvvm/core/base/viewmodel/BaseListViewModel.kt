@@ -1,6 +1,6 @@
 package com.theone.mvvm.core.base.viewmodel
 
-import com.theone.mvvm.core.data.net.IPageInfo
+import com.theone.mvvm.core.base.request.IPageInfo
 
 
 //  ┏┓　　　┏┓

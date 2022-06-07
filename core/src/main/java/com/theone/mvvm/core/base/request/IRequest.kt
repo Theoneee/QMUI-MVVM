@@ -1,6 +1,8 @@
 package com.theone.mvvm.core.base.request
 
 import androidx.lifecycle.LiveData
+import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
+import com.theone.mvvm.core.data.entity.ErrorInfo
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -31,7 +33,7 @@ interface IRequest<T> {
     suspend fun requestServer(vararg params:Any)
 
     fun getResponseLiveData():LiveData<T>
-    fun getErrorLiveData():LiveData<String>
+    fun getErrorLiveData(): LiveData<ErrorInfo>
     fun getStateLiveData():LiveData<Boolean>
 
 }

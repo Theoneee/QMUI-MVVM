@@ -1,13 +1,8 @@
 package com.theone.mvvm.core.app.ext
 
 import androidx.lifecycle.viewModelScope
-import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-import com.theone.mvvm.core.data.net.error.msg
 import kotlinx.coroutines.*
-import rxhttp.awaitResult
-import rxhttp.wrapper.coroutines.Await
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓

@@ -1,6 +1,6 @@
 package com.theone.demo.app.net
 
-import com.theone.mvvm.core.data.net.IPageInfo
+import com.theone.mvvm.core.base.request.IPageInfo
 import java.io.Serializable
 
 //  ┏┓　　　┏┓

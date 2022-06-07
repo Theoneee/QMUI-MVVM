@@ -5,7 +5,7 @@ import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.launch
-import com.theone.mvvm.core.data.net.error.msg
+import com.theone.mvvm.core.app.ext.msg
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

@@ -1,4 +1,4 @@
-package com.theone.mvvm.core.data.net.error
+package com.theone.mvvm.core.app.ext
 
 import android.content.Context
 import android.net.ConnectivityManager

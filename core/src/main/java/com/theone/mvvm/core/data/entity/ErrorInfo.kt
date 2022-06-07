@@ -1,5 +1,4 @@
-package com.theone.mvvm.core.data.net
-
+package com.theone.mvvm.core.data.entity
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -20,25 +19,10 @@ package com.theone.mvvm.core.data.net
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/2/23 0023
- * @describe 分页
+ * @date 2022-06-07 17:26
+ * @describe 错误信息
  * @email 625805189@qq.com
  * @remark
  */
-interface IPageInfo {
-
-    // 页数
-    fun getPage():Int
-
-    // 总页数
-    fun getPageTotalCount():Int
-
-    // 总条数
-    fun getTotalCount():Int
-
-    // 每页数量
-    fun getPageSize():Int
-
-
-
+data class ErrorInfo(val msg: String, val code: Int = 0) {
 }

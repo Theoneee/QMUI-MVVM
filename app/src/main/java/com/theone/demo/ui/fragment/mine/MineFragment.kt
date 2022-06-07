@@ -7,6 +7,7 @@ import com.theone.demo.R
 import com.theone.demo.app.ext.joinQQGroup
 import com.theone.demo.app.net.Url
 import com.theone.demo.app.ext.checkLogin
+import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.data.model.bean.BannerResponse
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.data.model.bean.UserInfo
@@ -98,9 +99,13 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
     override fun createObserver() {
         getViewModel().mRequest.run {
             getResponseLiveData().observe(this@MineFragment) {
-                setUserIntegral(it.getResponse()!!)
+                setUserIntegral(it)
             }
             getErrorLiveData().observe(this@MineFragment) {
+                if(it.contains("请先登录")){
+                    appVm.userInfo.value = null
+                    CacheUtil.setUser(null)
+                }
                 showFailTipsDialog(it)
             }
             getStateLiveData().observe(this@MineFragment) {
@@ -207,7 +212,7 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
          */
         fun integralRank() {
             checkLogin {
-                getViewModel().mRequest.getResponseLiveData().value?.getResponse()?.let {
+                getViewModel().mRequest.getResponseLiveData().value?.let {
                     startFragment(IntegralRankFragment.newInstance(it))
                 }
             }

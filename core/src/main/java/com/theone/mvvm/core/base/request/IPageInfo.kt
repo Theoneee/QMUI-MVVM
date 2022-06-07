@@ -1,4 +1,4 @@
-package com.theone.mvvm.core.data.net
+package com.theone.mvvm.core.base.request
 
 
 //  ┏┓　　　┏┓
@@ -21,15 +21,24 @@ package com.theone.mvvm.core.data.net
 /**
  * @author The one
  * @date 2021/2/23 0023
- * @describe 请求返回
+ * @describe 分页
  * @email 625805189@qq.com
  * @remark
  */
-interface IResponse<T> {
+interface IPageInfo {
 
-    fun isSuccess(): Boolean
-    fun getResponseData(): T?
-    fun getMsg():String?
-    fun getPageInfo(): IPageInfo?
+    // 页数
+    fun getPage():Int
+
+    // 总页数
+    fun getPageTotalCount():Int
+
+    // 总条数
+    fun getTotalCount():Int
+
+    // 每页数量
+    fun getPageSize():Int
+
+
 
 }

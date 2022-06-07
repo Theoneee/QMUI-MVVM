@@ -35,7 +35,6 @@ import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
  */
 class CollectionFragment :BaseTabInTitleFragment<BaseViewModel>() {
 
-
     override fun QMUITopBarLayout.initTopBar() {
         addLeftCloseImageBtn()
     }

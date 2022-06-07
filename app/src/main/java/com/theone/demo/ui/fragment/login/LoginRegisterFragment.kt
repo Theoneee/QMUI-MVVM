@@ -56,7 +56,6 @@ class LoginRegisterFragment : BaseTabInTitleFragment<BaseViewModel>() {
             addTab("注册")
         }
 
-
         with(fragments) {
             add(LoginRegisterItemFragment.newInstant(false))
             add(
