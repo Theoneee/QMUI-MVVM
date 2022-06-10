@@ -1,9 +1,6 @@
 ext {
 
-    TheBaseVersion = '1.2.0'
-    TheCommonVersion = '1.0.8'
-    TheCoreVersion = '1.2.0'
-    TheLoaderVersion = '0.0.3-beta'
+    loaderVersion = '0.0.3-beta'
 
     //net
     okhttpVersion = '4.9.0'
@@ -13,7 +10,7 @@ ext {
     rxhttpVersion = '2.8.5'
 
     //util
-    glideVersion = '4.10.0'
+    glideVersion = '4.12.0'
     multidexVersion = '2.0.1'
     xxpermissions = '8.2'
     mmkvVersion = '1.1.0'
@@ -28,6 +25,6 @@ ext {
 
     BaseRecyclerViewAdapterHelperVersion = '3.0.7'
     MagicIndicatorVersion = '1.6.0'
-    PictureSelectorVersion = 'v3.0.9'
+    PictureSelectorVersion = 'v3.10.1'
 
 }

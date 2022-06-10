@@ -17,7 +17,7 @@ configurations.all {
 dependencies {
     api project(path: ':base')
     api project(path: ':common')
-    api "com.github.Theoneee:Loader:$TheLoaderVersion"
+    api "com.github.Theoneee:Loader:$loaderVersion"
     api "androidx.multidex:multidex:$multidexVersion"
     api "com.zhy:okhttputils:$okhttpUtilVersion"
     // okhttp
