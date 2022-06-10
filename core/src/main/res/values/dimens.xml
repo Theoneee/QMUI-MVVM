@@ -3,7 +3,7 @@
 
     <dimen name="progressBar_size">10dp</dimen>
 
-    <dimen name="home_tab_height">52dp</dimen>
+    <dimen name="home_tab_height">60dp</dimen>
 
     <dimen name="top_tab_height">42dp</dimen>
 

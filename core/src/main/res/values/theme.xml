@@ -106,6 +106,7 @@
     <attr name="qmui_skin_support_topbar_back_drawable" format="reference"/>// 返回按钮图标
     <attr name="qmui_skin_support_tab_size" format="reference|dimension"/>// TabSegment字体大小
     <attr name="qmui_skin_segment_tab_height_size" format="reference|dimension"/> // QMUISegment高度
+    <attr name="qmui_skin_segment_tab_background_color" format="reference|color"/> // QMUISegment背景颜色
 
     <!--ProgressDialog-->
     <attr name="app_progress_dialog_width" format="dimension|reference"/>
@@ -232,6 +233,7 @@
         <item name="qmui_skin_support_empty_view_btn_bg_color">?attr/app_skin_primary_color</item>
         <item name="qmui_skin_support_empty_view_btn_text_color">@color/qmui_config_color_white</item>
         <item name="qmui_skin_segment_tab_height_size">@dimen/home_tab_height</item>
+        <item name="qmui_skin_segment_tab_background_color">@color/white</item>
         <item name="QMUITopBarStyle">@style/BaseTopBarStyle</item>
         <item name="QMUITabSegmentStyle">@style/BaseSegmentStyle</item>
 

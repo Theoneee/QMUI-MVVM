@@ -46,11 +46,6 @@ class IndexFragment : BaseTabIndexFragment<BaseViewModel>() {
 
     override fun isNeedChangeStatusBarMode(): Boolean = false
 
-    override fun initView(root: View) {
-        super.initView(root)
-        getTabSegment()?.setBackgroundColor(getColor(mActivity,R.color.white))
-    }
-
     override fun QMUITabBuilder.applyTabBuilder() {
         // TODO Tips1 更改选中图标的颜色
         skinChangeSelectedWithTintColor(true)
