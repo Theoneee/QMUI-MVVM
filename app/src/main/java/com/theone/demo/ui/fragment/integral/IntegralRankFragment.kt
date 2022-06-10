@@ -10,7 +10,7 @@ import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.getValueNonNull
 import com.theone.demo.BR
 import com.theone.demo.R
-import com.theone.demo.app.net.Url
+import com.theone.demo.data.net.Url
 import com.theone.demo.data.model.bean.BannerResponse
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.databinding.FragmentIntegralRankBinding

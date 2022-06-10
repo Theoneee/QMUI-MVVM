@@ -1,8 +1,8 @@
 package com.theone.demo.viewmodel
 
-import com.theone.demo.app.net.PagerResponse
+import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.data.model.bean.ArticleResponse
-import com.theone.demo.app.net.Url
+import com.theone.demo.data.net.Url
 import rxhttp.wrapper.cahce.CacheMode
 
 

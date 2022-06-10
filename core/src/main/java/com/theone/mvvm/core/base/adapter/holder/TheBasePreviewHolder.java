@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -19,8 +21,12 @@ import com.luck.picture.lib.photoview.PhotoView;
 import com.luck.picture.lib.utils.BitmapUtils;
 import com.luck.picture.lib.utils.DensityUtil;
 import com.luck.picture.lib.utils.MediaUtils;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.QMUIProgressBar;
 import com.theone.common.callback.IImageUrl;
+import com.theone.mvvm.core.R;
 import com.theone.mvvm.core.app.util.glide.GlideEngine;
+import com.theone.mvvm.core.app.widge.ProgressWheel;
 
 
 public class TheBasePreviewHolder extends BaseViewHolder {
@@ -42,13 +48,13 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     protected final int screenWidth;
     protected final int screenHeight;
     protected final int screenAppInHeight;
-    protected IImageUrl media;
     protected final ImageEngine imageEngine;
     public PhotoView coverImageView;
 
 
     public static TheBasePreviewHolder generate(ViewGroup parent, int viewType, int resource) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
+
         if (viewType == ADAPTER_TYPE_VIDEO) {
             return new ThePreviewVideoHolder(itemView);
         } else if (viewType == ADAPTER_TYPE_AUDIO) {
@@ -68,7 +74,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     }
 
     protected void findViews(View itemView) {
-        this.coverImageView = itemView.findViewById(com.luck.picture.lib.R.id.preview_image);
+        this.coverImageView = itemView.findViewById(R.id.preview_image);
     }
 
     /**
@@ -78,32 +84,31 @@ public class TheBasePreviewHolder extends BaseViewHolder {
      * @param position
      */
     public void bindData(IImageUrl media, int position) {
-        this.media = media;
         int[] size = getSize(media);
         int[] maxImageSize = BitmapUtils.getMaxImageSize(size[0], size[1]);
         loadImageBitmap(media, maxImageSize[0], maxImageSize[1]);
         setScaleDisplaySize(media);
-        setOnClickEventListener();
-        setOnLongClickEventListener();
+        setOnClickEventListener(media,position);
+        setOnLongClickEventListener(media,position);
     }
 
-    protected void setOnClickEventListener() {
+    protected void setOnClickEventListener(IImageUrl media, int position) {
         coverImageView.setOnViewTapListener(new OnViewTapListener() {
             @Override
             public void onViewTap(View view, float x, float y) {
                 if (mPreviewEventListener != null) {
-                    mPreviewEventListener.onPressed();
+                    mPreviewEventListener.onPreviewClick(media,position);
                 }
             }
         });
     }
 
-    protected void setOnLongClickEventListener() {
+    protected void setOnLongClickEventListener(IImageUrl media, int position) {
         coverImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 if (mPreviewEventListener != null) {
-                    mPreviewEventListener.onLongPressDownload(media);
+                    mPreviewEventListener.onPreviewLongClick(media,position);
                 }
                 return false;
             }
@@ -123,7 +128,9 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     protected void loadBitmapCallback(IImageUrl media, Bitmap bitmap) {
         String path = media.getImageUrl();
         if (bitmap == null) {
-            mPreviewEventListener.onLoadError();
+            coverImageView.setScaleType(ImageView.ScaleType.CENTER);
+            coverImageView.setImageResource(R.drawable.svg_image_fail);
+            mPreviewEventListener.onPreviewLoadError();
         } else {
             if (PictureMimeType.isUrlHasWebp(path)
                     || PictureMimeType.isUrlHasGif(path)) {
@@ -153,7 +160,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
                 width = isHaveSize ? bitmap.getWidth() : size[0];
                 height = isHaveSize ? bitmap.getHeight() : size[1];
             }
-            mPreviewEventListener.onLoadComplete(width, height, new OnCallbackListener<Boolean>() {
+            mPreviewEventListener.onPreviewLoadComplete(width, height, new OnCallbackListener<Boolean>() {
                 @Override
                 public void onCall(Boolean isBeginEffect) {
                     coverImageView.setScaleType(isBeginEffect ? ImageView.ScaleType.CENTER_CROP : scaleType);
@@ -205,15 +212,15 @@ public class TheBasePreviewHolder extends BaseViewHolder {
 
     public interface OnPreviewEventListener {
 
-        void onLoadComplete(int width, int height, OnCallbackListener<Boolean> call);
+        void onPreviewLoadComplete(int width, int height, OnCallbackListener<Boolean> call);
 
-        void onLoadError();
+        void onPreviewLoadError();
 
-        void onPressed();
+        void onPreviewClick(IImageUrl media,int position );
 
         void onPreviewVideoTitle(String videoName);
 
-        void onLongPressDownload(IImageUrl media);
+        void onPreviewLongClick(IImageUrl media,int position);
     }
 
 }

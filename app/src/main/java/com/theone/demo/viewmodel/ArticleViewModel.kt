@@ -3,7 +3,7 @@ package com.theone.demo.viewmodel
 import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.demo.data.model.bean.ArticleResponse
-import com.theone.demo.app.net.PagerResponse
+import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.data.repository.ApiRepository
 

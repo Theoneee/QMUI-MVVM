@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/qmui_config_color_pure_black"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.luck.picture.lib.photoview.PhotoView
+        android:id="@+id/preview_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.theone.mvvm.core.app.widge.ProgressWheel
+        xmlns:wheel="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progressWheel"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center"
+        android:clickable="false"
+        wheel:matProg_barColor="?attr/app_skin_primary_color"
+        wheel:matProg_barWidth="3dp"
+        wheel:matProg_rimColor="@color/qmui_config_color_gray_9"
+        wheel:matProg_rimWidth="3dp" />
+
+</FrameLayout>

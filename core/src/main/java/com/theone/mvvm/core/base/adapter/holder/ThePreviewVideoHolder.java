@@ -18,10 +18,7 @@ import com.luck.picture.lib.R;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.PictureSelectionConfig;
 import com.theone.common.callback.IImageUrl;
-
 import java.io.File;
-
-
 
 public class ThePreviewVideoHolder extends TheBasePreviewHolder {
     public ImageView ivPlayButton;
@@ -69,7 +66,7 @@ public class ThePreviewVideoHolder extends TheBasePreviewHolder {
             @Override
             public void onClick(View view) {
                 if (mPreviewEventListener != null) {
-                    mPreviewEventListener.onPressed();
+                    mPreviewEventListener.onPreviewClick(media,position);
                 }
             }
         });

@@ -76,7 +76,7 @@ abstract class BaseRequest<T> : IRequest<T> {
 
     protected suspend fun requestAwait(
         wait: Await<T>,
-        errorLiveData: UnPeekLiveData<String>? = null
+        errorLiveData: UnPeekLiveData<ErrorInfo>? = null
     ) {
         state.value = true
         wait.awaitResult { result ->
@@ -84,7 +84,7 @@ abstract class BaseRequest<T> : IRequest<T> {
         }.onFailure {
             // 错误回调
             it.printStackTrace()
-            onError(ErrorInfo(it.msg,it.code))
+            onError(ErrorInfo(it.msg,it.code),errorLiveData)
         }
         // 请求结束
         state.value = false

@@ -49,13 +49,13 @@ abstract class BasePagerListFragment<T, VM : BasePagerViewModel<T>, DB : ViewDat
 
     override fun initAdapter() {
         super.initAdapter()
-        mAdapter.setAdapterAnimation(mAppVm.appAnimation.value)
+        getAdapter().setAdapterAnimation(mAppVm.appAnimation.value)
     }
 
     override fun createObserver() {
         super.createObserver()
         mAppVm.appAnimation.observe(this, Observer {
-            mAdapter.setAdapterAnimation(it)
+            getAdapter().setAdapterAnimation(it)
         })
     }
 
@@ -70,7 +70,7 @@ abstract class BasePagerListFragment<T, VM : BasePagerViewModel<T>, DB : ViewDat
     }
 
     override fun onRefreshSuccess(data: List<T>) {
-        mAdapter.setDiffNewData(data.toMutableList()) {
+        getAdapter().setDiffNewData(data.toMutableList()) {
             setRefreshLayoutEnabled(true)
             getRecyclerView().scrollToPosition(0)
         }

@@ -1,12 +1,11 @@
-package com.theone.demo.ui.fragment.gzh
+package com.theone.mvvm.core.base.callback
 
-import android.util.Log
 import com.qmuiteam.qmui.arch.QMUIFragment
-import com.theone.demo.viewmodel.WxGzhRequestViewModel
+import com.qmuiteam.qmui.widget.QMUIViewPager
+import com.qmuiteam.qmui.widget.tab.QMUITabSegment
+import com.theone.mvvm.core.base.adapter.TabFragmentAdapter
 import com.theone.mvvm.core.data.entity.QMUITabBean
-import com.theone.mvvm.core.app.ext.qmui.addTab
-import com.theone.mvvm.core.base.fragment.BaseTabInTitleFragment
-
+import net.lucode.hackware.magicindicator.MagicIndicator
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -27,29 +26,23 @@ import com.theone.mvvm.core.base.fragment.BaseTabInTitleFragment
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/4 0004
+ * @date 2022-06-09 10:00
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class WxGzhFragment:BaseTabInTitleFragment<WxGzhRequestViewModel>() {
+interface ITab {
 
-    override fun isNeedChangeStatusBarMode(): Boolean  = true
+    fun getViewPager(): QMUIViewPager
+    fun getTabSegment(): QMUITabSegment?
+    fun getMagicIndicator(): MagicIndicator?
+    fun getPagerAdapter(): TabFragmentAdapter
 
-    override fun isLazyLoadData(): Boolean  = false
+    fun isLazyLoadData(): Boolean = true
 
-    override fun initTabAndFragments(
+    fun initTabAndFragments(
         tabs: MutableList<QMUITabBean>,
         fragments: MutableList<QMUIFragment>
-    ) {
-        for (data in getViewModel().getRequest().getResponseLiveData().value!!) {
-            tabs.addTab(data.name)
-            fragments.add(
-                WxGzhItemFragment.newInstance(
-                    data.id
-                )
-            )
-        }
-    }
+    )
 
 }

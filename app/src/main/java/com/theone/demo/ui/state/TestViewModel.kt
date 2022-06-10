@@ -1,4 +1,4 @@
-package com.theone.demo.viewmodel.state
+package com.theone.demo.ui.state
 
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.common.callback.databind.StringObservableField

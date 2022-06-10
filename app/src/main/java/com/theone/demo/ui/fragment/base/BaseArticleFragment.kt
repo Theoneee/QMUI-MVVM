@@ -1,5 +1,6 @@
 package com.theone.demo.ui.fragment.base
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.lifecycle.Observer
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -49,10 +50,11 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
 
     override fun initAdapter() {
         super.initAdapter()
-        mAdapter.addChildClickViewIds(R.id.collection)
-        mAdapter.setOnItemChildClickListener(this)
+        getAdapter().addChildClickViewIds(R.id.collection)
+        getAdapter().setOnItemChildClickListener(this)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
         super.createObserver()
         val isCollection = this is CollectionArticleFragment
@@ -62,7 +64,7 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
                 if (it != null) {
                     it.collectIds.forEach { id ->
                         // 以用户信息里的为准，请求的数据可能是缓存里的，没有更新
-                        for (item in mAdapter.data) {
+                        for (item in getAdapter().data) {
                             if (id.toInt() == item.id) {
                                 item.collect = true
                                 break
@@ -70,22 +72,22 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
                         }
                     }
                 } else {
-                    for (item in mAdapter.data) {
+                    for (item in getAdapter().data) {
                         item.collect = false
                     }
                 }
-                mAdapter.notifyDataSetChanged()
+                getAdapter().notifyDataSetChanged()
             }
             collectEvent.observe(this@BaseArticleFragment){
-                for (index in mAdapter.data.indices) {
-                    val articleId = mAdapter.data[index].getArticleId()
+                for (index in getAdapter().data.indices) {
+                    val articleId = getAdapter().data[index].getArticleId()
                     if (articleId == it.id) {
-                        mAdapter.data[index].collect = it.collect
+                        getAdapter().data[index].collect = it.collect
                         if (isCollection) {
-                            mAdapter.data.removeAt(index)
-                            mAdapter.notifyItemRemoved(index)
+                            getAdapter().data.removeAt(index)
+                            getAdapter().notifyItemRemoved(index)
                         } else {
-                            mAdapter.notifyItemChanged(index + mAdapter.headerLayoutCount)
+                            getAdapter().notifyItemChanged(index + getAdapter().headerLayoutCount)
                         }
                         // 操作过后应该更新本地的用户信息里的收藏
                         CacheUtil.setUser(

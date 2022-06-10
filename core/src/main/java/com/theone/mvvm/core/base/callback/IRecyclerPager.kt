@@ -1,6 +1,7 @@
 package com.theone.mvvm.core.base.callback
 
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.loadmore.BaseLoadMoreView
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 
@@ -31,6 +32,8 @@ import com.theone.mvvm.core.data.enum.LayoutManagerType
 interface IRecyclerPager<T> {
 
     fun getRecyclerView(): RecyclerView
+
+    fun getAdapter():BaseQuickAdapter<T,*>
 
     /**
      * 初始化适配器

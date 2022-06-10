@@ -61,7 +61,7 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
 
     override fun getItemSpace(): Int = 10
 
-    protected open fun getSelectList(): ArrayList<LocalMedia> = mAdapter.data as ArrayList<LocalMedia>
+    protected open fun getSelectList(): ArrayList<LocalMedia> = getAdapter().data as ArrayList<LocalMedia>
 
     override fun createAdapter(): BaseQuickAdapter<LocalMedia, *> = PictureSelectorAdapter().apply {
         mSelectMax = getMaxSelectNum()
@@ -72,7 +72,7 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
     }
 
     protected open fun setMaxSelectNum(max: Int) {
-        (mAdapter as PictureSelectorAdapter).mSelectMax = max
+        (getAdapter() as PictureSelectorAdapter).mSelectMax = max
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -100,7 +100,7 @@ abstract class BasePictureSelectorFragment<VM : BaseListViewModel<LocalMedia>, D
 
 
     override fun onResult(result: ArrayList<LocalMedia>?) {
-        mAdapter.setList(result)
+        getAdapter().setList(result)
     }
 
     override fun onCancel() {

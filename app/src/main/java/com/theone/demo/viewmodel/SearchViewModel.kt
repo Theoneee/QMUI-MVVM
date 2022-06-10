@@ -1,6 +1,6 @@
 package com.theone.demo.viewmodel
 
-import com.theone.demo.app.net.PagerResponse
+import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.app.util.CacheUtil
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
 

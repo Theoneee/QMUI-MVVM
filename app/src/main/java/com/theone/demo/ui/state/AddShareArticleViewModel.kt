@@ -1,11 +1,9 @@
-package com.theone.demo.viewmodel
+package com.theone.demo.ui.state
 
-import com.theone.demo.data.model.bean.ClassifyResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.data.request.ProjectRequest
+import com.theone.common.callback.databind.StringObservableField
+import com.theone.demo.data.request.AddShareArticleRequest
+import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.request
-import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 
 
 //  ┏┓　　　┏┓
@@ -27,19 +25,22 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/2 0002
+ * @date 2021/3/18 0018
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class ProjectViewModel : BaseRequestVM<ProjectRequest>() {
+class AddShareArticleViewModel:BaseViewModel() {
 
-    override fun requestServer() {
+    val title :StringObservableField = StringObservableField("")
+    val url :StringObservableField = StringObservableField("")
+    val publisher :StringObservableField = StringObservableField("")
+
+    val mRequest = AddShareArticleRequest()
+
+    fun requestServer() {
         request({
-            getRequest().getProjectList()
-        })
+            mRequest.requestServer(title.get(),url.get())
+        },"提交中")
     }
-
-    override fun createRequest() = ProjectRequest()
-
 }

@@ -19,6 +19,7 @@ import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.adapter.ThePicturePreviewAdapter
 import com.theone.mvvm.core.base.adapter.holder.TheBasePreviewHolder
 import com.theone.mvvm.core.base.viewmodel.BaseListViewModel
+import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
 import com.theone.mvvm.ext.qmui.updateStatusBarMode
 
 //  ┏┓　　　┏┓
@@ -46,7 +47,8 @@ import com.theone.mvvm.ext.qmui.updateStatusBarMode
  * @remark
  */
 abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, DB : ViewDataBinding> :
-    BasePagerPullRefreshFragment<T, VM, DB>(), TheBasePreviewHolder.OnPreviewEventListener {
+    BasePagerPullRefreshFragment<T, VM, DB>(), TheBasePreviewHolder.OnPreviewEventListener,
+    Animation.AnimationListener {
 
     private var isLightModel: Boolean = true
 
@@ -68,6 +70,8 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
     override fun createAdapter(): BaseQuickAdapter<T, *> = ThePicturePreviewAdapter<T>(this)
 
     override fun QMUITopBarLayout.initTopBar() {
+        setBackgroundAlpha(0)
+        addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_light)
         getColor(R.color.white).let {
             setTitle("").setTextColor(it)
             setSubTitle("").setTextColor(it)
@@ -76,7 +80,7 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
     }
 
     override fun initAdapter() {
-        with(mAdapter) {
+        with(getAdapter()) {
             if (this is LoadMoreModule) {
                 loadMoreModule.loadMoreView = getAdapterLoadMoreView()
                 loadMoreModule.setOnLoadMoreListener(this@BaseImageSnapFragment)
@@ -105,8 +109,12 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val position = linearLayoutManager.findFirstVisibleItemPosition()
-                if (mAdapter.data.size > position) {
-                    onScrollChanged(mAdapter.getItem(position) as T, position, mAdapter.data.size)
+                if (getAdapter().data.size > position) {
+                    onScrollChanged(
+                        getAdapter().getItem(position) as T,
+                        position,
+                        getAdapter().data.size
+                    )
                 }
             }
 
@@ -130,43 +138,52 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
     override fun onPreviewVideoTitle(videoName: String?) {
     }
 
-    override fun onLongPressDownload(media: IImageUrl) {
+    override fun onPreviewLongClick(media: IImageUrl,position: Int) {
     }
 
-    override fun onLoadComplete(width: Int, height: Int, call: OnCallbackListener<Boolean>?) {
+    override fun onPreviewLoadComplete(width: Int, height: Int, call: OnCallbackListener<Boolean>?) {
     }
 
-    override fun onLoadError() {
+    override fun onPreviewLoadError() {
     }
 
-    override fun onPressed() {
+    override fun onPreviewClick(media: IImageUrl,position: Int) {
         getTopBar()?.run {
             if (isVisible()) {
-                QMUIViewHelper.slideOut(this, 500, animationListener, true, QMUIDirection.BOTTOM_TO_TOP)
+                QMUIViewHelper.slideOut(
+                    this,
+                    500,
+                    this@BaseImageSnapFragment,
+                    true,
+                    QMUIDirection.BOTTOM_TO_TOP
+                )
             } else {
-                QMUIViewHelper.slideIn(this, 500, animationListener, true, QMUIDirection.TOP_TO_BOTTOM)
+                QMUIViewHelper.slideIn(
+                    this,
+                    500,
+                    this@BaseImageSnapFragment,
+                    true,
+                    QMUIDirection.TOP_TO_BOTTOM
+                )
             }
         }
     }
 
     override fun onDestroy() {
-        (mAdapter as ThePicturePreviewAdapter).destroy()
+        (getAdapter() as ThePicturePreviewAdapter).destroy()
         super.onDestroy()
     }
 
-    private val animationListener = object :Animation.AnimationListener{
-        override fun onAnimationStart(animation: Animation?) {
-        }
+    override fun onAnimationStart(animation: Animation?) {
+    }
 
-        override fun onAnimationEnd(animation: Animation?) {
-            getTopBar()?.let {
-                updateStatusBarMode(it.isVisible())
-            }
+    override fun onAnimationEnd(animation: Animation?) {
+        getTopBar()?.let {
+            updateStatusBarMode(it.isVisible())
         }
+    }
 
-        override fun onAnimationRepeat(animation: Animation?) {
-        }
-
+    override fun onAnimationRepeat(animation: Animation?) {
     }
 
 }

@@ -39,7 +39,6 @@ import rxhttp.wrapper.coroutines.Await
  * @email 625805189@qq.com
  * @remark
  */
-@Deprecated("将请求单独出去,不再ViewModel里进行多余操作", replaceWith = ReplaceWith("使用 BaseRequest()相关替代"))
 abstract class BaseRequestViewModel<T> : BaseViewModel() {
 
     abstract fun requestServer()

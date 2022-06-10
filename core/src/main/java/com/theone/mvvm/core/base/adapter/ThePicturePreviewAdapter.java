@@ -1,16 +1,14 @@
 package com.theone.mvvm.core.base.adapter;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.luck.picture.lib.R;
 import com.luck.picture.lib.adapter.holder.BasePreviewHolder;
-import com.luck.picture.lib.config.InjectResourceSource;
 import com.theone.common.callback.IImageUrl;
+import com.theone.mvvm.core.R;
 import com.theone.mvvm.core.base.adapter.holder.TheBasePreviewHolder;
 import com.theone.mvvm.core.base.adapter.holder.ThePreviewAudioHolder;
 import com.theone.mvvm.core.base.adapter.holder.ThePreviewVideoHolder;
@@ -24,7 +22,7 @@ import java.util.LinkedHashMap;
  * @email 625805189@qq.com
  * @remark
  */
-public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdapter<T,TheBasePreviewHolder> {
+public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdapter<T, TheBasePreviewHolder> {
 
     private final TheBasePreviewHolder.OnPreviewEventListener onPreviewEventListener;
     private final LinkedHashMap<Integer, TheBasePreviewHolder> mHolderCache = new LinkedHashMap<>();
@@ -41,29 +39,24 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
     @NonNull
     @Override
     public TheBasePreviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int layoutResourceId;
         if (viewType == BasePreviewHolder.ADAPTER_TYPE_VIDEO) {
-            layoutResourceId = InjectResourceSource.getLayoutResource(parent.getContext(), InjectResourceSource.PREVIEW_ITEM_VIDEO_LAYOUT_RESOURCE);
-            return TheBasePreviewHolder.generate(parent, viewType, layoutResourceId != 0 ? layoutResourceId : R.layout.ps_preview_video);
+            return TheBasePreviewHolder.generate(parent, viewType, R.layout.ps_preview_video);
         } else if (viewType == BasePreviewHolder.ADAPTER_TYPE_AUDIO) {
-            layoutResourceId = InjectResourceSource.getLayoutResource(parent.getContext(), InjectResourceSource.PREVIEW_ITEM_AUDIO_LAYOUT_RESOURCE);
-            return TheBasePreviewHolder.generate(parent, viewType, layoutResourceId != 0 ? layoutResourceId : R.layout.ps_preview_audio);
+            return TheBasePreviewHolder.generate(parent, viewType, R.layout.ps_preview_audio);
         } else {
-            layoutResourceId = InjectResourceSource.getLayoutResource(parent.getContext(), InjectResourceSource.PREVIEW_ITEM_IMAGE_LAYOUT_RESOURCE);
-            return TheBasePreviewHolder.generate(parent, viewType, layoutResourceId != 0 ? layoutResourceId : R.layout.ps_preview_image);
+            return TheBasePreviewHolder.generate(parent, viewType, R.layout.item_preview_image);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull TheBasePreviewHolder holder, int position) {
-        if(null != onPreviewEventListener){
+        if (null != onPreviewEventListener) {
             holder.setOnPreviewEventListener(onPreviewEventListener);
         }
         IImageUrl media = getData().get(position);
         mHolderCache.put(position, holder);
         holder.bindData(media, position);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -76,7 +69,6 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
             return BasePreviewHolder.ADAPTER_TYPE_IMAGE;
         }
     }
-
 
     @Override
     public void onViewAttachedToWindow(@NonNull TheBasePreviewHolder holder) {

@@ -1,12 +1,6 @@
-package com.theone.demo.viewmodel
+package com.theone.demo.data.net
 
-import com.theone.demo.data.model.bean.ClassifyResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.data.request.ProjectRequest
-import com.theone.mvvm.core.app.ext.request
-import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-
+import com.theone.mvvm.core.base.request.IResponse
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -32,14 +26,17 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
  * @email 625805189@qq.com
  * @remark
  */
-class ProjectViewModel : BaseRequestVM<ProjectRequest>() {
+data class Response<T>(
+    val errorCode: Int,
+    val errorMsg: String?,
+    val data: T?
+) : IResponse<T> {
 
-    override fun requestServer() {
-        request({
-            getRequest().getProjectList()
-        })
-    }
+    override fun isSuccess(): Boolean = errorCode == 0
 
-    override fun createRequest() = ProjectRequest()
+    override fun getResponse(): T? = data
 
+    override fun getMsg(): String? = errorMsg
+
+    override fun getCode(): Int = errorCode
 }

@@ -1,9 +1,8 @@
 package com.theone.demo.viewmodel
 
-import com.theone.demo.data.model.bean.ClassifyResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-import com.theone.demo.app.ext.getCacheMode
+import com.theone.demo.data.request.WxGzhRequest
+import com.theone.mvvm.core.app.ext.request
+import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
 
 
 //  ┏┓　　　┏┓
@@ -30,12 +29,14 @@ import com.theone.demo.app.ext.getCacheMode
  * @email 625805189@qq.com
  * @remark
  */
-class WxGzhRequestViewModel : BaseRequestViewModel<List<ClassifyResponse>>() {
+class WxGzhRequestViewModel : BaseRequestVM<WxGzhRequest>() {
 
     override fun requestServer() {
         request({
-            onSuccess(ApiRepository.INSTANCE.getWxGzh(getCacheMode(true)))
+            getRequest().getWxGzhItems()
         })
     }
+
+    override fun createRequest() = WxGzhRequest()
 
 }

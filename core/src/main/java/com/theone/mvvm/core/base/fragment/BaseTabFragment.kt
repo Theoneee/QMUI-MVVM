@@ -18,6 +18,8 @@ import com.theone.mvvm.core.data.entity.QMUITabBean
 import com.theone.mvvm.core.app.ext.qmui.init
 import com.theone.mvvm.core.app.widge.indicator.SkinLinePagerIndicator
 import com.theone.mvvm.core.app.widge.indicator.SkinPagerTitleView
+import com.theone.mvvm.core.base.callback.ITab
+import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -52,21 +54,16 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  * @remark
  */
 abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
-    BaseCoreFragment<VM, DB>() {
+    BaseCoreFragment<VM, DB>(),ITab {
 
     private var mTabs: MutableList<QMUITabBean> = mutableListOf()
     private var mFragments: MutableList<QMUIFragment> = mutableListOf()
 
-    protected open lateinit var mPagerAdapter: TabFragmentAdapter
+    private val mPagerAdapter: TabFragmentAdapter by lazy {
+        TabFragmentAdapter(childFragmentManager, mFragments)
+    }
 
-    abstract fun initTabAndFragments(
-        tabs: MutableList<QMUITabBean>,
-        fragments: MutableList<QMUIFragment>
-    )
-
-    abstract fun getViewPager(): QMUIViewPager
-    abstract fun getTabSegment(): QMUITabSegment?
-    abstract fun getMagicIndicator(): MagicIndicator?
+    override fun getPagerAdapter(): TabFragmentAdapter = mPagerAdapter
 
     /**
      * 这个界面不再设置颜色
@@ -75,55 +72,47 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun getRootBackgroundColor(): Int? = null
 
     /**
-     * 如果TAB数据是从网络获取，则返回一个请求的ViewModel，继承 BaseRequestViewModel
-     */
-    protected open fun getRequestViewModel(): BaseRequestViewModel<*>? = null
-
-    /**
      * TAB的内容是否来自网络
      * @return Boolean
      */
-    protected open fun isTabFromNet(): Boolean = getRequestViewModel() != null
+    private val isTabFromNet by lazy {
+        getViewModel() is BaseRequestVM<*>
+    }
 
-    /**
-     * 是否需要延迟加载数据
-     * @return Boolean
-     */
-    protected open fun isLazyLoadData(): Boolean = true
-
-    override fun loaderRegisterView(): View?  = if(isTabFromNet()) getViewConstructor().getRootView() else null
+    override fun loaderRegisterView(): View?  = if(isTabFromNet) getViewConstructor().getRootView() else null
 
     override fun initView(root: View) {
         // 如果Tab的内容不是从网络获取，是否也需要延迟初始化？
-        if (!isTabFromNet()) {
+        if (!isTabFromNet) {
             startInit()
         } else if (!isLazyLoadData()) {
-            getRequestViewModel()?.requestServer()
+            (getViewModel() as BaseRequestVM<*>).requestServer()
         }
     }
 
     override fun onLazyInit() {
-        if (isTabFromNet() && isLazyLoadData()) {
+        if (isTabFromNet && isLazyLoadData()) {
             onPageReLoad()
         }
     }
 
     override fun onPageReLoad() {
         showLoadingPage()
-        getRequestViewModel()?.requestServer()
+        (getViewModel() as BaseRequestVM<*>).requestServer()
     }
 
     override fun createObserver() {
-        getRequestViewModel()?.run {
-            addLoadingObserve(this)
-            getResponseLiveData().observe(this@BaseTabFragment, Observer {
-                startInit()
-            })
-            getErrorLiveData().observe(this@BaseTabFragment, Observer {
-                showErrorPage(it) {
-                    onPageReLoad()
-                }
-            })
+        if(isTabFromNet){
+            (getViewModel() as BaseRequestVM<*>).getRequest().run {
+                getResponseLiveData().observe(this@BaseTabFragment, Observer {
+                    startInit()
+                })
+                getErrorLiveData().observe(this@BaseTabFragment, Observer {
+                    showErrorPage(it.msg) {
+                        onPageReLoad()
+                    }
+                })
+            }
         }
     }
 
@@ -138,9 +127,8 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     }
 
     private fun initViewPager() {
-        mPagerAdapter = TabFragmentAdapter(childFragmentManager, mFragments)
         getViewPager().run {
-            adapter = mPagerAdapter
+            adapter = getPagerAdapter()
         }
     }
 

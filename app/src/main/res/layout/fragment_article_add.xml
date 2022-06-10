@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.theone.demo.viewmodel.AddShareArticleViewModel" />
+            type="com.theone.demo.ui.state.AddShareArticleViewModel" />
 
         <variable
             name="click"

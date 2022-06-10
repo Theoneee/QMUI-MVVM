@@ -1,8 +1,12 @@
 package com.theone.mvvm.core.app.ext
 
 import androidx.lifecycle.viewModelScope
+import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.mvvm.core.data.entity.ErrorInfo
 import kotlinx.coroutines.*
+import rxhttp.awaitResult
+import rxhttp.wrapper.coroutines.Await
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -63,13 +67,25 @@ fun BaseViewModel.launch(
     }
 }
 
-
-fun BaseViewModel.launch(
+fun BaseViewModel.request(
     block: suspend CoroutineScope.() -> Unit,
+    loadingMsg:String?=null
 ): Job {
     return viewModelScope.launch {
-        block()
+        try {
+            coroutineScope {
+                loadingMsg?.let {
+                    showLoadingDialog(it)
+                }
+                block()
+            }
+        } finally {
+            loadingMsg?.let {
+                hideLoadingDialog()
+            }
+        }
     }
 }
+
 
 

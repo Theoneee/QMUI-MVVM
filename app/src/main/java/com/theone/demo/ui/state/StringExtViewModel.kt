@@ -1,7 +1,7 @@
-package com.theone.demo.app.net
+package com.theone.demo.ui.state
 
-import com.google.gson.annotations.SerializedName
-import com.theone.mvvm.core.base.request.IResponse
+import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.common.callback.databind.SpannableStringObservableField
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,22 +22,17 @@ import com.theone.mvvm.core.base.request.IResponse
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/2 0002
+ * @date 2021-04-09 10:18
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-data class Response<T>(
-    val errorCode: Int,
-    val errorMsg: String?,
-    val data: T?
-) : IResponse<T> {
+class StringExtViewModel:BaseViewModel() {
 
-    override fun isSuccess(): Boolean = errorCode == 0
+    val fruitName: SpannableStringObservableField = SpannableStringObservableField()
+    val superscript: SpannableStringObservableField = SpannableStringObservableField()
+    val subscript: SpannableStringObservableField = SpannableStringObservableField()
+    val price: SpannableStringObservableField = SpannableStringObservableField()
 
-    override fun getResponse(): T? = data
 
-    override fun getMsg(): String? = errorMsg
-
-    override fun getCode(): Int = errorCode
 }

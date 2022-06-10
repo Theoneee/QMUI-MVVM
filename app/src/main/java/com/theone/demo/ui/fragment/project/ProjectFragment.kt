@@ -39,11 +39,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  * @email 625805189@qq.com
  * @remark
  */
-class ProjectFragment : BaseTabInTitleFragment<BaseViewModel>() {
-
-    private val mRequestVm: ProjectViewModel by viewModels()
-
-    override fun getRequestViewModel(): BaseRequestViewModel<List<ClassifyResponse>>  = mRequestVm
+class ProjectFragment : BaseTabInTitleFragment<ProjectViewModel>() {
 
     override fun isLazyLoadData(): Boolean  = false
 
@@ -51,7 +47,7 @@ class ProjectFragment : BaseTabInTitleFragment<BaseViewModel>() {
         tabs: MutableList<QMUITabBean>,
         fragments: MutableList<QMUIFragment>
     ) {
-        mRequestVm.getResponseLiveData().value?.forEach {
+        getViewModel().getRequest().getResponseLiveData().value?.forEach {
             tabs.addTab(it.name)
             fragments.add(
                 ProjectItemFragment.newInstance(

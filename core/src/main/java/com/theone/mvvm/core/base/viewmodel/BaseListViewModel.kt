@@ -27,7 +27,6 @@ import com.theone.mvvm.core.base.request.IPageInfo
  * @email 625805189@qq.com
  * @remark
  */
-@Deprecated("将请求单独出去,不再ViewModel里进行多余操作", replaceWith = ReplaceWith("使用 BaseListRequest() 替代"))
 abstract class BaseListViewModel<T> : BaseRequestViewModel<List<T>>() {
 
     // 分页信息,实体需实现 IPageInfo

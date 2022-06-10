@@ -92,13 +92,13 @@ class SamplePagerFragment :
 
     override fun initAdapter() {
         super.initAdapter()
-        mAdapter.setAdapterAnimation(mAppVm.appAnimation.value)
+        getAdapter().setAdapterAnimation(mAppVm.appAnimation.value)
     }
 
     override fun createObserver() {
         super.createObserver()
         mAppVm.appAnimation.observe(this, Observer {
-            mAdapter.setAdapterAnimation(it)
+            getAdapter().setAdapterAnimation(it)
         })
     }
 
@@ -113,7 +113,7 @@ class SamplePagerFragment :
     }
 
     override fun onRefreshSuccess(data: List<ArticleResponse>) {
-        mAdapter.getDiffer().submitList(data.toMutableList()) {
+        getAdapter().getDiffer().submitList(data.toMutableList()) {
             setRefreshLayoutEnabled(true)
             getRecyclerView().scrollToPosition(0)
         }

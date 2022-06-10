@@ -179,7 +179,7 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>() {
                             )
                         }
                     }
-                    mAdapter.addHeaderView(this)
+                    this@HomeFragment.getAdapter().addHeaderView(this)
                 }
         }
     }

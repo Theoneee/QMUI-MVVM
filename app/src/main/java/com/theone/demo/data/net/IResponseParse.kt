@@ -1,6 +1,6 @@
 package the.one.brand.net
 
-import com.theone.demo.app.net.Response
+import com.theone.demo.data.net.Response
 import com.theone.mvvm.core.base.request.IResponse
 import rxhttp.wrapper.annotation.Parser
 import rxhttp.wrapper.exception.ParseException

@@ -43,9 +43,11 @@ abstract class BasePagerAdapterFragment
 <T, VM : BaseListViewModel<T>, DB : ViewDataBinding>
     : BasePagerRecyclerViewFragment<T, VM, DB>(), OnLoadMoreListener, OnItemClickListener {
 
-    val mAdapter: BaseQuickAdapter<T, *> by lazy {
+    private val mAdapter: BaseQuickAdapter<T, *> by lazy {
         createAdapter()
     }
+
+    override fun getAdapter(): BaseQuickAdapter<T, *> = mAdapter
 
     abstract fun createAdapter(): BaseQuickAdapter<T, *>
 
@@ -58,7 +60,7 @@ abstract class BasePagerAdapterFragment
      * 如有需要，重写此方法进行更改
      */
     override fun initAdapter() {
-        mAdapter.run {
+        getAdapter().run {
             if (this is LoadMoreModule) {
                 loadMoreModule.loadMoreView = getAdapterLoadMoreView()
                 loadMoreModule.setOnLoadMoreListener(this@BasePagerAdapterFragment)
@@ -70,7 +72,7 @@ abstract class BasePagerAdapterFragment
     override fun getAdapterLoadMoreView(): BaseLoadMoreView = TheLoadMoreView()
 
     override fun initRecyclerView() {
-        getRecyclerView().init(getLayoutManager(), mAdapter, getItemDecoration())
+        getRecyclerView().init(getLayoutManager(), getAdapter(), getItemDecoration())
     }
 
     /**
@@ -81,7 +83,7 @@ abstract class BasePagerAdapterFragment
         return TheSpaceItemDecoration(
             getSpanCount(),
             dp2px(getItemSpace()),
-            mAdapter.headerLayoutCount
+            getAdapter().headerLayoutCount
         )
     }
 
@@ -99,7 +101,7 @@ abstract class BasePagerAdapterFragment
      * @param data List<T>
      */
     override fun onRefreshSuccess(data: List<T>) {
-        mAdapter.setList(data)
+        getAdapter().setList(data)
         setRefreshLayoutEnabled(true)
         getRecyclerView().scrollToPosition(0)
     }
@@ -109,14 +111,14 @@ abstract class BasePagerAdapterFragment
      * @param data List<T>
      */
     override fun onLoadMoreSuccess(data: List<T>) {
-        mAdapter.addData(data)
+        getAdapter().addData(data)
     }
 
     /**
      * 数据加载后，当前的页数<总页数时会触发此方法
      */
     override fun onLoadMoreComplete() {
-        mAdapter.loadMoreModule.loadMoreComplete()
+        getAdapter().loadMoreModule.loadMoreComplete()
     }
 
     /**
@@ -124,14 +126,14 @@ abstract class BasePagerAdapterFragment
      * @param errorMsg String?
      */
     override fun onLoadMoreError(errorMsg: String?) {
-        mAdapter.loadMoreModule.loadMoreFail()
+        getAdapter().loadMoreModule.loadMoreFail()
     }
 
     /**
      * 当没有数据时会触发此方法
      */
     override fun onLoadMoreEnd() {
-        mAdapter.loadMoreModule.loadMoreEnd()
+        getAdapter().loadMoreModule.loadMoreEnd()
     }
 
 }

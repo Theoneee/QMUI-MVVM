@@ -16,7 +16,6 @@ android {
         dataBinding = true
     }
 
-    // 支持 Java JDK 8
     compileOptions {
         targetCompatibility JavaVersion.VERSION_11
         sourceCompatibility JavaVersion.VERSION_11

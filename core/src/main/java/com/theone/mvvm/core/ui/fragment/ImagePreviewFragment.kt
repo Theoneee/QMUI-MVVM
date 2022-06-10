@@ -4,6 +4,7 @@ import SuccessCallback
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -20,6 +21,7 @@ import com.theone.mvvm.core.data.entity.ImagePreviewEvent
 import com.theone.mvvm.core.data.entity.QMUIItem
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
+import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
 import com.theone.mvvm.core.app.util.DownloadUtil
 import com.theone.mvvm.core.ui.viewmodel.ImagePreviewViewModel
 import com.theone.mvvm.core.app.widge.pullrefresh.PullRefreshLayout
@@ -68,6 +70,8 @@ open class ImagePreviewFragment :
     protected open var mClickData: IImageUrl? = null
     private val TAG_SAVE = "下载"
 
+    override fun isStatusBarLightMode(): Boolean = false
+
     override fun getDataBindingClass(): Class<BasePullFreshFragmentBinding> =
         BasePullFreshFragmentBinding::class.java
 
@@ -81,39 +85,28 @@ open class ImagePreviewFragment :
     override fun isLazyLoadData(): Boolean = false
 
     override fun QMUITopBarLayout.initTopBar() {
-        getColor(R.color.black).let {
+        setBackgroundAlpha(0)
+        addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_light)
+        getColor(R.color.white).let {
             setTitle("${mData.position + 1}/${mData.datas.size}").setTextColor(it)
-            setSubTitle("").setTextColor(it)
         }
-        updateBottomDivider(0,0,0,0)
-        addLeftCloseImageBtn(R.drawable.mz_comment_titlebar_ic_close_dark)
+        updateBottomDivider(0, 0, 0, 0)
     }
 
     override fun initData() {
         initGridBottomItems(mActions)
-        mAdapter.setList(mData.datas)
-        Log.e(TAG, "initData: ${mData.datas}" )
+        getAdapter().setList(mData.datas)
         getRecyclerView().scrollToPosition(mData.position)
         setRefreshLayoutEnabled(false)
     }
 
     override fun onLoadMoreComplete() {
-        mAdapter.loadMoreModule.loadMoreEnd(true)
+        getAdapter().loadMoreModule.loadMoreEnd(true)
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-    }
-
-
-//    override fun onImageLongClick(data: ImagePreviewBean, position: Int): Boolean {
-//        mClickData = data
-//        mActivity.showGridBottomSheet(mActions, listener = this).show()
-//        return true
-//    }
-
-    override fun onLongPressDownload(media: IImageUrl) {
+    override fun onPreviewLongClick(media: IImageUrl,position: Int) {
         mClickData = media
-        super.onLongPressDownload(media)
+        mActivity.showGridBottomSheet(mActions, listener = this).show()
     }
 
     protected open fun initGridBottomItems(items: MutableList<QMUIItem>) {
@@ -132,6 +125,10 @@ open class ImagePreviewFragment :
 
     override fun onScrollChanged(item: ImagePreviewBean, position: Int, total: Int) {
         getTopBar()?.setTitle("${position + 1}/$total")
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+
     }
 
     override fun getRefreshLayout(): PullRefreshLayout = getDataBinding().refreshLayout

@@ -1,4 +1,4 @@
-package com.theone.demo.app.net
+package com.theone.demo.data.net
 
 import rxhttp.wrapper.annotation.DefaultDomain
 

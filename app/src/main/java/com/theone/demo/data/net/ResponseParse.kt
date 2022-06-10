@@ -1,7 +1,6 @@
 package the.one.brand.net
 
-import com.theone.demo.app.net.Response
-import com.theone.demo.app.util.CacheUtil
+import com.theone.demo.data.net.Response
 import rxhttp.wrapper.annotation.Parser
 import rxhttp.wrapper.exception.ParseException
 import rxhttp.wrapper.parse.TypeParser

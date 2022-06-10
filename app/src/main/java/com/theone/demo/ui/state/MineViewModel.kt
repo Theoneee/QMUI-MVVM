@@ -1,10 +1,10 @@
-package com.theone.demo.viewmodel.state
+package com.theone.demo.ui.state
 
 import com.theone.demo.app.util.ColorUtil
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.common.callback.databind.StringObservableField
-import com.theone.demo.viewmodel.request.MineRequest
-import com.theone.mvvm.core.app.ext.launch
+import com.theone.demo.data.request.MineRequest
+import com.theone.mvvm.core.app.ext.request
 
 
 //  ┏┓　　　┏┓
@@ -47,10 +47,10 @@ class MineViewModel : BaseViewModel() {
 
     val mRequest = MineRequest()
 
-    fun requestData(){
-        launch {
-            mRequest.requestServer()
-        }
+    fun requestData() {
+        request({
+            mRequest.getUserIntegral()
+        })
     }
 
 }

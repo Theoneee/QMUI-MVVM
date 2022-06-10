@@ -96,22 +96,22 @@ class SearchFragment :
 
     override fun initAdapter() {
         super.initAdapter()
-        mAdapter.addChildClickViewIds(R.id.history_delete)
-        mAdapter.setOnItemChildClickListener(this)
+        getAdapter().addChildClickViewIds(R.id.history_delete)
+        getAdapter().setOnItemChildClickListener(this)
         val hotView = getView(R.layout.custom_search_hot_layout)
         mFloatLayout = hotView.findViewById(R.id.float_layout)
         mHistory = hotView.findViewById(R.id.history_layout)
         hotView.findViewById<TextView>(R.id.clear).apply {
             setOnClickListener(this@SearchFragment)
         }
-        mAdapter.addHeaderView(hotView)
+        getAdapter().addHeaderView(hotView)
     }
 
     override fun createObserver() {
         getViewModel().run {
             getResponseLiveData().observe(this@SearchFragment, Observer {
-                mAdapter.setNewInstance(it.toMutableList())
-                mAdapter.loadMoreModule.loadMoreEnd(true)
+                getAdapter().setNewInstance(it.toMutableList())
+                getAdapter().loadMoreModule.loadMoreEnd(true)
                 setHistoryData(it)
                 showSuccessPage()
             })
@@ -134,8 +134,8 @@ class SearchFragment :
     }
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        mAdapter.data.removeAt(position)
-        mAdapter.notifyItemRangeChanged(position + mAdapter.headerLayoutCount,mAdapter.data.size + mAdapter.headerLayoutCount)
+        getAdapter().data.removeAt(position)
+        getAdapter().notifyItemRangeChanged(position + getAdapter().headerLayoutCount,getAdapter().data.size + getAdapter().headerLayoutCount)
         setHistoryData()
     }
 
@@ -156,7 +156,7 @@ class SearchFragment :
                 keyStr
             )
         )
-        mAdapter.data.let {
+        getAdapter().data.let {
             if (it.contains(keyStr)) {
                 //当搜索历史中包含该数据时 删除
                 it.remove(keyStr)
@@ -167,7 +167,7 @@ class SearchFragment :
             //添加新数据到第一条
             it.add(0, keyStr)
         }
-        mAdapter.notifyDataSetChanged()
+        getAdapter().notifyDataSetChanged()
         setHistoryData()
     }
 
@@ -179,11 +179,11 @@ class SearchFragment :
         dialog?.dismiss()
         if (index > 0) {
             setHistoryData(arrayListOf())
-            mAdapter.setNewInstance(arrayListOf())
+            getAdapter().setNewInstance(arrayListOf())
         }
     }
 
-    private fun setHistoryData(data: List<String> = mAdapter.data) {
+    private fun setHistoryData(data: List<String> = getAdapter().data) {
         if (data.isEmpty())
             goneViews(mHistory)
         else
@@ -203,6 +203,6 @@ class SearchFragment :
 
     override fun getRecyclerView(): RecyclerView = getDataBinding().recyclerView
 
-    override fun getRefreshLayout(): SwipeRefreshLayout? = getDataBinding().swipeRefresh
+    override fun getRefreshLayout(): SwipeRefreshLayout = getDataBinding().swipeRefresh
 
 }

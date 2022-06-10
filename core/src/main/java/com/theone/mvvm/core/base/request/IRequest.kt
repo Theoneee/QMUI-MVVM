@@ -30,7 +30,7 @@ import com.theone.mvvm.core.data.entity.ErrorInfo
  */
 interface IRequest<T> {
 
-    suspend fun requestServer(vararg params:Any)
+    //suspend fun requestServer(vararg params:Any)
 
     fun getResponseLiveData():LiveData<T>
     fun getErrorLiveData(): LiveData<ErrorInfo>

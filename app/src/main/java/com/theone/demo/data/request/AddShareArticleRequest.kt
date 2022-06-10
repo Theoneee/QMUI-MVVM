@@ -1,9 +1,7 @@
-package com.theone.demo.viewmodel
+package com.theone.demo.data.request
 
 import com.theone.demo.data.repository.ApiRepository
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-import com.theone.common.callback.databind.StringObservableField
-
+import com.theone.mvvm.core.base.request.BaseRequest
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -24,20 +22,15 @@ import com.theone.common.callback.databind.StringObservableField
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/18 0018
+ * @date 2022-06-09 08:52
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class AddShareArticleViewModel:BaseRequestViewModel<String>() {
+class AddShareArticleRequest:BaseRequest<String>() {
 
-    val title :StringObservableField = StringObservableField("")
-    val url :StringObservableField = StringObservableField("")
-    val publisher :StringObservableField = StringObservableField("")
-
-    override fun requestServer() {
-       request({
-           onSuccess(ApiRepository.INSTANCE.shareArticle(title.get(),url.get()))
-       },"添加中")
+    suspend fun requestServer(vararg params: Any) {
+      requestAwait(ApiRepository.INSTANCE.shareArticle(params[0] as String,params[0] as String))
     }
+
 }

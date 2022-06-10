@@ -1,12 +1,8 @@
-package com.theone.demo.viewmodel
+package com.theone.mvvm.core.base.viewmodel
 
-import com.theone.demo.data.model.bean.ClassifyResponse
-import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.data.request.ProjectRequest
-import com.theone.mvvm.core.app.ext.request
-import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-
+import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.mvvm.core.base.request.BaseRequest
+import com.theone.mvvm.ext.getClazz
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -27,19 +23,21 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/2 0002
+ * @date 2022-06-09 09:33
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class ProjectViewModel : BaseRequestVM<ProjectRequest>() {
+abstract class BaseRequestVM<R:BaseRequest<*>>:BaseViewModel() {
 
-    override fun requestServer() {
-        request({
-            getRequest().getProjectList()
-        })
+    private val mRequest:R by lazy {
+        createRequest()
     }
 
-    override fun createRequest() = ProjectRequest()
+    open fun getRequest():R = mRequest
+
+    abstract fun createRequest():R
+
+    abstract fun requestServer()
 
 }

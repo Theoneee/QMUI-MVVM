@@ -1,9 +1,11 @@
-package com.theone.demo.viewmodel.request
+package com.theone.demo.data.request
 
-import com.theone.demo.app.ext.getCacheMode
-import com.theone.demo.data.model.bean.IntegralResponse
+import com.theone.demo.data.model.bean.ClassifyResponse
 import com.theone.demo.data.repository.ApiRepository
+import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
+import com.theone.demo.app.ext.getCacheMode
 import com.theone.mvvm.core.base.request.BaseRequest
+
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -24,17 +26,15 @@ import com.theone.mvvm.core.base.request.BaseRequest
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2022-05-27 09:05
- * @describe TODO
+ * @date 2021/3/2 0002
+ * @describe 微信公众号
  * @email 625805189@qq.com
  * @remark
  */
-class MineRequest: BaseRequest<IntegralResponse>() {
+class WxGzhRequest : BaseRequest<List<ClassifyResponse>>() {
 
-    var isFirst:Boolean = true
-
-     override suspend fun requestServer(vararg params: Any) {
-         requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
+    suspend fun getWxGzhItems() {
+        requestAwait(ApiRepository.INSTANCE.getWxGzh(getCacheMode(true)))
     }
 
 }

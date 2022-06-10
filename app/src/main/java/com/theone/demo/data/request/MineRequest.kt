@@ -1,11 +1,9 @@
-package com.theone.demo.viewmodel.request
+package com.theone.demo.data.request
 
+import com.theone.demo.app.ext.getCacheMode
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.data.repository.ApiRepository
-import com.theone.demo.app.ext.getCacheMode
-import com.theone.mvvm.core.app.ext.launch
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-
+import com.theone.mvvm.core.base.request.BaseRequest
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -26,19 +24,17 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/4 0004
+ * @date 2022-05-27 09:05
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class MineRequestViewModel : BaseRequestViewModel<IntegralResponse>() {
+class MineRequest : BaseRequest<IntegralResponse>() {
 
-    var isFirst =  true
+    var isFirst: Boolean = true
 
-
-    override fun requestServer() {
-        //requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
+    suspend fun getUserIntegral() {
+        requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
     }
-
 
 }

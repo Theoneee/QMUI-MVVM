@@ -1,7 +1,8 @@
-package com.theone.demo.app.net
+package com.theone.demo.data.request
 
-import com.theone.mvvm.core.base.request.IPageInfo
-import java.io.Serializable
+import com.theone.demo.data.model.bean.ClassifyResponse
+import com.theone.demo.data.repository.ApiRepository
+import com.theone.mvvm.core.base.request.BaseRequest
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,31 +23,15 @@ import java.io.Serializable
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/2 0002
+ * @date 2022-06-10 10:18
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class PagerResponse<T> : IPageInfo, Serializable {
-    var curPage = 0
-    var pageCount = 0
-    var size = 0
-    var total = 0
-    var datas: T? = null
+class ProjectRequest:BaseRequest<List<ClassifyResponse>>() {
 
-    override fun getPage(): Int {
-        return curPage
+    suspend fun getProjectList(){
+        requestAwait(ApiRepository.INSTANCE.getProjectItems())
     }
 
-    override fun getPageTotalCount(): Int {
-        return pageCount
-    }
-
-    override fun getTotalCount(): Int {
-        return total
-    }
-
-    override fun getPageSize(): Int {
-        return size
-    }
 }

@@ -1,7 +1,7 @@
-package com.theone.demo.viewmodel.state
+package com.theone.demo.data.net
 
-import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.common.callback.databind.SpannableStringObservableField
+import com.theone.mvvm.core.base.request.IPageInfo
+import java.io.Serializable
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,17 +22,31 @@ import com.theone.common.callback.databind.SpannableStringObservableField
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-04-09 10:18
+ * @date 2021/3/2 0002
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class StringExtViewModel:BaseViewModel() {
+class PagerResponse<T> : IPageInfo, Serializable {
+    var curPage = 0
+    var pageCount = 0
+    var size = 0
+    var total = 0
+    var datas: T? = null
 
-    val fruitName: SpannableStringObservableField = SpannableStringObservableField()
-    val superscript: SpannableStringObservableField = SpannableStringObservableField()
-    val subscript: SpannableStringObservableField = SpannableStringObservableField()
-    val price: SpannableStringObservableField = SpannableStringObservableField()
+    override fun getPage(): Int {
+        return curPage
+    }
 
+    override fun getPageTotalCount(): Int {
+        return pageCount
+    }
 
+    override fun getTotalCount(): Int {
+        return total
+    }
+
+    override fun getPageSize(): Int {
+        return size
+    }
 }
