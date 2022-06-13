@@ -1,5 +1,6 @@
 package com.theone.mvvm.base.fragment
 
+import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -95,8 +96,7 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
     }
 
     /**
-     * 当为 BaseFragmentActivity 的 DefaultFirstFragment 时，[isIndexFragment] = True , 但是并不会走 onEnterAnimationEnd()
-     * 所以现在全部以界面可见时为懒加载时机
+     * 懒加载
      */
     protected open fun onLazyInit() {}
 
@@ -109,10 +109,8 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
         }
     }
 
-    /**
-     * 检查是否需要延迟初始化
-     */
-    private fun checkLazyInit() {
+    override fun onResume() {
+        super.onResume()
         if (lifecycle.currentState == Lifecycle.State.STARTED) {
             onLazyResume()
             if (mIsFirstLayInit) {
@@ -124,9 +122,13 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkLazyInit()
+    /**
+     * 原本懒加载当[isIndexFragment] = True时是在界面动画结束后
+     * 但是当为 BaseFragmentActivity 的 DefaultFirstFragment 时，[isIndexFragment] = True , 但是并不会走 onEnterAnimationEnd()
+     * 所以现在全部以界面可见时为懒加载时机
+     */
+    override fun onEnterAnimationEnd(animation: Animator?) {
+        super.onEnterAnimationEnd(animation)
     }
 
     /**
