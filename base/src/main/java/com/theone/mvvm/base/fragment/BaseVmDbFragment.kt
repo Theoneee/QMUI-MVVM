@@ -37,15 +37,12 @@ import com.theone.mvvm.ext.initDataBinding
 abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmFragment<VM>(),
     IDataBinding<DB> {
 
-    private val factory: ViewConstructor.DataBindingFactory<DB> by lazy {
-        ViewConstructor.DataBindingFactory<DB>(getDataBindingClass()){
-            it.initDataBinding(this,this,getViewModel())
+    override fun getContentViewFactory(): ViewConstructor.Factory =
+        ViewConstructor.DataBindingFactory<DB>(getDataBindingClass()) {
+            it.initDataBinding(this, this, getViewModel())
         }
-    }
 
-    override fun getContentViewFactory(): ViewConstructor.Factory = factory
-
-    override fun getDataBinding(): DB = factory.getDataBinding()
+    override fun getDataBinding(): DB = (getViewConstructor().getFactory() as ViewConstructor.DataBindingFactory<*>).getDataBinding() as DB
 
     @Deprecated(message = "View通过DataBinding反射进行创建，这个不再需要", replaceWith = ReplaceWith(""))
     override fun getLayoutId(): Int = 0

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 
 //  ┏┓　　　┏┓
@@ -31,7 +32,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout
  * @email 625805189@qq.com
  * @remark
  */
-abstract class ViewConstructor(val context: Context,private val factory: Factory) {
+abstract class ViewConstructor(val context: Context, private val factory: Factory) {
 
     private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -40,7 +41,7 @@ abstract class ViewConstructor(val context: Context,private val factory: Factory
     }
 
     private val mContentView: View by lazy {
-        factory.create(getRootView(), getLayoutInflater())
+        factory.create(getRootView(), mLayoutInflater)
     }
 
     private val mTopBar: QMUITopBarLayout? by lazy {
@@ -51,10 +52,11 @@ abstract class ViewConstructor(val context: Context,private val factory: Factory
     abstract fun createView(): View
     abstract fun createTopBar(): QMUITopBarLayout?
 
-    fun getLayoutInflater() = mLayoutInflater
+    fun getFactory(): Factory = factory
     fun getRootView(): ViewGroup = mRootView
     fun getContentView(): View = mContentView
-    fun getTopBar():QMUITopBarLayout? = mTopBar
+    fun getTopBar(): QMUITopBarLayout? = mTopBar
+
 
     interface Factory {
 
@@ -70,7 +72,10 @@ abstract class ViewConstructor(val context: Context,private val factory: Factory
 
     }
 
-    class DataBindingFactory<DB : ViewDataBinding>(private val clazz: Class<DB>, val init:(dataBinding:DB)->Unit) :
+    class DataBindingFactory<DB : ViewDataBinding>(
+        private val clazz: Class<DB>,
+        val init: (dataBinding: DB) -> Unit
+    ) :
         Factory {
 
         private lateinit var mBinding: DB
@@ -88,6 +93,32 @@ abstract class ViewConstructor(val context: Context,private val factory: Factory
             return mBinding.root
         }
 
+    }
+
+    class ViewBindingFactory<VB : ViewBinding>(private val clazz: Class<VB>) : Factory {
+
+        private lateinit var mBinding: VB
+
+        fun getViewBinding() = mBinding
+
+//        private inline fun <reified DB> createDB(root: ViewGroup, layoutInflater: LayoutInflater) =
+//            DB::class.java.getDeclaredMethod(
+//                "inflate",
+//                LayoutInflater::class.java,
+//                ViewGroup::class.java,
+//                Boolean::class.java
+//            ).invoke(null, layoutInflater, root, false) as DB
+
+
+        override fun create(root: ViewGroup, layoutInflater: LayoutInflater): View {
+            mBinding = clazz.getDeclaredMethod(
+                "inflate",
+                LayoutInflater::class.java,
+                ViewGroup::class.java,
+                Boolean::class.java
+            ).invoke(null, layoutInflater, root, false) as VB
+            return mBinding.root
+        }
     }
 
 }
