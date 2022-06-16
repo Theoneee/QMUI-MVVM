@@ -1,13 +1,13 @@
 package com.theone.mvvm.core.app.ext.qmui
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.qmuiteam.qmui.widget.tab.QMUITab
 import com.qmuiteam.qmui.widget.tab.QMUITabBuilder
 import com.qmuiteam.qmui.widget.tab.QMUITabSegment
 import com.theone.common.ext.getDrawable
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
+import com.theone.mvvm.ext.qmui.NO_SET
 
 
 //  ┏┓　　　┏┓
@@ -49,19 +49,18 @@ fun QMUITabBuilder.createTab(
     return build(context)
 }
 
-fun QMUITabBuilder.createTab(context: Context, tab: QMUITabBean): QMUITab {
-    return createTab(context, tab.title, tab.normal, tab.select)
+fun QMUITabBuilder.createTab(context: Context, tab: QMUIItemBean): QMUITab {
+    return createTab(context, tab.title, tab.normalRes, tab.selectRes)
 }
 
-fun QMUITabSegment.init(viewPager: ViewPager, tabs: List<QMUITabBean>, builder: QMUITabBuilder) {
+fun QMUITabSegment.init(viewPager: ViewPager, tabs: List<QMUIItemBean>, builder: QMUITabBuilder) {
     for (tab in tabs) {
         addTab(builder.createTab(context, tab))
     }
     setupWithViewPager(viewPager, false)
 }
 
-fun MutableList<QMUITabBean>.addTab(title: String, normal: Int = NO_SET, select: Int = NO_SET) {
-    add(QMUITabBean(title, normal,if(select == NO_SET) normal else select))
+fun MutableList<QMUIItemBean>.addTab(title: String, normal: Int = NO_SET, select: Int = NO_SET) {
+    add(QMUIItemBean(title, normal,if(select == NO_SET) normal else select))
 }
 
-private val NO_SET: Int = -1

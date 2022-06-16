@@ -2,11 +2,9 @@ package com.theone.mvvm.core.ui.fragment
 
 import SuccessCallback
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet
 import com.theone.common.callback.IImageUrl
@@ -18,7 +16,7 @@ import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.fragment.BaseImageSnapFragment
 import com.theone.mvvm.core.data.entity.ImagePreviewBean
 import com.theone.mvvm.core.data.entity.ImagePreviewEvent
-import com.theone.mvvm.core.data.entity.QMUIItem
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
 import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
@@ -53,7 +51,7 @@ import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
  */
 open class ImagePreviewFragment :
     BaseImageSnapFragment<ImagePreviewBean, ImagePreviewViewModel, BasePullFreshFragmentBinding>(),
-    OnGridBottomSheetItemClickListener {
+    OnGridBottomSheetItemClickListener<QMUIItemBean> {
 
     companion object {
         fun newInstance(data: ImagePreviewEvent?): ImagePreviewFragment {
@@ -66,7 +64,7 @@ open class ImagePreviewFragment :
     }
 
     private val mData: ImagePreviewEvent by getValueNonNull(BundleConstant.DATA)
-    private val mActions = mutableListOf<QMUIItem>()
+    private val mActions = mutableListOf<QMUIItemBean>()
     protected open var mClickData: IImageUrl? = null
     private val TAG_SAVE = "下载"
 
@@ -109,13 +107,13 @@ open class ImagePreviewFragment :
         mActivity.showGridBottomSheet(mActions, listener = this).show()
     }
 
-    protected open fun initGridBottomItems(items: MutableList<QMUIItem>) {
-        items.add(QMUIItem(TAG_SAVE, R.drawable.svg_operation_save))
+    protected open fun initGridBottomItems(items: MutableList<QMUIItemBean>) {
+        items.add(QMUIItemBean(TAG_SAVE, R.drawable.svg_operation_save))
     }
 
-    override fun onGridBottomSheetItemClick(dialog: QMUIBottomSheet, itemView: View, tag: String) {
+    override fun onGridBottomSheetItemClick(dialog: QMUIBottomSheet, itemView: View, tag: QMUIItemBean) {
         dialog.dismiss()
-        if (tag == TAG_SAVE) {
+        if (tag.getItemTitle() == TAG_SAVE) {
             mClickData?.let {
                 DownloadUtil.startDownload(mActivity, it)
             }

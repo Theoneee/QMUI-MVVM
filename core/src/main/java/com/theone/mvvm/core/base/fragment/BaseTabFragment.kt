@@ -5,22 +5,16 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.qmuiteam.qmui.arch.QMUIFragment
-import com.qmuiteam.qmui.widget.QMUIViewPager
 import com.qmuiteam.qmui.widget.tab.QMUITabBuilder
-import com.qmuiteam.qmui.widget.tab.QMUITabSegment
-import com.theone.common.ext.getColor
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.mvvm.core.R
 import com.theone.mvvm.core.app.ext.*
 import com.theone.mvvm.core.base.adapter.TabFragmentAdapter
-import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.core.app.ext.qmui.init
 import com.theone.mvvm.core.app.widge.indicator.SkinLinePagerIndicator
 import com.theone.mvvm.core.app.widge.indicator.SkinPagerTitleView
 import com.theone.mvvm.core.base.callback.ITab
 import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
-import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -56,7 +50,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     BaseCoreFragment<VM, DB>(),ITab {
 
-    private var mTabs: MutableList<QMUITabBean> = mutableListOf()
+    private var mTabs: MutableList<QMUIItemBean> = mutableListOf()
     private var mFragments: MutableList<QMUIFragment> = mutableListOf()
 
     private val mPagerAdapter: TabFragmentAdapter by lazy {
@@ -188,7 +182,7 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     protected open fun getNavTitleView(
         context: Context,
         index: Int,
-        tabs: MutableList<QMUITabBean>
+        tabs: MutableList<QMUIItemBean>
     ): IPagerTitleView {
         return getPagerTitleView(context).init(index, tabs, getViewPager()).initBadgePager(context)
     }

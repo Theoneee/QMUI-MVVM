@@ -7,7 +7,7 @@ import com.theone.demo.data.model.bean.ClassifyResponse
 import com.theone.demo.viewmodel.ProjectViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.fragment.BaseTabInTitleFragment
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.core.app.ext.qmui.addTab
 import com.theone.mvvm.core.app.widge.indicator.SkinScaleTransitionPagerTitleView
 import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
@@ -44,7 +44,7 @@ class ProjectFragment : BaseTabInTitleFragment<ProjectViewModel>() {
     override fun isLazyLoadData(): Boolean  = false
 
     override fun initTabAndFragments(
-        tabs: MutableList<QMUITabBean>,
+        tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>
     ) {
         getViewModel().getRequest().getResponseLiveData().value?.forEach {

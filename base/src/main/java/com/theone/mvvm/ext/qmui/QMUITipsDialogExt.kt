@@ -1,6 +1,8 @@
 package com.theone.mvvm.ext.qmui
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 
 
@@ -66,7 +68,7 @@ fun Context.showTipsDelayedDismiss(
     callback: (() -> Any?)? = null
 ) {
     val dialog = createQMUIDialog(msg, type)
-    android.os.Handler().postDelayed({
+    Handler(Looper.getMainLooper()).postDelayed({
         dialog.dismiss()
         callback?.invoke()
     }, delay)

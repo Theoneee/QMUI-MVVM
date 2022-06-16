@@ -3,7 +3,7 @@ package com.theone.demo.ui.fragment.gzh
 import android.util.Log
 import com.qmuiteam.qmui.arch.QMUIFragment
 import com.theone.demo.viewmodel.WxGzhRequestViewModel
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.core.app.ext.qmui.addTab
 import com.theone.mvvm.core.base.fragment.BaseTabInTitleFragment
 
@@ -39,7 +39,7 @@ class WxGzhFragment:BaseTabInTitleFragment<WxGzhRequestViewModel>() {
     override fun isLazyLoadData(): Boolean  = false
 
     override fun initTabAndFragments(
-        tabs: MutableList<QMUITabBean>,
+        tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>
     ) {
         for (data in getViewModel().getRequest().getResponseLiveData().value!!) {

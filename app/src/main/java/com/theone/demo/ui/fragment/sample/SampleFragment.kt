@@ -9,6 +9,7 @@ import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.createItem
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
+import com.theone.mvvm.ext.qmui.showTips
 
 
 //  ┏┓　　　┏┓
@@ -47,6 +48,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     lateinit var mLoader: QMUICommonListItemView
     lateinit var mAppUpdate: QMUICommonListItemView
     lateinit var mPictureSelect: QMUICommonListItemView
+    lateinit var mBottomSheet: QMUICommonListItemView
 
     override fun initView(root: View) {
         getTopBar()?.setTitleWithBackBtn("示例", this)
@@ -60,9 +62,11 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
             mLoader = createItem("Loader")
             mAppUpdate = createItem("AppUpdate")
             mPictureSelect = createItem("PictureSelect")
+            mBottomSheet = createItem("QMUIBottomSheet")
             addToGroup(
                 mPager,
                 mGroupListView,
+                mBottomSheet,
                 mLoader,
                 mPictureSelect,
                 title = "ui",
@@ -71,6 +75,8 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
             addToGroup(mAppUpdate, mStringExt, mCrash, title = "工具", listener = this@SampleFragment)
             addToGroup(mCustomView, title = "widget", listener = this@SampleFragment)
             addToGroup(mTest, title = "其他", listener = this@SampleFragment)
+
+            showTips(mBottomSheet, isDot = false)
         }
     }
 
@@ -88,6 +94,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
                 when (v) {
                     mPager -> SamplePagerFragment()
                     mGroupListView -> GroupListViewFragment()
+                    mBottomSheet -> QMUIBottomSheetFragment()
                     mStringExt -> StringExtFragment()
                     mCustomView -> CustomViewFragment()
                     mLoader -> LoaderFragment()

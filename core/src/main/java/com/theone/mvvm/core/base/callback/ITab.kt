@@ -4,7 +4,7 @@ import com.qmuiteam.qmui.arch.QMUIFragment
 import com.qmuiteam.qmui.widget.QMUIViewPager
 import com.qmuiteam.qmui.widget.tab.QMUITabSegment
 import com.theone.mvvm.core.base.adapter.TabFragmentAdapter
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import net.lucode.hackware.magicindicator.MagicIndicator
 
 //  ┏┓　　　┏┓
@@ -41,7 +41,7 @@ interface ITab {
     fun isLazyLoadData(): Boolean = true
 
     fun initTabAndFragments(
-        tabs: MutableList<QMUITabBean>,
+        tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>
     )
 

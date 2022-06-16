@@ -13,7 +13,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
 import com.theone.common.ext.dp2px
 import com.theone.common.ext.goneViews
 import com.theone.mvvm.core.R
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
@@ -72,7 +72,7 @@ fun IPagerTitleView.initBadgePager(
 
 fun SimplePagerTitleView.init(
     index: Int,
-    tabs: List<QMUITabBean>,
+    tabs: List<QMUIItemBean>,
     viewPager: ViewPager
 ): IPagerTitleView {
     text = tabs[index].title

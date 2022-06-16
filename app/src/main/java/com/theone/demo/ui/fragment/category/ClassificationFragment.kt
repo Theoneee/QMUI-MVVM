@@ -5,7 +5,7 @@ import com.qmuiteam.qmui.arch.QMUIFragment
 import com.theone.demo.R
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.fragment.BaseTabInTitleFragment
-import com.theone.mvvm.core.data.entity.QMUITabBean
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.core.app.ext.init
 import com.theone.mvvm.core.app.ext.qmui.addTab
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
@@ -16,7 +16,7 @@ class ClassificationFragment : BaseTabInTitleFragment<BaseViewModel>() {
     override fun isNeedChangeStatusBarMode(): Boolean = true
 
     override fun initTabAndFragments(
-        tabs: MutableList<QMUITabBean>,
+        tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>
     ) {
         with(tabs){
