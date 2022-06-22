@@ -3,11 +3,6 @@ import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-/**
- * 作者　: hegaojian
- * 时间　: 2019/12/23
- * 描述　: 账户信息
- */
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class UserInfo(var admin: Boolean = false,
@@ -24,7 +19,7 @@ data class UserInfo(var admin: Boolean = false,
 
 
     fun getUserName():String{
-        return if(nickname.isEmpty()) username else nickname
+        return nickname.ifEmpty { username }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.theone.demo.ui.fragment.mine
 
 import android.view.View
+import androidx.work.WorkManager
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.theone.common.ext.notNull
 import com.theone.demo.R
@@ -12,6 +13,7 @@ import com.theone.demo.data.model.bean.BannerResponse
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.data.model.bean.UserInfo
 import com.theone.demo.databinding.FragmentMineBinding
+import com.theone.demo.domain.work.LoginSignWorker
 import com.theone.demo.ui.fragment.sample.SampleFragment
 import com.theone.demo.ui.fragment.setting.SettingFragment
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
@@ -103,6 +105,7 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
                 if(it.code == -1001){
                     appVm.userInfo.value = null
                     CacheUtil.setUser(null)
+                    WorkManager.getInstance(mActivity).cancelAllWorkByTag(LoginSignWorker.TAG)
                 }
                 showFailTipsDialog(it.msg)
             }

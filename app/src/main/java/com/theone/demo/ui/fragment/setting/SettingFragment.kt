@@ -4,8 +4,7 @@ import android.content.DialogInterface
 import android.view.View
 import android.widget.CompoundButton
 import androidx.lifecycle.Observer
-import com.qmuiteam.qmui.arch.SwipeBackLayout
-import com.qmuiteam.qmui.arch.SwipeBackLayout.DRAG_DIRECTION_LEFT_TO_RIGHT
+import androidx.work.WorkManager
 import com.qmuiteam.qmui.util.QMUIPackageHelper
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
@@ -13,6 +12,7 @@ import com.theone.demo.R
 import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.data.model.bean.BannerResponse
 import com.theone.demo.databinding.FragmentSettingBinding
+import com.theone.demo.domain.work.LoginSignWorker
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.SettingViewModel
@@ -37,16 +37,6 @@ class SettingFragment : BaseCoreFragment<SettingViewModel, FragmentSettingBindin
     private val mAnimationTypes: Array<String> by lazy {
         resources.getStringArray(R.array.setting_list_animations)
     }
-
-//    override fun getDragDirection(
-//        swipeBackLayout: SwipeBackLayout,
-//        viewMoveAction: SwipeBackLayout.ViewMoveAction,
-//        downX: Float,
-//        downY: Float,
-//        dx: Float,
-//        dy: Float,
-//        slopTouch: Float
-//    ): Int  = DRAG_DIRECTION_LEFT_TO_RIGHT
 
     override fun initView(rootView: View) {
         getDataBinding().groupListView.run {
@@ -102,6 +92,7 @@ class SettingFragment : BaseCoreFragment<SettingViewModel, FragmentSettingBindin
             getResponseLiveData().observe(this@SettingFragment, Observer {
                 mAppVm.userInfo.value = null
                 CacheUtil.loginOut()
+                WorkManager.getInstance(mActivity).cancelAllWorkByTag(LoginSignWorker.TAG)
                 showSuccessTipsExitDialog("退出成功")
             })
             getErrorLiveData().observe(this@SettingFragment, Observer {

@@ -43,19 +43,15 @@ class ApiRepository private constructor() {
         val INSTANCE = Holder.INSTANCE
     }
 
-    suspend fun loginOrRegister(
+    fun loginOrRegister(
         account: String,
         password: String,
-        repassword: String,
         isRegister: Boolean
-    ): UserInfo {
-        return RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
+    ) =  RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
             .add("username", account)
             .add("password", password)
-            .add("repassword", repassword, isRegister)
+            .add("repassword", password, isRegister)
             .toResponse<UserInfo>()
-            .await()
-    }
 
     /**
      * 登出

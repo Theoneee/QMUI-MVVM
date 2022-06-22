@@ -5,6 +5,8 @@ import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.mvvm.core.app.ext.code
 import com.theone.mvvm.core.app.ext.msg
 import com.theone.mvvm.core.data.entity.ErrorInfo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import rxhttp.awaitResult
 import rxhttp.wrapper.coroutines.Await
 
@@ -74,20 +76,45 @@ abstract class BaseRequest<T> : IRequest<T> {
         (errorLiveData ?: error).value = errorInfo
     }
 
+    /**
+     * 请求状态
+     * @param isStart Boolean
+     */
+    protected fun onState(isStart: Boolean) {
+        state.value = isStart
+    }
+
     protected suspend fun requestAwait(
         wait: Await<T>,
         errorLiveData: UnPeekLiveData<ErrorInfo>? = null
     ) {
-        state.value = true
+        onState(true)
         wait.awaitResult { result ->
             onSuccess(result)
         }.onFailure {
             // 错误回调
             it.printStackTrace()
-            onError(ErrorInfo(it.msg,it.code),errorLiveData)
+            onError(ErrorInfo(it.msg, it.code), errorLiveData)
         }
         // 请求结束
-        state.value = false
+        onState(false)
+    }
+
+    protected suspend fun request(
+        block: suspend CoroutineScope.() -> Unit,
+        errorLiveData: UnPeekLiveData<ErrorInfo>? = null){
+        try {
+            coroutineScope {
+                onState(true)
+                block()
+            }
+        } catch (e: Throwable) {
+            // 错误回调
+            e.printStackTrace()
+            onError(ErrorInfo(e.msg, e.code), errorLiveData)
+        } finally {
+            onState(false)
+        }
     }
 
 }

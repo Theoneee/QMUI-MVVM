@@ -15,9 +15,14 @@ class LoginRegisterViewModel : BaseRequestViewModel<UserInfo>() {
     var isRegister = BooleanObservableField()
 
     override fun requestServer() {
-        request({
-            onSuccess(ApiRepository.INSTANCE.loginOrRegister(account.get(),password.get(),repassword.get(),isRegister.get()))
-        }, if (isRegister.get()) "注册中" else "登录中")
+        requestAwait(
+            ApiRepository.INSTANCE.loginOrRegister(
+                account.get(),
+                password.get(),
+                isRegister.get()
+            ),
+            if (isRegister.get()) "注册中" else "登录中"
+        )
     }
 
 }
