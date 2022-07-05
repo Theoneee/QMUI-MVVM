@@ -16,8 +16,7 @@
 
     <com.qmuiteam.qmui.layout.QMUIConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false">
+        android:layout_height="match_parent">
 
         <com.qmuiteam.qmui.layout.QMUIConstraintLayout
             android:id="@+id/center"
@@ -25,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="?attr/app_update_horizontal_margin"
             android:background="@color/white"
-            android:clipChildren="false"
             android:padding="?attr/app_update_container_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,18 +66,13 @@
 
             <TextView
                 android:id="@+id/tv_content"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="?attr/app_update_vertical_margin"
-                android:maxHeight="130dp"
                 android:minHeight="100dp"
-                android:scrollbars="vertical"
-                android:singleLine="false"
                 android:text="@{vm.updateInfo}"
                 android:textColor="?attr/app_update_content_text_color"
                 android:textSize="?attr/app_update_content_text_size"
-                app:layout_constraintEnd_toEndOf="@id/center"
-                app:layout_constraintStart_toStartOf="@id/center"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
                 tools:layout_marginVertical="20dp"
                 tools:text="【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门\n【新增】短视频首页增加今日热门"

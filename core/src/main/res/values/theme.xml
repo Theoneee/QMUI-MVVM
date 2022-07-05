@@ -173,8 +173,8 @@
         <item name="app_update_logo_height">140dp</item>
         <item name="app_update_logo_width">wrap_content</item>
         <item name="app_update_version_margin">14dp</item>
-        <item name="app_update_container_padding">22dp</item>
-        <item name="app_update_version_text_size">15sp</item>
+        <item name="app_update_container_padding">20dp</item>
+        <item name="app_update_version_text_size">14sp</item>
         <item name="app_update_version_text_color">@color/app_update_version_color</item>
         <item name="app_update_title_text">@string/app_find_new_version</item>
         <item name="app_update_title_text_size">20sp</item>
