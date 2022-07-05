@@ -5,6 +5,7 @@ import com.theone.common.util.ThemeUtil
 import com.theone.demo.ui.activity.ErrorActivity
 import com.theone.demo.ui.activity.LauncherActivity
 import com.theone.mvvm.core.app.CoreApplication
+import com.theone.mvvm.core.app.ext.code
 import com.theone.mvvm.core.data.entity.RxHttpBuilder
 import com.theone.mvvm.core.app.ext.initCrashConfig
 import com.theone.mvvm.core.app.util.RxHttpManager
@@ -42,8 +43,16 @@ class App : CoreApplication() {
         initCrashConfig(LauncherActivity::class.java, ErrorActivity::class.java)
         super.init(application)
         ThemeUtil.init(application)
-        RxHttpManager.init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG)
-
-//        RxHttpManager.init(RxHttpBuilder(isNeedCookie = true,cookiejar = MyCookeJar(appContext))).setDebug(DEBUG)
+        RxHttpManager.run {
+            init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG)
+            initCustomExceptionParse {
+                if (it.code == 502) {
+                    "服务器正在升级,请稍等"
+                } else {
+                    null
+                }
+            }
+        }
     }
+
 }

@@ -3,10 +3,10 @@ package com.theone.demo.app.util
 import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tencent.mmkv.MMKV
 import com.theone.demo.data.model.bean.UserInfo
 import com.theone.mvvm.core.app.util.MMKVUtil
 import com.theone.mvvm.core.app.util.RxHttpManager
+import rxhttp.RxHttpPlugins
 
 
 //  ┏┓　　　┏┓
@@ -43,7 +43,8 @@ object CacheUtil {
     fun isLogin(): Boolean = null != getUser()
 
     fun loginOut() {
-        RxHttpManager.clearCache()
+        RxHttpManager.clearCookieCache()
+        //RxHttpPlugins.getCache().removeAll()
         setUser(null)
     }
 

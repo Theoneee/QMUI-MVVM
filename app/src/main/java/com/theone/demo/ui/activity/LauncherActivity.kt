@@ -12,7 +12,6 @@ import com.theone.demo.databinding.ActivityLauncherBinding
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
 import com.theone.mvvm.core.app.util.RxHttpManager
-import java.util.*
 
 class LauncherActivity : BaseCoreActivity<BaseViewModel, ActivityLauncherBinding>(),
     TypeTextView.OnTypeViewListener {
@@ -34,7 +33,7 @@ class LauncherActivity : BaseCoreActivity<BaseViewModel, ActivityLauncherBinding
     override fun initView(root: View) {
         // 再次安装后请求时要清除，不然会读取到
         if (CacheUtil.isFirst()) {
-            RxHttpManager.clearCache()
+            RxHttpManager.clearCookieCache()
             CacheUtil.isEnterApp()
         }
 

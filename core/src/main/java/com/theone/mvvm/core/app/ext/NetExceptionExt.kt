@@ -53,6 +53,10 @@ val Throwable.code: Int
 
 val Throwable.msg: String
     get() {
+        val customResult = customParseException?.invoke(this)
+        if(!customResult.isNullOrEmpty()){
+            return customResult
+        }
         return if (this is UnknownHostException) {
             //网络异常
             "当前无网络，请检查你的网络设置"
@@ -65,7 +69,7 @@ val Throwable.msg: String
         } else if (this is ConnectException) {
             "网络不给力，请稍候重试！"
         } else if (this is HttpStatusCodeException) {
-            "Http状态码异常"
+            if (code == 502) "系统正在升级," else "Http状态码异常"
         } else if (this is JsonSyntaxException) {
             //请求成功，但Json语法异常,导致解析失败
             "数据解析失败,请检查数据是否正确"
@@ -76,6 +80,8 @@ val Throwable.msg: String
             "请求失败，请稍后再试"
         }
     }
+
+internal var customParseException: ((Throwable) -> String?)? = null
 
 fun isNetworkConnected(): Boolean {
     val manager = appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

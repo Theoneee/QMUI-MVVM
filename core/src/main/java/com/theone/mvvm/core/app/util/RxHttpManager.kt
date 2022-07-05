@@ -2,6 +2,7 @@ package com.theone.mvvm.core.app.util
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.theone.mvvm.core.app.ext.customParseException
 import com.theone.mvvm.core.data.entity.RxHttpBuilder
 import com.zhy.http.okhttp.OkHttpUtils
 import okhttp3.CookieJar
@@ -36,29 +37,31 @@ import java.util.concurrent.TimeUnit
  */
 object RxHttpManager {
 
-    private var mBuilder:RxHttpBuilder? = null
+    private var mBuilder: RxHttpBuilder? = null
 
     fun init(builder: RxHttpBuilder = RxHttpBuilder()): RxHttpPlugins =
         with(builder) {
-            mBuilder= builder
+            mBuilder = builder
             val client = getDefaultClient()
             OkHttpUtils.initClient(client)
             RxHttpPlugins.init(client)
-                .setCache(File(cacheFilePath, cacheFileName), cacheMaxSize, cacheMode, cacheValidTime)
+                .setCache(
+                    File(cacheFilePath, cacheFileName),
+                    cacheMaxSize,
+                    cacheMode,
+                    cacheValidTime
+                )
         }
 
-    fun clearCache() {
-        mBuilder?.run {
-            File(cacheFilePath, cacheFileName).deleteOnExit()
-            if(isNeedCookie){
-                cookiejar.clear()
-            }
-        }
+    fun clearCookieCache() {
+        mBuilder?.cookiejar?.clear()
     }
 
+    fun getRxHttpBuilder() = mBuilder
+
     private fun RxHttpBuilder.getDefaultClient(): OkHttpClient = OkHttpClient().newBuilder().apply {
-        if (isNeedCookie) {
-            cookieJar(cookiejar)
+        cookiejar?.let {
+            cookieJar(it)
         }
         connectTimeout(outTime, TimeUnit.SECONDS)
         readTimeout(readTime, TimeUnit.SECONDS)
@@ -68,5 +71,13 @@ object RxHttpManager {
         //忽略host验证
         hostnameVerifier { _, _ -> true }
     }.build()
+
+    /**
+     * 自定义错误解析
+     * @param parse Function1<Throwable, String?>?
+     */
+    fun initCustomExceptionParse(parse: ((Throwable) -> String?)? = null) {
+        customParseException = parse
+    }
 
 }
