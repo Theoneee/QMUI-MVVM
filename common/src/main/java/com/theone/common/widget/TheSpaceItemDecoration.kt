@@ -85,7 +85,6 @@ class TheSpaceItemDecoration(
                 top = if (position == headerNum) mTop else 0
                 if (column > 1) {
                     // 只要不为一列，只考虑最左和最右项的差别
-                    Log.e(TAG, "getItemOffsets: columnIndex  $columnIndex" )
                     val curIndex = column - columnIndex
                     // 如果为多列时，给第一行的加上top.
                     // X != column 这个判断
@@ -109,7 +108,6 @@ class TheSpaceItemDecoration(
                         }
                     }
                 }
-                Log.e(TAG, "getItemOffsets: position: $position  left:  $left  top: $top  right:$right  bottom:$bottom     " )
             }
         }
 
