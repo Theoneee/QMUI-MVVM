@@ -25,6 +25,7 @@
         <attr name="progressbtn_backgroud_second_color" format="color" />
         <attr name="progressbtn_text_color" format="color" />
         <attr name="progressbtn_text_covercolor" format="color" />
+        <attr name="progressbtn_animation" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="WheelView">

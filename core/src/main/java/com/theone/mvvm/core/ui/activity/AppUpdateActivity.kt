@@ -5,17 +5,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.view.View
-import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction
-import com.theone.common.callback.OnKeyBackClickListener
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.getAppName
 import com.theone.common.ext.getValueNonNull
 import com.theone.common.ext.installApk
+import com.theone.common.ext.logE
 import com.theone.common.widget.ProgressButton
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
@@ -25,6 +22,7 @@ import com.theone.mvvm.core.databinding.ActivityAppUpdateBinding
 import com.theone.mvvm.core.service.DownloadService
 import com.theone.mvvm.core.service.startDownloadService
 import com.theone.mvvm.core.app.util.FileDirectoryManager
+import com.theone.mvvm.core.base.callback.CoreOnPermission
 import com.theone.mvvm.core.ui.viewmodel.AppUpdateViewModel
 import com.theone.mvvm.ext.qmui.showMsgDialog
 import java.io.File
@@ -123,41 +121,20 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
 
     private fun requestPermission() {
         XXPermissions.with(this).run {
-            if(applicationInfo.targetSdkVersion >=30){
+            if (applicationInfo.targetSdkVersion >= 30) {
                 permission(Permission.MANAGE_EXTERNAL_STORAGE)
-            }else{
-                permission(Permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                permission(Permission.Group.STORAGE)
             }
         }
             .constantRequest()
-            .request(object : OnPermission {
+            .request(object : CoreOnPermission(this) {
 
                 override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
                     if (all) {
                         doDownload()
                     }
                 }
-
-                override fun noPermission(denied: MutableList<String>?, quick: Boolean) {
-                    if (quick) {
-                        showMsgDialog(
-                            "提示",
-                            "权限被禁止，请在设置里打开权限",
-                            listener = QMUIDialogAction.ActionListener { dialog, index ->
-                                dialog.dismiss()
-                                XXPermissions.startPermissionActivity(
-                                    this@AppUpdateActivity,
-                                    denied
-                                )
-                            },
-                            prop = QMUIDialogAction.ACTION_PROP_NEGATIVE
-                        ).run {
-                            setCanceledOnTouchOutside(false)
-                            setOnKeyListener(OnKeyBackClickListener())
-                        }
-                    }
-                }
-
             })
     }
 

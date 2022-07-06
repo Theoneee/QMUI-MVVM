@@ -41,7 +41,7 @@ class AppUpdate : IApkUpdate, Parcelable {
     override fun getAppVersionName(): String = "1.0.0"
 
     override fun getAppApkUrl(): String =
-        "http://theone.0851zy.com/2022/04/13/97096d9c4094306a804f847f7c89d751.apk"
+        "https://downv6.qq.com/qqweb/QQ_1/android_apk/Android_8.8.98.8410_537124025_64.apk"
 
     override fun getAppUpdateLog(): String =
         "【新增1】短视频首页增加今日热门\n" +

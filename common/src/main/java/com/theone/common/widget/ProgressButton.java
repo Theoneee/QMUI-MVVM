@@ -55,8 +55,6 @@ import com.theone.common.R;
  */
 public class ProgressButton extends AppCompatTextView {
 
-    private Context mContext;
-
     //背景画笔
     private Paint mBackgroundPaint;
     //按钮文字画笔
@@ -80,6 +78,7 @@ public class ProgressButton extends AppCompatTextView {
     private int mMaxProgress = 100;
     private int mMinProgress;
     private float mProgressPercent;
+    private boolean mProgressAnimationEnable;
 
     private float mButtonRadius;
 
@@ -116,10 +115,11 @@ public class ProgressButton extends AppCompatTextView {
     public ProgressButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (!isInEditMode()) {
-            mContext = context;
             initAttrs(context, attrs);
             init();
-            setupAnimations();
+            if(mProgressAnimationEnable){
+                setupAnimations();
+            }
         }
 
     }
@@ -131,6 +131,7 @@ public class ProgressButton extends AppCompatTextView {
         mButtonRadius = a.getFloat(R.styleable.ProgressButton_progressbtn_radius, getMeasuredHeight() / 2);
         mTextColor = a.getColor(R.styleable.ProgressButton_progressbtn_text_color, mBackgroundColor);
         mTextCoverColor = a.getColor(R.styleable.ProgressButton_progressbtn_text_covercolor, Color.WHITE);
+        mProgressAnimationEnable = a.getBoolean(R.styleable.ProgressButton_progressbtn_animation,false);
         a.recycle();
     }
 
@@ -150,10 +151,8 @@ public class ProgressButton extends AppCompatTextView {
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
         mTextPaint.setTextSize(50f);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            //解决文字有时候画不出问题
-            setLayerType(LAYER_TYPE_SOFTWARE, mTextPaint);
-        }
+        //解决文字有时候画不出问题
+        setLayerType(LAYER_TYPE_SOFTWARE, mTextPaint);
 
         //设置第一个点画笔
         mDot1Paint = new Paint();
@@ -171,9 +170,7 @@ public class ProgressButton extends AppCompatTextView {
 
     }
 
-
     private void setupAnimations() {
-
         //两个点向右移动动画
         ValueAnimator dotMoveAnimation = ValueAnimator.ofFloat(0, 20);
         TimeInterpolator pathInterpolator = PathInterpolatorCompat.create(0.11f, 0f, 0.12f, 1f);
@@ -205,9 +202,7 @@ public class ProgressButton extends AppCompatTextView {
                 mDot1Paint.setAlpha(dot1Alpha);
                 mDot2Paint.setAlpha(dot2Alpha);
             }
-
         });
-
 
         dotAlphaAnim.addListener(new Animator.AnimatorListener() {
             @Override
@@ -246,8 +241,6 @@ public class ProgressButton extends AppCompatTextView {
                 invalidate();
             }
         });
-
-
     }
 
     //第一个点透明度计算函数
@@ -405,13 +398,15 @@ public class ProgressButton extends AppCompatTextView {
             //状态确实有改变
             this.mState = state;
             invalidate();
-            if (state == ProgressButton.INSTALLING) {
-                //开启两个点动画
-                mDotAnimationSet.start();
-            } else if (state == NORMAL) {
-                mDotAnimationSet.cancel();
-            } else if (state == DOWNLOADING) {
-                mDotAnimationSet.cancel();
+            if(mProgressAnimationEnable){
+                if (state == ProgressButton.INSTALLING) {
+                    //开启两个点动画
+                    mDotAnimationSet.start();
+                } else if (state == NORMAL) {
+                    mDotAnimationSet.cancel();
+                } else if (state == DOWNLOADING) {
+                    mDotAnimationSet.cancel();
+                }
             }
         }
 
@@ -438,11 +433,14 @@ public class ProgressButton extends AppCompatTextView {
         if (progress >= mMinProgress && progress <= mMaxProgress) {
             mCurrentText = text + getResources().getString(R.string.downloaded, (int) progress);
             mToProgress = progress;
-            if (mProgressAnimation.isRunning()) {
-                mProgressAnimation.resume();
+            if(mProgressAnimationEnable){
+                if (mProgressAnimation.isRunning()) {
+                    mProgressAnimation.resume();
+                }
                 mProgressAnimation.start();
-            } else {
-                mProgressAnimation.start();
+            }else{
+                mProgress = progress;
+                invalidate();
             }
         } else if (progress < mMinProgress) {
             mProgress = 0;
@@ -502,6 +500,14 @@ public class ProgressButton extends AppCompatTextView {
         mMaxProgress = maxProgress;
     }
 
+    public boolean isProgressAnimationEnable() {
+        return mProgressAnimationEnable;
+    }
+
+    public void setProgressAnimationEnable(boolean progressAnimationEnable) {
+        this.mProgressAnimationEnable = progressAnimationEnable;
+    }
+
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
@@ -514,7 +520,7 @@ public class ProgressButton extends AppCompatTextView {
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-        return new SavedState(superState, (int) mProgress, mState, mCurrentText.toString());
+        return new SavedState(superState, (int) mProgress, mState, mCurrentText.toString(),mProgressAnimationEnable);
     }
 
     public static class SavedState extends BaseSavedState {
@@ -522,12 +528,14 @@ public class ProgressButton extends AppCompatTextView {
         private int progress;
         private int state;
         private String currentText;
+        private boolean animationEnable;
 
-        public SavedState(Parcelable parcel, int progress, int state, String currentText) {
+        public SavedState(Parcelable parcel, int progress, int state, String currentText,boolean animationEnable) {
             super(parcel);
             this.progress = progress;
             this.state = state;
             this.currentText = currentText;
+            this.animationEnable = animationEnable;
         }
 
         private SavedState(Parcel in) {
@@ -535,6 +543,7 @@ public class ProgressButton extends AppCompatTextView {
             progress = in.readInt();
             state = in.readInt();
             currentText = in.readString();
+            animationEnable = in.readInt() == 1;
         }
 
         @Override
@@ -543,6 +552,7 @@ public class ProgressButton extends AppCompatTextView {
             out.writeInt(progress);
             out.writeInt(state);
             out.writeString(currentText);
+            out.writeInt(animationEnable?1:0);
         }
 
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
