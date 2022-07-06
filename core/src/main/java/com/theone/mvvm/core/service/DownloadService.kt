@@ -185,7 +185,7 @@ class DownloadService : Service() {
             setAction(action)
             if (msgValue is String)
                 putExtra(msgName, msgValue)
-            if (msgValue is Int)
+            else if (msgValue is Int)
                 putExtra(msgName, msgValue)
         })
     }

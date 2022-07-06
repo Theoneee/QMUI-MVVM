@@ -1,11 +1,8 @@
 package com.theone.mvvm.core.app.util
 
-import com.franmontiel.persistentcookiejar.ClearableCookieJar
-import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.theone.mvvm.core.app.ext.customParseException
 import com.theone.mvvm.core.data.entity.RxHttpBuilder
 import com.zhy.http.okhttp.OkHttpUtils
-import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import rxhttp.RxHttpPlugins
 import java.io.File
