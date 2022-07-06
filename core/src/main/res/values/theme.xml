@@ -22,6 +22,8 @@
     <attr name="app_skin_status_layout_empty_drawable" format="reference"/>
     <attr name="app_skin_status_layout_net_error_drawable" format="reference"/>
     <attr name="app_skin_status_layout_no_net_drawable" format="reference"/>
+    <attr name="app_skin_status_layout_retry_bg_color" format="color|reference"/>
+    <attr name="app_skin_status_layout_retry_text_size" format="dimension|reference"/>
 
     <!--                          App更新界面                              -->
     <!-- 水平间距 -->
@@ -149,6 +151,8 @@
         <item name="app_skin_status_layout_empty_drawable">@drawable/status_search_result_empty</item>
         <item name="app_skin_status_layout_net_error_drawable">@drawable/status_loading_view_network_error</item>
         <item name="app_skin_status_layout_no_net_drawable">@drawable/status_loading_view_no_network</item>
+        <item name="app_skin_status_layout_retry_bg_color">@color/qmui_config_color_gray_6</item>
+        <item name="app_skin_status_layout_retry_text_size">14sp</item>
 
         <item name="app_skin_btn_gray_background_color">@color/qmui_config_color_gray_6</item>
         <item name="app_skin_btn_tips_background_color">@color/qmui_config_color_red</item>

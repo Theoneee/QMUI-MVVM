@@ -51,6 +51,10 @@ val Throwable.code: Int
         }
     }
 
+const val NET_ERROR = "当前无网络，请检查你的网络设置"
+const val NET_CONNECT_ERROR = "网络不给力，请稍候重试！"
+const val NET_TIME_OUT = "连接超时,请稍后再试"
+
 val Throwable.msg: String
     get() {
         val customResult = customParseException?.invoke(this)
@@ -59,17 +63,17 @@ val Throwable.msg: String
         }
         return if (this is UnknownHostException) {
             //网络异常
-            "当前无网络，请检查你的网络设置"
+            NET_ERROR
         } else if (
             this is SocketTimeoutException  //okHttp全局设置超时
             || this is TimeoutException     //方法超时
             || this is TimeoutCancellationException  //协程超时
         ) {
-            "连接超时,请稍后再试"
+            NET_TIME_OUT
         } else if (this is ConnectException) {
-            "网络不给力，请稍候重试！"
+            NET_CONNECT_ERROR
         } else if (this is HttpStatusCodeException) {
-            if (code == 502) "系统正在升级," else "Http状态码异常"
+            "Http状态码异常"
         } else if (this is JsonSyntaxException) {
             //请求成功，但Json语法异常,导致解析失败
             "数据解析失败,请检查数据是否正确"

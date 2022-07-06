@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/errorStateRelativeLayout"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/app_skin_status_layout_bg_color">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/app_skin_status_layout_bg_color"
+    tools:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/errorViewRelativeLayout"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/stateImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:src="?attr/app_skin_status_layout_error_drawable"
+        tools:src="@drawable/status_loading_view_network_error"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/stateContentTextView" />
+
+    <TextView
+        android:id="@+id/stateContentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="请检查网络状态"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/stateImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/status_loading_view_loading_fail"
-            tools:background="#000000"
-            tools:ignore="ContentDescription" />
+        android:textColor="@color/qmui_config_color_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/stateImageView"
+        app:layout_constraintBottom_toTopOf="@id/retry"
+        android:layout_marginTop="20dp"/>
 
 
-        <TextView
-            android:id="@+id/stateContentTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:textSize="?attr/app_skin_status_layout_content_size"
-            android:textColor="?attr/app_skin_status_layout_content_color"
-            android:gravity="center"
-            android:lineSpacingExtra="5.5dp" />
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/stateContentTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="点击重试"
+        android:layout_marginTop="40dp"
+        app:qmui_backgroundColor="?attr/app_skin_status_layout_retry_bg_color"
+        android:textSize="?attr/app_skin_status_layout_retry_text_size"
+        android:textColor="@color/qmui_config_color_white"
+        android:paddingHorizontal="20dp"
+        app:qmui_isRadiusAdjustBounds="true"
+        app:qmui_borderWidth="0dp"
+        android:paddingVertical="8dp"
+        android:layout_height="wrap_content"/>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
