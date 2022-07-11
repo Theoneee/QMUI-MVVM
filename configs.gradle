@@ -7,7 +7,7 @@ ext {
     okhttpUtilVersion = '2.6.2'
 
     // rxHttp
-    rxhttpVersion = '2.8.5'
+    rxhttpVersion = '2.9.0'
 
     //util
     glideVersion = '4.12.0'
@@ -25,6 +25,6 @@ ext {
 
     BaseRecyclerViewAdapterHelperVersion = '3.0.7'
     MagicIndicatorVersion = '1.6.0'
-    PictureSelectorVersion = 'v3.10.1'
+    PictureSelectorVersion = 'v3.10.3'
 
 }

@@ -48,7 +48,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     protected final int screenWidth;
     protected final int screenHeight;
     protected final int screenAppInHeight;
-    protected final ImageEngine imageEngine;
+    protected final GlideEngine imageEngine;
     public PhotoView coverImageView;
 
 

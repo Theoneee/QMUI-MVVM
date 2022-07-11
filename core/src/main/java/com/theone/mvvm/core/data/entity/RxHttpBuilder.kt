@@ -53,7 +53,7 @@ data class RxHttpBuilder(
     var cacheFilePath: String = cookieFilePath,
     var cacheMaxSize: Long = 1000 * 100,
     var cacheMode: CacheMode = CacheMode.ONLY_NETWORK,
-    var cacheValidTime: Long = -1,
+    var cacheValidTime: Long = Long.MAX_VALUE,
 
     var outTime: Long = 10,
     var readTime: Long = 10,
