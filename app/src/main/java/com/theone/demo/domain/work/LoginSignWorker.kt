@@ -56,7 +56,7 @@ class LoginSignWorker(context: Context, workerParams: WorkerParameters) :
                 Result.Failure()
             } else {
                 ApiRepository.INSTANCE.loginOrRegister(account, password, false).await()
-                ApiRepository.INSTANCE.getUserCoin(CacheMode.NETWORK_SUCCESS_WRITE_CACHE)
+                ApiRepository.INSTANCE.getUserCoin(CacheMode.NETWORK_SUCCESS_WRITE_CACHE).await()
                 Result.success()
             }
         } catch (e: Exception) {
