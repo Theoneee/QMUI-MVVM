@@ -54,11 +54,9 @@ open class ImagePreviewFragment :
     OnGridBottomSheetItemClickListener<QMUIItemBean> {
 
     companion object {
-        fun newInstance(data: ImagePreviewEvent?): ImagePreviewFragment {
-            return ImagePreviewFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(BundleConstant.DATA, data)
-                }
+        fun newInstance(data: ImagePreviewEvent?) = ImagePreviewFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(BundleConstant.DATA, data)
             }
         }
     }
@@ -102,7 +100,7 @@ open class ImagePreviewFragment :
         getAdapter().loadMoreModule.loadMoreEnd(true)
     }
 
-    override fun onPreviewLongClick(media: IImageUrl,position: Int) {
+    override fun onPreviewLongClick(media: IImageUrl, position: Int) {
         mClickData = media
         mActivity.showGridBottomSheet(mActions, listener = this).show()
     }
@@ -111,12 +109,14 @@ open class ImagePreviewFragment :
         items.add(QMUIItemBean(TAG_SAVE, R.drawable.svg_operation_save))
     }
 
-    override fun onGridBottomSheetItemClick(dialog: QMUIBottomSheet, itemView: View, tag: QMUIItemBean) {
+    override fun onGridBottomSheetItemClick(
+        dialog: QMUIBottomSheet,
+        itemView: View,
+        item: QMUIItemBean
+    ) {
         dialog.dismiss()
-        if (tag.getItemTitle() == TAG_SAVE) {
-            mClickData?.let {
-                DownloadUtil.startDownload(mActivity, it)
-            }
+        if (item.getItemTitle() == TAG_SAVE) {
+            DownloadUtil.startDownload(mActivity, mClickData!!)
             return
         }
     }
@@ -132,6 +132,5 @@ open class ImagePreviewFragment :
     override fun getRefreshLayout(): PullRefreshLayout = getDataBinding().refreshLayout
 
     override fun getRecyclerView(): RecyclerView = getDataBinding().recyclerView
-
 
 }

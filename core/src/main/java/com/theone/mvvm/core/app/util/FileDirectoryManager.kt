@@ -145,9 +145,7 @@ object FileDirectoryManager {
     fun getCompressPath(): String = getCacheChildFilePath(COMPRESS)
 
     private fun createDir(name: String = ""): String =
-        FileUtils.createFileDir(
-            appContext, INDEX + (if (name.isEmpty()) "" else File.separator + name)
-        ).path
+        FileUtils.createFileDir(appContext, name).path
 
 
 }

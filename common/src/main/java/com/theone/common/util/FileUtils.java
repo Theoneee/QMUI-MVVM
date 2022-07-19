@@ -55,18 +55,7 @@ public class FileUtils {
      * @return
      */
     public static File createFileDir(Context context, String dirName) {
-        String filePath;
-        // 如SD卡已存在，则存储；反之存在data目录下
-//        if (SdkUtils.INSTANCE.isAndroidQ()) {
-//            filePath = ContextCompat.getExternalFilesDirs(
-//                    context, null)[0].getAbsolutePath();
-//        } else
-            if (isMountedSDCard()) {
-            // SD卡路径
-            filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        } else {
-            filePath = context.getCacheDir().getPath();
-        }
+        String filePath = context.getExternalCacheDir().getPath();
         File destDir = new File(filePath + File.separator + dirName);
         if (!destDir.exists()) {
             boolean isCreate = destDir.mkdirs();

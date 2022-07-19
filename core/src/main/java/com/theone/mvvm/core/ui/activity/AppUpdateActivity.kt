@@ -70,6 +70,10 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     private val STATUS_INSTALL = "立即安装"
     private val STATUS_RE_DOWNLOAD = "重新下载"
 
+    private val mDownloadPath:String by lazy {
+        (externalCacheDir?:filesDir).absolutePath
+    }
+
     override fun showTopBar(): Boolean = false
 
     override fun getRootBackgroundColor(): Int = R.color.qmui_config_color_transparent
@@ -104,7 +108,7 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
                     }
                     else -> {
                         getDataBinding().tvUpdate.setProgressText(STATUS_DOWNING, 0.0f)
-                        requestPermission()
+                        doDownload()
                     }
                 }
             }
@@ -119,37 +123,16 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
 
     }
 
-    private fun requestPermission() {
-        XXPermissions.with(this).run {
-            if (applicationInfo.targetSdkVersion >= 30) {
-                permission(Permission.MANAGE_EXTERNAL_STORAGE)
-            } else {
-                permission(Permission.Group.STORAGE)
-            }
-        }
-            .constantRequest()
-            .request(object : CoreOnPermission(this) {
-
-                override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
-                    if (all) {
-                        doDownload()
-                    }
-                }
-            })
-    }
-
     private fun doDownload() {
         DownloadBean(
             mUpdate.getAppApkUrl(),
-            getApkDownloadPath(),
+            mDownloadPath,
             getApkDownloadName()
         ).let {
             startDownloadService(it)
         }
         getDataBinding().tvUpdate.state = ProgressButton.DOWNLOADING
     }
-
-    private fun getApkDownloadPath(): String = FileDirectoryManager.getUpdateAPKDownloadPath()
 
     private fun getApkDownloadName(): String {
         return getAppName() + "_" + mUpdate.getAppVersionName() + ".apk"
@@ -182,7 +165,7 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     private fun checkUpdateApkFile(): File? {
         getDataBinding().tvUpdate.state = ProgressButton.NORMAL
         getDataBinding().tvUpdate.setCurrentText(STATUS_START)
-        val file = File(getApkDownloadPath(), getApkDownloadName())
+        val file = File(mDownloadPath, getApkDownloadName())
         if (file.exists()) {
             // 判断服务器APK大小，可能没有返回大小
             if (file.length() > 0) {
