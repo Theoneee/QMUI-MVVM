@@ -38,8 +38,6 @@ abstract class TheBaseQuickAdapter<T, BD : ViewDataBinding>(layout: Int) :
         layout
     ), LoadMoreModule {
 
-    private val bindingParams: SparseArray<Any> = SparseArray()
-
     protected open fun SparseArray<Any>.bindingParams() {}
 
     override fun convert(holder: BaseDataBindingHolder<BD>, item: T) {

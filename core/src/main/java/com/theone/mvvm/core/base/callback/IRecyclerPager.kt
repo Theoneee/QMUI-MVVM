@@ -54,18 +54,18 @@ interface IRecyclerPager<T> {
     /**
      * 初始化下拉刷新
      */
-    fun initRefreshView()
+    fun initRefreshView(){}
 
     /**
      * 设置刷新控制状态
      * @param enabled Boolean
      */
-    fun setRefreshLayoutEnabled(enabled:Boolean)
+    fun setRefreshLayoutEnabled(enabled:Boolean){}
 
     /**
      * 直接调用刷新
      */
-    fun onRefreshDirectly()
+    fun onRefreshDirectly(){}
 
     /**
      * 是否需要懒加载数据
