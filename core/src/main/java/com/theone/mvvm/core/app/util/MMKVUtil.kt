@@ -2,6 +2,7 @@ package com.theone.mvvm.core.app.util
 
 import android.app.Application
 import com.tencent.mmkv.MMKV
+import com.theone.mvvm.base.appContext
 
 
 //  ┏┓　　　┏┓
@@ -30,18 +31,18 @@ import com.tencent.mmkv.MMKV
  */
 object MMKVUtil {
 
-    private var mMMKV:MMKV?=null
+    private var mMMKV: MMKV? = null
 
-    fun init(application:Application,id: String? = "mmkv"){
-        MMKV.initialize(application.filesDir.absolutePath+"/$id")
-        mMMKV =  MMKV.mmkvWithID(id)
+    fun init(application: Application, id: String? = "mmkv") {
+        MMKV.initialize(application.filesDir.absolutePath + "/$id")
+        mMMKV = MMKV.mmkvWithID(id)
     }
 
-    private fun getMMKV():MMKV {
-      if(null == mMMKV){
-          TODO("MMKVUtil需要在Application里调用init方法初始化")
-      }
-      return mMMKV!!
+    fun getMMKV(): MMKV {
+        if (null == mMMKV) {
+            init(appContext)
+        }
+        return mMMKV!!
     }
 
     fun putBoolean(key: String, value: Boolean) {
@@ -71,15 +72,36 @@ object MMKVUtil {
     fun getInt(key: String, default: Int): Int =
         getMMKV().decodeInt(key, default)
 
-    fun clear(){
+    fun putLong(key: String, value: Long) {
+        getMMKV().encode(key, value)
+    }
+
+    fun getLong(key: String, default: Long): Long =
+        getMMKV().decodeLong(key, default)
+
+    fun putDouble(key: String, value: Double) {
+        getMMKV().encode(key, value)
+    }
+
+    fun getDouble(key: String, default: Double): Double =
+        getMMKV().decodeDouble(key, default)
+
+    fun putFloat(key: String, value: Float) {
+        getMMKV().encode(key, value)
+    }
+
+    fun getFloat(key: String, default: Float): Float =
+        getMMKV().decodeFloat(key, default)
+
+    fun clear() {
         getMMKV().clear()
     }
 
-    fun clearAll(){
+    fun clearAll() {
         getMMKV().clearAll()
     }
 
-    fun clearMemoryCache(){
+    fun clearMemoryCache() {
         getMMKV().clearMemoryCache()
     }
 }
