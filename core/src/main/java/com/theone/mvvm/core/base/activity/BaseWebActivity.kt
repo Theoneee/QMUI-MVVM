@@ -251,7 +251,7 @@ abstract class BaseWebActivity<VM : BaseViewModel, DB : ViewDataBinding> :
             handler: SslErrorHandler?,
             error: SslError?
         ) {
-            handler?.proceed()
+            handler?.cancel()
         }
 
         override fun onPageFinished(

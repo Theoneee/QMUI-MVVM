@@ -1,7 +1,9 @@
 package com.theone.mvvm.core.app.util
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.ContentValues
+import android.content.Context
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore

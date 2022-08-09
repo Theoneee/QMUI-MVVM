@@ -41,7 +41,7 @@ class AppUpdate : IApkUpdate, Parcelable {
     override fun getAppVersionName(): String = "1.0.0"
 
     override fun getAppApkUrl(): String =
-        "https://downv6.qq.com/qqweb/QQ_1/android_apk/Android_8.8.98.8410_537124025_64.apk"
+        "https://bmob-cdn-24989.bmobpay.com/2022/07/25/e2997b6c40ee6ce980a0ae3c4cd3c5bd.apk"
 
     override fun getAppUpdateLog(): String =
         "【新增1】短视频首页增加今日热门\n" +
@@ -52,8 +52,7 @@ class AppUpdate : IApkUpdate, Parcelable {
                 "【新增6】短视频首页增加今日热门\n" +
                 "【新增7】短视频首页增加今日热门\n" +
                 "【新增8】短视频首页增加今日热门\n" +
-                "【新增9】短视频首页增加今日热门\n" +
-                "【新增10】短视频首页增加今日热门\n"
+                "【新增9】短视频首页增加今日热门\n"
 
     override fun getAppApkSize(): Long = 0
 

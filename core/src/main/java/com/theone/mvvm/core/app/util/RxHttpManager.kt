@@ -2,7 +2,6 @@ package com.theone.mvvm.core.app.util
 
 import com.theone.mvvm.core.app.ext.customParseException
 import com.theone.mvvm.core.data.entity.RxHttpBuilder
-import com.zhy.http.okhttp.OkHttpUtils
 import okhttp3.OkHttpClient
 import rxhttp.RxHttpPlugins
 import java.io.File
@@ -40,7 +39,7 @@ object RxHttpManager {
         with(builder) {
             mBuilder = builder
             val client = getDefaultClient()
-            OkHttpUtils.initClient(client)
+            //OkHttpUtils.initClient(client)
             RxHttpPlugins.init(client)
                 .setCache(
                     File(cacheFilePath, cacheFileName),

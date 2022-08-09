@@ -9,12 +9,10 @@ import com.theone.demo.R
 import com.theone.demo.databinding.FragmentGroupListViewBinding
 import com.theone.mvvm.base.fragment.BaseVbFragment
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
-import com.theone.mvvm.core.app.ext.qmui.findSelect
 import com.theone.mvvm.core.app.ext.qmui.showBottomListSheet
 import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
 import com.theone.mvvm.core.data.entity.QMUIItemBean
 import com.theone.mvvm.entity.QMUIItem
-import com.theone.mvvm.ext.qmui.NO_SET
 import com.theone.mvvm.ext.qmui.addToGroup
 import com.theone.mvvm.ext.qmui.createItem
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn

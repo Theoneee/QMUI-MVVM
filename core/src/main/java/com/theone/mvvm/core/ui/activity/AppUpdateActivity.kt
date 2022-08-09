@@ -6,25 +6,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.view.View
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.theone.common.constant.BundleConstant
+import com.theone.common.ext.delay
 import com.theone.common.ext.getAppName
 import com.theone.common.ext.getValueNonNull
 import com.theone.common.ext.installApk
-import com.theone.common.ext.logE
 import com.theone.common.widget.ProgressButton
 import com.theone.mvvm.core.R
+import com.theone.mvvm.core.app.ext.isServiceRunning
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
 import com.theone.mvvm.core.base.callback.IApkUpdate
 import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.databinding.ActivityAppUpdateBinding
 import com.theone.mvvm.core.service.DownloadService
 import com.theone.mvvm.core.service.startDownloadService
-import com.theone.mvvm.core.app.util.FileDirectoryManager
-import com.theone.mvvm.core.base.callback.CoreOnPermission
 import com.theone.mvvm.core.ui.viewmodel.AppUpdateViewModel
-import com.theone.mvvm.ext.qmui.showMsgDialog
 import java.io.File
 
 //  ┏┓　　　┏┓
@@ -70,8 +66,8 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     private val STATUS_INSTALL = "立即安装"
     private val STATUS_RE_DOWNLOAD = "重新下载"
 
-    private val mDownloadPath:String by lazy {
-        (externalCacheDir?:filesDir).absolutePath
+    private val mDownloadPath: String by lazy {
+        (externalCacheDir ?: filesDir).absolutePath
     }
 
     override fun showTopBar(): Boolean = false
@@ -98,18 +94,13 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     inner class ClickProxy {
 
         fun download() {
-            if (getDataBinding().tvUpdate.currentText.isNotEmpty()) {
-                when (getDataBinding().tvUpdate.currentText) {
-                    STATUS_INSTALL -> {
-                        installApk(checkUpdateApkFile())
-                    }
-                    STATUS_DOWNING -> {
-
-                    }
-                    else -> {
-                        getDataBinding().tvUpdate.setProgressText(STATUS_DOWNING, 0.0f)
-                        doDownload()
-                    }
+            when (getDataBinding().tvUpdate.state) {
+                ProgressButton.INSTALLING -> {
+                    installApk(checkUpdateApkFile())
+                }
+                ProgressButton.NORMAL -> {
+                    getDataBinding().tvUpdate.setProgressText(STATUS_DOWNING, 0.0f)
+                    doDownload()
                 }
             }
         }
@@ -124,6 +115,7 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     }
 
     private fun doDownload() {
+        getDataBinding().tvUpdate.state = ProgressButton.DOWNLOADING
         DownloadBean(
             mUpdate.getAppApkUrl(),
             mDownloadPath,
@@ -131,31 +123,30 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
         ).let {
             startDownloadService(it)
         }
-        getDataBinding().tvUpdate.state = ProgressButton.DOWNLOADING
     }
 
     private fun getApkDownloadName(): String {
         return getAppName() + "_" + mUpdate.getAppVersionName() + ".apk"
     }
 
-    var mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 DownloadService.DOWNLOAD_OK -> {
                     // 下载完成
                     getDataBinding().tvUpdate.setCurrentText(STATUS_INSTALL)
+                    getDataBinding().tvUpdate.state = ProgressButton.INSTALLING
                 }
                 DownloadService.DOWNLOAD_ERROR -> {
                     // 下载失败
-                    val error =
-                        intent.getStringExtra(DownloadService.DOWNLOAD_ERROR_MSG)
                     getDataBinding().tvUpdate.setCurrentText(STATUS_RE_DOWNLOAD)
+                    getDataBinding().tvUpdate.state = ProgressButton.NORMAL
                 }
                 else -> {
                     // 更新进度
-                    val percent =
-                        intent.getIntExtra(DownloadService.DOWNLOAD_PROGRESS_PERCENT, 0)
+                    getDataBinding().tvUpdate.state = ProgressButton.DOWNLOADING
+                    val percent = intent.getIntExtra(DownloadService.DOWNLOAD_PROGRESS_PERCENT, 0)
                     getDataBinding().tvUpdate.setProgressText(STATUS_DOWNING, percent * 1.0f)
                 }
             }
@@ -177,6 +168,7 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
                 }
                 // 当前安装包已经存在，直接点击安装
                 getDataBinding().tvUpdate.setCurrentText(STATUS_INSTALL)
+                getDataBinding().tvUpdate.state = ProgressButton.INSTALLING
                 return file
             } else {
                 file.delete()
@@ -194,7 +186,11 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     override fun onResume() {
         super.onResume()
         registerReceiver(mReceiver, mFilter)
-        checkUpdateApkFile()
+        delay(100) {
+            if (getDataBinding().tvUpdate.state == ProgressButton.NORMAL) {
+                checkUpdateApkFile()
+            }
+        }
     }
 
     override fun onDestroy() {

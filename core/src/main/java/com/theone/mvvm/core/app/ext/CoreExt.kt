@@ -2,11 +2,15 @@ package com.theone.mvvm.core.app.ext
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.theone.common.callback.OnKeyBackClickListener
 import com.theone.common.constant.BundleConstant
+import com.theone.mvvm.base.appContext
 import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 import com.theone.mvvm.core.app.widge.dialog.ProgressDialog
 import com.theone.mvvm.core.base.callback.IApkUpdate
@@ -82,4 +86,24 @@ fun Activity.startAppUpdateActivity(update: IApkUpdate, clazz:Class<*> = AppUpda
     startActivity(Intent(this, clazz).apply {
         putExtra(BundleConstant.DATA, update)
     })
+}
+
+/**
+ * 服务是否运行
+ * @param targetName String
+ * @return Boolean
+ */
+fun Context.isServiceRunning(targetName:String?):Boolean{
+    val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val serviceList = am.getRunningServices(200)
+    if(serviceList.size <= 0){
+        return false
+    }
+    for (running in serviceList){
+        val serviceName = running.service.className
+        if(serviceName == targetName){
+            return true
+        }
+    }
+    return false
 }

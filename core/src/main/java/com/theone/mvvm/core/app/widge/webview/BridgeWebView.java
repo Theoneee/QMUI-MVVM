@@ -78,10 +78,8 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
     }
 
     /**
-     *
-     * @param handler
-     *            default handler,handle messages send by js without assigned handler name,
-     *            if js message has handler name, it will be handled by named handlers registered by native
+     * @param handler default handler,handle messages send by js without assigned handler name,
+     *                if js message has handler name, it will be handled by named handlers registered by native
      */
     public void setDefaultHandler(BridgeHandler handler) {
         this.defaultHandler = handler;
@@ -91,18 +89,17 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
+        WebView.setWebContentsDebuggingEnabled(false);
         this.setWebViewClient(generateBridgeWebViewClient());
     }
 
     protected BridgeWebViewClient generateBridgeWebViewClient() {
-        return new BridgeWebViewClient(this,true,true);
+        return new BridgeWebViewClient(this, true, true);
     }
 
     /**
      * 获取到CallBackFunction data执行调用并且从数据集移除
+     *
      * @param url
      */
     void handlerReturnData(String url) {
@@ -127,8 +124,9 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
 
     /**
      * 保存message到消息队列
-     * @param handlerName handlerName
-     * @param data data
+     *
+     * @param handlerName      handlerName
+     * @param data             data
      * @param responseCallback CallBackFunction
      */
     private void doSend(String handlerName, String data, CallBackFunction responseCallback) {
@@ -149,6 +147,7 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
 
     /**
      * list<message> != null 添加到消息集合否则分发消息
+     *
      * @param m Message
      */
     private void queueMessage(Message m) {
@@ -161,6 +160,7 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
 
     /**
      * 分发message 必须在主线程才分发成功
+     *
      * @param m Message
      */
     void dispatchMessage(Message m) {
@@ -237,7 +237,7 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
                             } else {
                                 handler = defaultHandler;
                             }
-                            if (handler != null){
+                            if (handler != null) {
                                 handler.handler(m.getData(), responseFunction);
                             }
                         }
@@ -257,8 +257,9 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
     /**
      * register handler,so that javascript can call it
      * 注册处理程序,以便javascript调用它
+     *
      * @param handlerName handlerName
-     * @param handler BridgeHandler
+     * @param handler     BridgeHandler
      */
     public void registerHandler(String handlerName, BridgeHandler handler) {
         if (handler != null) {
@@ -281,9 +282,10 @@ public class BridgeWebView extends QMUIWebView implements WebViewJavascriptBridg
     /**
      * call javascript registered handler
      * 调用javascript处理程序注册
+     *
      * @param handlerName handlerName
-     * @param data data
-     * @param callBack CallBackFunction
+     * @param data        data
+     * @param callBack    CallBackFunction
      */
     public void callHandler(String handlerName, String data, CallBackFunction callBack) {
         doSend(handlerName, data, callBack);

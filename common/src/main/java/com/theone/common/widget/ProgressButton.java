@@ -102,7 +102,7 @@ public class ProgressButton extends AppCompatTextView {
     public static final int NORMAL = 0;
     //下载中
     public static final int DOWNLOADING = 1;
-    //有点运动状态
+    //安装中
     public static final int INSTALLING = 2;
 
     private int mState;
@@ -335,6 +335,8 @@ public class ProgressButton extends AppCompatTextView {
                 mBackgroundPaint.setColor(mBackgroundColor);
                 canvas.drawRoundRect(mBackgroundBounds, mButtonRadius, mButtonRadius, mBackgroundPaint);
                 break;
+            default:
+                break;
         }
     }
 
@@ -381,10 +383,11 @@ public class ProgressButton extends AppCompatTextView {
             case INSTALLING:
                 mTextPaint.setColor(mTextCoverColor);
                 canvas.drawText(mCurrentText.toString(), (getMeasuredWidth() - textWidth) / 2, y, mTextPaint);
-                canvas.drawCircle((getMeasuredWidth() + textWidth) / 2 + 4 + mDot1transX, y, 4, mDot1Paint);
-                canvas.drawCircle((getMeasuredWidth() + textWidth) / 2 + 24 + mDot2transX, y, 4, mDot2Paint);
+//                canvas.drawCircle((getMeasuredWidth() + textWidth) / 2 + 4 + mDot1transX, y, 4, mDot1Paint);
+//                canvas.drawCircle((getMeasuredWidth() + textWidth) / 2 + 24 + mDot2transX, y, 4, mDot2Paint);
                 break;
-
+            default:
+                break;
         }
 
     }

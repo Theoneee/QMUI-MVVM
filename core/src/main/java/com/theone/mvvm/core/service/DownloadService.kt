@@ -1,23 +1,25 @@
 package com.theone.mvvm.core.service
 
 import android.app.Activity
+import android.app.IntentService
 import android.app.Notification
 import android.app.Service
 import android.content.Intent
+import android.content.IntentSender
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.hjq.permissions.Permission
 import com.hjq.toast.ToastUtils
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.installApk
 import com.theone.mvvm.base.appContext
 import com.theone.mvvm.core.R
+import com.theone.mvvm.core.app.util.FileDownloadUtil
 import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.app.util.NotificationManager
-import com.zhy.http.okhttp.OkHttpUtils
-import com.zhy.http.okhttp.callback.FileCallBack
-import okhttp3.Call
 import java.io.File
 import java.util.*
 
@@ -53,17 +55,14 @@ fun Activity.startDownloadService(download: DownloadBean) {
     startService(intent)
 }
 
-class DownloadService : Service() {
+class DownloadService : IntentService(this::class.java.canonicalName) {
 
     companion object {
-        const val DOWNLOAD_URL = "download_url"
         const val DOWNLOAD_OK = "download_ok"
         const val DOWNLOAD_PATH = "download_path"
         const val DOWNLOAD_ERROR = "download_error"
         const val DOWNLOAD_ERROR_MSG = "download_error_msg"
         const val DOWNLOAD_PROGRESS = "download_progress"
-        const val DOWNLOAD_PROGRESS_CURRENT = "download_progress_current"
-        const val DOWNLOAD_PROGRESS_TOTAL = "download_progress_total"
         const val DOWNLOAD_PROGRESS_PERCENT = "download_progress_percent"
     }
 
@@ -73,14 +72,15 @@ class DownloadService : Service() {
 
     private lateinit var mNotificationBuilder: NotificationCompat.Builder
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onHandleIntent(intent: Intent?) {
         if (null != intent && null == mDownload) {
             NOTIFICATION_ID = UUID.randomUUID().hashCode()
             mDownload = intent.getParcelableExtra(BundleConstant.DATA)
             initNotification()
             startDown()
+        }else{
+            ToastUtils.show("等待当前任务下载完成")
         }
-        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun initNotification() {
@@ -97,44 +97,38 @@ class DownloadService : Service() {
 
     private fun startDown() {
         mDownload?.run {
-            OkHttpUtils.get()
-                .url(url)
-                .tag(url)
-                .build()
-                .execute(object : FileCallBack(downloadPath, name) {
-
-                    override fun inProgress(progress: Float, total: Long, id: Int) {
-                        val percent = (progress * 100).toInt()
-                        if (percent != mOldPercent) {
-                            mOldPercent = percent
-                            updateProgress(percent)
-                            sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, percent)
-                        }
-                    }
-
-                    override fun onResponse(response: File, id: Int) {
-                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, response.absolutePath)
+            FileDownloadUtil.get().download(url,downloadPath,name,object :FileDownloadUtil.OnDownloadListener{
+                override fun onDownloadSuccess(file: File?) {
+                    file?.let {
+                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, it.absolutePath)
                         updateNotification("下载完成", true)
-                        if (name.endsWith(".apk"))
-                            installApk(response)
+                        if (it.name.endsWith(".apk"))
+                            installApk(it)
                         else
-                            updateLocationFile(response)
+                            updateLocationFile(it)
                     }
+                }
 
-                    override fun onError(call: Call?, e: Exception?, id: Int) {
-                        val error = e?.localizedMessage
-                        sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
-                        updateNotification("下载失败", false)
-                        ToastUtils.show("下载失败 $error")
-                        val file = File(downloadPath, name)
-                        if (file.exists()) {
-                            file.delete()
-                        }
+                override fun onDownloading(progress: Int) {
+                    if (progress != mOldPercent) {
+                        mOldPercent = progress
+                        updateProgress(progress)
+                        sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, progress)
                     }
+                }
 
-                })
+                override fun onDownloadFailed(e: java.lang.Exception?) {
+                    val error = e?.localizedMessage
+                    sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
+                    updateNotification("下载失败", false)
+                    ToastUtils.show("下载失败 $error")
+                    val file = File(downloadPath, name)
+                    if (file.exists()) {
+                        file.delete()
+                    }
+                }
+            })
         }
-
     }
 
     private fun updateNotification(title: String, isFinish: Boolean) {
@@ -172,7 +166,7 @@ class DownloadService : Service() {
                 appContext,
                 arrayOf(file?.absolutePath),
                 null
-            ) { path: String?, uri: Uri? ->
+            ) { path: String?, _: Uri? ->
                 ToastUtils.show("已保存到：$path")
             }
         } catch (e: java.lang.Exception) {
@@ -190,8 +184,6 @@ class DownloadService : Service() {
         })
     }
 
-
     override fun onBind(intent: Intent?): IBinder? = null
-
 
 }
