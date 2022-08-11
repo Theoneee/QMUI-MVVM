@@ -1,7 +1,9 @@
 package com.theone.demo.ui.fragment.sample
 
 import android.view.View
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.theone.demo.databinding.FragmentCustomViewBinding
+import com.theone.mvvm.base.fragment.BaseVbFragment
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
@@ -30,19 +32,14 @@ import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
  * @email 625805189@qq.com
  * @remark
  */
-class CustomViewFragment : BaseCoreFragment<BaseViewModel, FragmentCustomViewBinding>() {
+class CustomViewFragment : BaseVbFragment<FragmentCustomViewBinding>() {
+
+    override fun QMUITopBarLayout.initTopBar() {
+        setTitleWithBackBtn("CustomView", this@CustomViewFragment)
+    }
 
     override fun initView(root: View) {
-        getTopBar()?.run {
-            setTitleWithBackBtn("CustomView", this@CustomViewFragment)
-        }
-    }
 
-    override fun initData() {
-
-    }
-
-    override fun createObserver() {
     }
 
 }

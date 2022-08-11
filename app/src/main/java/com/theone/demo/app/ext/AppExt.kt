@@ -44,6 +44,13 @@ fun getCacheMode(isFirst: Boolean): CacheMode {
         CacheMode.NETWORK_SUCCESS_WRITE_CACHE
 }
 
+fun getCacheModeOnly(isFirst: Boolean): CacheMode {
+    return if (isFirst)
+        CacheMode.ONLY_CACHE
+    else
+        CacheMode.NETWORK_SUCCESS_WRITE_CACHE
+}
+
 /**
  * 加入qq聊天群
  * https://qun.qq.com/join.html

@@ -1,6 +1,7 @@
 package com.theone.demo.data.request
 
 import com.theone.demo.app.ext.getCacheMode
+import com.theone.demo.app.ext.getCacheModeOnly
 import com.theone.demo.data.model.bean.IntegralResponse
 import com.theone.demo.data.repository.ApiRepository
 import com.theone.mvvm.core.base.request.BaseRequest
@@ -34,7 +35,7 @@ class MineRequest : BaseRequest<IntegralResponse>() {
     var isFirst: Boolean = true
 
     suspend fun getUserIntegral() {
-        requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheMode(isFirst)))
+        requestAwait(ApiRepository.INSTANCE.getUserCoin(getCacheModeOnly(isFirst)))
     }
 
 }

@@ -7,6 +7,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.theone.demo.R
 import com.theone.demo.databinding.FragmentGroupListViewBinding
+import com.theone.demo.databinding.FragmentSampleGroupListViewBinding
 import com.theone.mvvm.base.fragment.BaseVbFragment
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
 import com.theone.mvvm.core.app.ext.qmui.showBottomListSheet
@@ -48,7 +49,7 @@ class QMUIBottomSheetFragment : BaseVbFragment<FragmentGroupListViewBinding>(),
     private lateinit var mGridItem: QMUICommonListItemView
 
     override fun QMUITopBarLayout.initTopBar() {
-        setTitleWithBackBtn("QMUIBottomSheetFragment",this@QMUIBottomSheetFragment)
+        setTitleWithBackBtn(TAG,this@QMUIBottomSheetFragment)
     }
 
     override fun initView(root: View) {
@@ -125,8 +126,6 @@ class QMUIBottomSheetFragment : BaseVbFragment<FragmentGroupListViewBinding>(),
             }
         }
     }
-
-
 
     inner class TestBean(val title: String) : QMUIItem {
 

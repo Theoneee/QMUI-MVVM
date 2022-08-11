@@ -162,7 +162,7 @@ class ApiRepository private constructor() {
     fun getUserCoin(cacheMode: CacheMode): Await<IntegralResponse> {
         return RxHttp.get(Url.USER_COIN)
             .setCacheMode(cacheMode)
-            .setCacheValidTime(-1)
+            .setCacheValidTime(Long.MAX_VALUE)
             .toResponse<IntegralResponse>()
     }
 

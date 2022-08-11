@@ -4,12 +4,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.theone.common.ext.dp2px
 import com.theone.demo.R
+import com.theone.demo.databinding.FragmentGroupListViewBinding
 import com.theone.demo.databinding.FragmentSampleGroupListViewBinding
-import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.mvvm.core.base.fragment.BaseCoreFragment
+import com.theone.mvvm.base.fragment.BaseVbFragment
 import com.theone.mvvm.ext.qmui.*
 
 
@@ -37,12 +38,15 @@ import com.theone.mvvm.ext.qmui.*
  * @email 625805189@qq.com
  * @remark 这里最主要的是演示封装的一些扩展函数，方便使用
  */
-class GroupListViewFragment : BaseCoreFragment<BaseViewModel, FragmentSampleGroupListViewBinding>(),
+class GroupListViewFragment : BaseVbFragment<FragmentGroupListViewBinding>(),
     CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
+    override fun QMUITopBarLayout.initTopBar() {
+        setTitleWithBackBtn(TAG, this@GroupListViewFragment)
+    }
+
     override fun initView(root: View) {
-        getTopBar()?.setTitleWithBackBtn(TAG, this)
-        getDataBinding().groupListView.run {
+        getViewBinding().groupListView.run {
             val normal = createItem("普通的Item")
             val detail = createItem("带有图标和详情的Item", "这是详情", R.drawable.svg_mine_project_address)
             val switch =
@@ -67,10 +71,6 @@ class GroupListViewFragment : BaseCoreFragment<BaseViewModel, FragmentSampleGrou
             addToGroup(item, item2, title = "", description = "这是描述", listener = this@GroupListViewFragment)
 
         }
-    }
-
-    override fun createObserver() {
-
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

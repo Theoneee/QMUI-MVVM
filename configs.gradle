@@ -7,7 +7,7 @@ ext {
     okhttpUtilVersion = '2.6.2'
 
     // rxHttp
-    rxhttpVersion = '2.9.0'
+    rxhttpVersion = '2.9.1'
 
     //util
     glideVersion = '4.12.0'

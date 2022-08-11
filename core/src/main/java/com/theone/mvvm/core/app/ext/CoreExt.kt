@@ -81,7 +81,6 @@ fun Fragment.addFailTipsObserve(vararg vms: BaseRequestViewModel<*>) {
     }
 }
 
-
 fun Activity.startAppUpdateActivity(update: IApkUpdate, clazz:Class<*> = AppUpdateActivity::class.java) {
     startActivity(Intent(this, clazz).apply {
         putExtra(BundleConstant.DATA, update)

@@ -2,12 +2,14 @@ package com.theone.demo.ui.fragment.sample
 
 import android.text.SpannableString
 import android.view.View
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 import com.theone.common.ext.*
 import com.theone.demo.R
 import com.theone.demo.databinding.FragmentSampleStringExtBinding
 import com.theone.demo.ui.state.StringExtViewModel
+import com.theone.mvvm.base.fragment.BaseVmDbFragment
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.addToGroup
 import com.theone.mvvm.ext.qmui.createItem
@@ -37,7 +39,7 @@ import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
  * @email 625805189@qq.com
  * @remark
  */
-class StringExtFragment : BaseCoreFragment<StringExtViewModel, FragmentSampleStringExtBinding>() {
+class StringExtFragment : BaseVmDbFragment<StringExtViewModel, FragmentSampleStringExtBinding>() {
 
     private lateinit var ForegroundColorSpan: QMUICommonListItemView
     private lateinit var BackgroundColorSpan: QMUICommonListItemView
@@ -50,10 +52,11 @@ class StringExtFragment : BaseCoreFragment<StringExtViewModel, FragmentSampleStr
     private lateinit var BOLD_ITALIC2: QMUICommonListItemView
     private lateinit var SKIN: QMUICommonListItemView
 
+    override fun QMUITopBarLayout.initTopBar() {
+        setTitleWithBackBtn("StringExt", this@StringExtFragment)
+    }
+
     override fun initView(root: View) {
-        getTopBar()?.run {
-            setTitleWithBackBtn("StringExt", this@StringExtFragment)
-        }
         getDataBinding().groupListView.run {
             ForegroundColorSpan =
                 createItem("前景色", SpanType.ForegroundColorSpan)
@@ -110,11 +113,6 @@ class StringExtFragment : BaseCoreFragment<StringExtViewModel, FragmentSampleStr
             )
         }
     }
-
-    override fun createObserver() {
-
-    }
-
 
     private fun QMUIGroupListView.createItem(
         title: String,

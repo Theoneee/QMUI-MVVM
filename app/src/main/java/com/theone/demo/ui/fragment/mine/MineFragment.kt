@@ -85,14 +85,15 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
         }
 
         getDataBinding().swipeRefresh.setOnRefreshListener {
-            requestIntegral()
+            requestIntegral(false)
         }
-        setUserInfo(appVm.userInfo.value)
+        setUserInfo(appVm.userInfo.value,true)
     }
 
     override fun onLazyInit() {
         appVm.userInfo.value?.run {
-            requestIntegral()
+            getViewModel().mRequest.isFirst = false
+            requestIntegral(false)
         }
     }
 
@@ -120,13 +121,14 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
             }
         }
         appVm.userInfo.observe(this) {
-            setUserInfo(it)
+            setUserInfo(it,false)
         }
     }
 
-    private fun requestIntegral() {
+    private fun requestIntegral(isFirst:Boolean) {
         getViewModel().run {
-            getDataBinding().swipeRefresh.isRefreshing = !mRequest.isFirst
+            mRequest.isFirst = isFirst
+            getDataBinding().swipeRefresh.isRefreshing = !isFirst
             requestData()
         }
     }
@@ -139,10 +141,10 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
         }
     }
 
-    private fun setUserInfo(it: UserInfo?) {
+    private fun setUserInfo(it: UserInfo?,isFirst: Boolean) {
         getDataBinding().swipeRefresh.isEnabled = false
         it.notNull({
-            requestIntegral()
+            requestIntegral(isFirst)
             getViewModel().run {
                 name.set(it.getUserName())
                 id.set("ID " + it.id)

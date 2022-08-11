@@ -1,9 +1,11 @@
 package com.theone.demo.ui.fragment.sample
 
 import android.view.View
+import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
 import com.theone.demo.app.util.AppUpdateUtil
 import com.theone.demo.databinding.FragmentSampleBinding
+import com.theone.mvvm.base.fragment.BaseVbFragment
 import com.theone.mvvm.ext.qmui.addToGroup
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
@@ -36,7 +38,7 @@ import com.theone.mvvm.ext.qmui.showTips
  * @email 625805189@qq.com
  * @remark
  */
-class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
+class SampleFragment : BaseVbFragment<FragmentSampleBinding>(),
     View.OnClickListener {
 
     lateinit var mGroupListView: QMUICommonListItemView
@@ -50,9 +52,12 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
     lateinit var mPictureSelect: QMUICommonListItemView
     lateinit var mBottomSheet: QMUICommonListItemView
 
+    override fun QMUITopBarLayout.initTopBar() {
+        setTitleWithBackBtn("示例", this@SampleFragment)
+    }
+
     override fun initView(root: View) {
-        getTopBar()?.setTitleWithBackBtn("示例", this)
-        getDataBinding().groupListView.run {
+        getViewBinding().groupListView.run {
             mPager = createItem("BasePagerPullRefreshFragment")
             mGroupListView = createItem("QMUIGroupListView")
             mStringExt = createItem("StringExt")
@@ -80,17 +85,15 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
         }
     }
 
-    override fun onLazyInit() {
-
-    }
-
     override fun onClick(v: View?) {
-        if (v == mCrash) {
-            arrayListOf<String>()[1]
-        } else if (v == mAppUpdate) {
-            AppUpdateUtil(mActivity,true).checkUpdate()
-        } else
-            startFragment(
+        when (v) {
+            mCrash -> {
+                arrayListOf<String>()[1]
+            }
+            mAppUpdate -> {
+                AppUpdateUtil(mActivity,true).checkUpdate()
+            }
+            else -> startFragment(
                 when (v) {
                     mPager -> SamplePagerFragment()
                     mGroupListView -> GroupListViewFragment()
@@ -104,9 +107,7 @@ class SampleFragment : BaseCoreFragment<BaseViewModel, FragmentSampleBinding>(),
                     }
                 }
             )
-    }
-
-    override fun createObserver() {
+        }
     }
 
 }
