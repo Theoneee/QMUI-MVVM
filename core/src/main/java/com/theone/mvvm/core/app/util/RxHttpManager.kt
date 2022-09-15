@@ -34,19 +34,20 @@ import java.util.concurrent.TimeUnit
 object RxHttpManager {
 
     private var mBuilder: RxHttpBuilder? = null
+    private var mPlugins: RxHttpPlugins? = null
 
-    fun init(builder: RxHttpBuilder = RxHttpBuilder()): RxHttpPlugins =
+    fun init(builder: RxHttpBuilder = RxHttpBuilder()) =
         with(builder) {
             mBuilder = builder
-            val client = getDefaultClient()
-            //OkHttpUtils.initClient(client)
-            RxHttpPlugins.init(client)
-                .setCache(
+            RxHttpPlugins.init(getDefaultClient()).apply {
+                mPlugins = this
+                setCache(
                     File(cacheFilePath, cacheFileName),
                     cacheMaxSize,
                     cacheMode,
                     cacheValidTime
                 )
+            }
         }
 
     fun clearCookieCache() {
@@ -54,6 +55,7 @@ object RxHttpManager {
     }
 
     fun getRxHttpBuilder() = mBuilder
+    fun getRxHttpPlugins() = mPlugins
 
     private fun RxHttpBuilder.getDefaultClient(): OkHttpClient = OkHttpClient().newBuilder().apply {
         cookiejar?.let {

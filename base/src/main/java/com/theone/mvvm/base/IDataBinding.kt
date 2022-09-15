@@ -1,7 +1,7 @@
 package com.theone.mvvm.base
 
 import android.util.SparseArray
-import androidx.annotation.NonNull
+import androidx.databinding.ViewDataBinding
 import com.theone.mvvm.BR
 import com.theone.mvvm.ext.getClazz
 
@@ -29,7 +29,7 @@ import com.theone.mvvm.ext.getClazz
  * @email 625805189@qq.com
  * @remark
  */
-interface IDataBinding<DB> {
+interface IDataBinding<DB:ViewDataBinding> {
 
     /**
      * 获取DataBinding，供子类调用
@@ -49,7 +49,7 @@ interface IDataBinding<DB> {
      * DataBinding的class
      * @return Class<*>
      */
-    fun getDataBindingClass():Class<DB> = getClazz(this,getDataBindingIndex())
+    fun getDataBindingClass():Class<DB> = getClazz(getDataBindingIndex())
 
     /**
      * 视图绑定里ViewModel的ID

@@ -2,6 +2,7 @@ package com.theone.mvvm.base
 
 import android.util.SparseArray
 import androidx.annotation.NonNull
+import androidx.viewbinding.ViewBinding
 import com.theone.mvvm.BR
 import com.theone.mvvm.ext.getClazz
 
@@ -29,7 +30,7 @@ import com.theone.mvvm.ext.getClazz
  * @email 625805189@qq.com
  * @remark
  */
-interface IViewBinding<VB> {
+interface IViewBinding<VB:ViewBinding> {
 
     /**
      * 获取ViewBinding，供子类调用
@@ -49,7 +50,7 @@ interface IViewBinding<VB> {
      * DataBinding的class
      * @return Class<*>
      */
-    fun getViewBindingClass():Class<VB> = getClazz(this,getViewBindingIndex())
+    fun getViewBindingClass():Class<VB> = getClazz()
 
 
 }

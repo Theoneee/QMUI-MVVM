@@ -1,5 +1,6 @@
-package com.theone.mvvm.base.fragment
+package com.theone.mvvm.base.activity
 
+import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.theone.mvvm.base.IViewBinding
 import com.theone.mvvm.base.ViewConstructor
@@ -30,7 +31,7 @@ import com.theone.mvvm.base.ViewConstructor
  *          tools:viewBindingIgnore="true"
  *
  */
-abstract class BaseVbFragment<VB : ViewBinding> : BaseQMUIFragment(), IViewBinding<VB> {
+abstract class BaseVbActivity<VB : ViewBinding> : BaseQMUIActivity(), IViewBinding<VB> {
 
     override fun getContentViewFactory(): ViewConstructor.Factory {
         return ViewConstructor.ViewBindingFactory(getViewBindingClass())

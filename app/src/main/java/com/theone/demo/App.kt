@@ -44,7 +44,7 @@ class App : CoreApplication() {
         super.init(application)
         ThemeUtil.init(application)
         RxHttpManager.run {
-            init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG)
+            init(RxHttpBuilder(isNeedCookie = true)).setDebug(DEBUG,true,2)
             initCustomExceptionParse {
                 if (it.code == 502) {
                     "服务器正在升级,请稍等"

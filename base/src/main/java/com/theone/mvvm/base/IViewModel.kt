@@ -50,7 +50,7 @@ interface IViewModel<VM : BaseViewModel> {
      * ViewModel的Class类型
      * @return Class<VM>
      */
-    fun getViewModelClass(): Class<VM> = getClazz(this, getViewModelIndex())
+    fun getViewModelClass(): Class<VM> = getClazz(getViewModelIndex())
 
     /**
      * 初始化数据、请求相关的在这个方法里进行，请勿在[initView]

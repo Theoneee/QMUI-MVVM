@@ -3,7 +3,6 @@ package com.theone.mvvm.base
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager
 import kotlin.properties.Delegates
 
@@ -35,7 +34,7 @@ import kotlin.properties.Delegates
 
 val appContext: Application by lazy { BaseApplication.app }
 
-abstract class BaseApplication : Application(), ViewModelStoreOwner {
+abstract class BaseApplication : Application(), AppViewModelProviderOwner {
 
     companion object{
         lateinit var app: Application
@@ -44,7 +43,9 @@ abstract class BaseApplication : Application(), ViewModelStoreOwner {
 
     abstract fun isDebug():Boolean
 
-    private lateinit var mAppViewModelStore: ViewModelStore
+    private val mAppViewModelStore: ViewModelStore by lazy {
+        ViewModelStore()
+    }
 
     private val mFactory: ViewModelProvider.Factory by lazy {
         ViewModelProvider.AndroidViewModelFactory.getInstance(this)
@@ -54,18 +55,15 @@ abstract class BaseApplication : Application(), ViewModelStoreOwner {
         super.onCreate()
         app = this
         DEBUG = isDebug()
-        mAppViewModelStore = ViewModelStore()
         QMUISwipeBackActivityManager.init(this)
         init(this)
     }
 
     abstract fun init(application: Application)
 
-    override fun getViewModelStore(): ViewModelStore  = mAppViewModelStore
-
     /**
-     * 获取一个全局的ViewModel
+     * 获取一个Application级别的ViewModelProvider
      */
-    fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(this,mFactory)
+    override fun getAppViewModelProvider(): ViewModelProvider = ViewModelProvider(mAppViewModelStore,mFactory)
 
 }
