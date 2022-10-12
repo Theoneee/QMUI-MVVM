@@ -16,14 +16,14 @@ import com.theone.demo.domain.work.LoginSignWorker
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.SettingViewModel
-import com.theone.mvvm.ext.getAppViewModel
+import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.*
 
 class SettingFragment : BaseCoreFragment<SettingViewModel, FragmentSettingBinding>(),
     View.OnClickListener {
 
-    private val mAppVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+    private val mAppVm: AppViewModel by appViewModels()
 
     private lateinit var mLoginOut: QMUICommonListItemView
     private lateinit var mVersion: QMUICommonListItemView

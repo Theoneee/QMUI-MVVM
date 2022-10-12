@@ -12,7 +12,7 @@ import com.hjq.toast.ToastUtils
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
 import com.theone.common.callback.IImageUrl
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.service.startDownloadService

@@ -3,7 +3,7 @@ package com.theone.mvvm.core.data.entity
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.app.util.FileDirectoryManager
 import rxhttp.RxHttpPlugins
 import rxhttp.wrapper.cahce.CacheMode

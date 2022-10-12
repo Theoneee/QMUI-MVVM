@@ -12,7 +12,7 @@ import com.theone.demo.app.ext.isShareAutoPass
 import com.theone.demo.databinding.FragmentArticleAddBinding
 import com.theone.demo.viewmodel.AddShareArticleViewModel
 import com.theone.demo.viewmodel.AppViewModel
-import com.theone.mvvm.ext.getAppViewModel
+import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
@@ -46,13 +46,13 @@ import com.theone.mvvm.ext.qmui.showSuccessTipsExitDialog
 class AddShareArticleFragment :
     BaseCoreFragment<AddShareArticleViewModel, FragmentArticleAddBinding>() {
 
-    val mAppVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+    val mAppVm: AppViewModel by appViewModels()
 
     private val mRulesPopup: QMUIPopup by lazy {
         createRulesPopup()
     }
 
-    override fun initView(rootView: View) {
+    override fun initView(root: View) {
         getTopBar()?.run {
             setTitleWithBackBtn("添加分享", this@AddShareArticleFragment)
             addRightImageButton(

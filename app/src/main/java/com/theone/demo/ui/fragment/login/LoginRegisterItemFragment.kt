@@ -1,6 +1,7 @@
 package com.theone.demo.ui.fragment.login
 
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.work.*
 import com.theone.common.constant.BundleConstant.TYPE
 import com.theone.common.ext.bundle
@@ -12,7 +13,7 @@ import com.theone.demo.viewmodel.LoginRegisterViewModel
 import com.theone.demo.databinding.FragmentLoginRegisterBinding
 import com.theone.demo.domain.work.LoginSignWorker
 import com.theone.demo.viewmodel.AppViewModel
-import com.theone.mvvm.ext.getAppViewModel
+import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import com.theone.mvvm.ext.qmui.showSuccessTipsExitDialog
@@ -22,14 +23,12 @@ class LoginRegisterItemFragment private constructor() :
     BaseCoreFragment<LoginRegisterViewModel, FragmentLoginRegisterBinding>() {
 
     companion object {
-        fun newInstant(isRegister: Boolean): LoginRegisterItemFragment {
-            return LoginRegisterItemFragment().bundle {
-                putBoolean(TYPE, isRegister)
-            }
+        fun newInstant(isRegister: Boolean) = LoginRegisterItemFragment().bundle {
+            putBoolean(TYPE, isRegister)
         }
     }
 
-    private val mAppVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+    private val mAppVm: AppViewModel by appViewModels()
 
     private val isRegister: Boolean by getValueNonNull(TYPE)
 

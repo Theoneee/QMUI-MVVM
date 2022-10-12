@@ -1,7 +1,7 @@
 package com.theone.mvvm.core.app.util
 
 import com.theone.common.util.FileUtils
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
 import java.io.File
 

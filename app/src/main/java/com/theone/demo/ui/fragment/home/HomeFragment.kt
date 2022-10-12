@@ -86,7 +86,7 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>() {
         root.setBackgroundColor(
             getColor(
                 mActivity,
-                com.theone.mvvm.core.R.color.qmui_config_color_transparent
+                R.color.qmui_config_color_transparent
             )
         )
         super.initView(root)

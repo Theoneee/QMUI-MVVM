@@ -12,10 +12,10 @@ import com.theone.demo.data.model.bean.ArticleResponse
 import com.theone.demo.ui.adapter.ArticleAdapter
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.HomeViewModel
+import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BasePagerPullRefreshFragment
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.widge.pullrefresh.PullRefreshLayout
-import com.theone.mvvm.ext.getAppViewModel
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
 import com.theone.mvvm.ext.qmui.showSingleChoiceDialog
 
@@ -81,7 +81,7 @@ class SamplePagerFragment :
 
     override fun getRefreshLayout(): PullRefreshLayout = getDataBinding().refreshLayout
 
-    private val mAppVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+    private val mAppVm: AppViewModel by appViewModels()
 
     /**
      * 第一次请求成功后是否自动刷新（第一次的数据从Cache里获取的)

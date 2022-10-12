@@ -2,7 +2,7 @@ package com.theone.mvvm.core.app.util
 
 import android.app.Application
 import com.tencent.mmkv.MMKV
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 
 
 //  ┏┓　　　┏┓

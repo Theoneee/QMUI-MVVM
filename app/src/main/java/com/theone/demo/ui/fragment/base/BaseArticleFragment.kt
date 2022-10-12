@@ -79,10 +79,10 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
                 getAdapter().notifyDataSetChanged()
             }
             collectEvent.observe(this@BaseArticleFragment){
-                for (index in getAdapter().data.indices) {
-                    val articleId = getAdapter().data[index].getArticleId()
+                for ((index,item) in getAdapter().data.withIndex()) {
+                    val articleId = item.getArticleId()
                     if (articleId == it.id) {
-                        getAdapter().data[index].collect = it.collect
+                        item.collect = it.collect
                         if (isCollection) {
                             getAdapter().data.removeAt(index)
                             getAdapter().notifyItemRemoved(index)
@@ -90,13 +90,13 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
                             getAdapter().notifyItemChanged(index + getAdapter().headerLayoutCount)
                         }
                         // 操作过后应该更新本地的用户信息里的收藏
-                        CacheUtil.setUser(
-                            mAppVm.userInfo.value?.apply {
-                            if (it.collect)
-                                collectIds.add(articleId.toString())
-                            else
-                                collectIds.remove(articleId.toString())
-                        })
+//                        CacheUtil.setUser(
+//                            mAppVm.userInfo.value?.apply {
+//                            if (it.collect)
+//                                collectIds.add(articleId.toString())
+//                            else
+//                                collectIds.remove(articleId.toString())
+//                        })
                         break
                     }
                 }

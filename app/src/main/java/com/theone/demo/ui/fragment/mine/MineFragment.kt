@@ -23,8 +23,8 @@ import com.theone.demo.ui.fragment.integral.IntegralRankFragment
 import com.theone.demo.ui.fragment.share.ShareArticleFragment
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.MineViewModel
+import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
-import com.theone.mvvm.ext.getAppViewModel
 import com.theone.mvvm.ext.qmui.*
 
 
@@ -54,7 +54,7 @@ import com.theone.mvvm.ext.qmui.*
  */
 class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), View.OnClickListener {
 
-    private val appVm: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+    private val appVm: AppViewModel by appViewModels()
 
     private lateinit var mShare: QMUICommonListItemView
     private lateinit var mCollection: QMUICommonListItemView

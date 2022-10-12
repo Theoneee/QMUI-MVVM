@@ -14,6 +14,7 @@ import com.theone.mvvm.base.IDataBinding
 import com.theone.mvvm.base.IQMUI
 import com.theone.mvvm.base.IViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
+import java.lang.reflect.ParameterizedType
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -93,4 +94,12 @@ fun SparseArray<Any>.addParams(
     if (get(variableId) == null) {
         put(variableId, any)
     }
+}
+
+/**
+ * 获取当前类绑定的泛型clazz
+ */
+@Suppress("UNCHECKED_CAST")
+fun <T> Any.getClazz(index: Int = 0): T {
+    return (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[index] as T
 }

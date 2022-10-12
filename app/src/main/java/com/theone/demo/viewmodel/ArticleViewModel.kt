@@ -48,6 +48,14 @@ abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<Ar
     fun collection(article: ArticleResponse, event: AppViewModel) {
         request({
             ApiRepository.INSTANCE.collectionArticle(article.getArticleId(),article.collect).await()
+            // 操作过后应该更新本地的用户信息里的收藏
+            CacheUtil.setUser(
+                CacheUtil.getUser()?.apply {
+                    if (!article.collect)
+                        collectIds.add(article.getArticleId().toString())
+                    else
+                        collectIds.remove(article.getArticleId().toString())
+                })
             event.collectEvent.value = CollectBus(article.getArticleId(), !article.collect)
         }, null, collectionError)
     }

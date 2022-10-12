@@ -3,7 +3,7 @@ package com.theone.mvvm.core.app.ext
 import android.content.Context
 import android.net.ConnectivityManager
 import com.google.gson.JsonSyntaxException
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import kotlinx.coroutines.TimeoutCancellationException
 import rxhttp.wrapper.exception.HttpStatusCodeException
 import rxhttp.wrapper.exception.ParseException

@@ -1,7 +1,6 @@
-package com.theone.mvvm.base
+package com.theone.common.callback
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓

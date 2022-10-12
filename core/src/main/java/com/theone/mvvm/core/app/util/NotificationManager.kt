@@ -8,7 +8,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.theone.common.ext.toBitmap
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
 import com.theone.common.ext.getAppIcon
 

@@ -15,7 +15,7 @@ import com.hjq.permissions.Permission
 import com.hjq.toast.ToastUtils
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.installApk
-import com.theone.mvvm.base.appContext
+import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.app.util.FileDownloadUtil
 import com.theone.mvvm.core.data.entity.DownloadBean
