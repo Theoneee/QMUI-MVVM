@@ -9,6 +9,7 @@ import android.net.http.SslError
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
@@ -28,6 +29,7 @@ import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.getValueNonNull
 import com.theone.common.ext.gone
 import com.theone.common.ext.showViews
+import com.theone.common.ext.visible
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.callback.IWeb
@@ -98,7 +100,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     }
 
     protected open fun setTopBarTitle(title: String?) {
-       getTopBar()?.setTitle(title)
+        getTopBar()?.setTitle(title)
     }
 
     override fun onLazyInit() {
@@ -128,7 +130,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         mWebView.run {
             overScrollMode = View.OVER_SCROLL_NEVER
             webChromeClient = ExplorerWebViewChromeClient()
-            webViewClient = ExplorerWebViewClient(this,needDispatchSafeAreaInset)
+            webViewClient = ExplorerWebViewClient(this, needDispatchSafeAreaInset)
             setZoomControlGone(this)
         }
         handleUrl(mIWeb.getWebUrl())
@@ -203,7 +205,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         }
     }
 
-    inner class ExplorerWebViewChromeClient() : WebChromeClient() {
+    inner class ExplorerWebViewChromeClient : WebChromeClient() {
 
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
@@ -225,13 +227,15 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     }
 
     inner class ExplorerWebViewClient(webView: BridgeWebView, needDispatchSafeAreaInset: Boolean) :
-        BridgeWebViewClient(webView,needDispatchSafeAreaInset, true) {
+        BridgeWebViewClient(webView, needDispatchSafeAreaInset, true) {
+
         override fun onPageStarted(
             view: WebView,
             url: String,
             favicon: Bitmap?
         ) {
             super.onPageStarted(view, url, favicon)
+            getProgressBar().visible()
             if (mProgressHandler.mDstProgressIndex == 0) {
                 sendProgressMessage(
                     PROGRESS_PROCESS,
@@ -241,6 +245,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
             }
         }
 
+        @Deprecated("Deprecated in Java")
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
             url?.let {
                 if (it.startsWith("http:") || it.startsWith("https:")) {
@@ -256,7 +261,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
             handler: SslErrorHandler?,
             error: SslError?
         ) {
-            handler?.proceed()
+            handler?.cancel()
         }
 
         override fun onPageFinished(
@@ -273,7 +278,7 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         }
     }
 
-    protected open fun getImageBridgeHandler():BridgeHandler{
+    protected open fun getImageBridgeHandler(): BridgeHandler {
         return BridgeHandler { data, function ->
             var jsonObject: JSONObject? = null
             val itemData: ArrayList<String>
@@ -300,7 +305,6 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         }
     }
 
-
     protected open fun startImagePreview(
         itemData: ArrayList<String>,
         position: Int
@@ -323,26 +327,17 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
                 PROGRESS_PROCESS -> {
                     mDstProgressIndex = msg.arg1
                     mDuration = msg.arg2
-                    showViews(getProgressBar())
-                    if (null != mAnimator && mAnimator?.isRunning!!) {
-                        mAnimator?.cancel()
+                    mAnimator?.run {
+                        if(isRunning){
+                            cancel()
+                        }
                     }
                     mAnimator =
                         ObjectAnimator.ofInt(getProgressBar(), "progress", mDstProgressIndex)
-                    mAnimator?.run {
-                        duration = mDuration.toLong()
-                        addListener(object : AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator) {
-                                if (getProgressBar().progress == 100) {
-                                    sendEmptyMessageDelayed(
-                                        PROGRESS_GONE,
-                                        500
-                                    )
-                                }
+                            .apply {
+                                duration = mDuration.toLong()
+                                start()
                             }
-                        })
-                        start()
-                    }
                 }
                 PROGRESS_GONE -> {
                     mDstProgressIndex = 0
@@ -360,7 +355,14 @@ abstract class BaseWebFragment<VM : BaseViewModel, DB : ViewDataBinding> :
                 }
             }
         }
+    }
 
+    override fun onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun onDestroy() {

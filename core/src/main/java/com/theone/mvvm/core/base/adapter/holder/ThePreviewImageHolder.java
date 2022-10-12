@@ -26,6 +26,12 @@ public class ThePreviewImageHolder extends TheBasePreviewHolder {
     }
 
     @Override
+    public void clearCache() {
+        super.clearCache();
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void bindData(IImageUrl media, int position) {
         if(getPosition() == position){
             progressBar.spin();

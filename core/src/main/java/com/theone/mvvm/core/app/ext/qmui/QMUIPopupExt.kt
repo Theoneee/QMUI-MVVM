@@ -40,21 +40,14 @@ import com.theone.mvvm.ext.qmui.NO_SET
 /**
  * @author The one
  * @date 2022-10-11 16:21
- * @describe TODO
+ * @describe QMUIPopup 相关封装
  * @email 625805189@qq.com
  * @remark
  */
 
-
-fun <T : QMUIItem> Context.createListPopup(
-    items: List<T>,
-    onItemClickListener: OnItemClickListener,
-    width: Int = 400,
-    height: Int = 500
-): QMUIPopup {
-
-    val mAdapter = object : BaseQuickAdapter<T, BaseViewHolder>(R.layout.item_qmui_item) {
-        override fun convert(holder: BaseViewHolder, item: T) {
+private val mAdapter: BaseQuickAdapter<QMUIItem, *> by lazy {
+    object : BaseQuickAdapter<QMUIItem, BaseViewHolder>(R.layout.item_qmui_item) {
+        override fun convert(holder: BaseViewHolder, item: QMUIItem) {
             holder.setText(R.id.content, item.getItemTitle())
             holder.getView<ImageView>(R.id.icon).let {
                 if (item.getItemNormalImage() == NO_SET) {
@@ -66,12 +59,21 @@ fun <T : QMUIItem> Context.createListPopup(
             }
         }
     }
+}
+
+fun <T : QMUIItem> Context.createListPopup(
+    items: List<T>,
+    onItemClickListener: OnItemClickListener,
+    adapter: BaseQuickAdapter<QMUIItem, *> = mAdapter,
+    width: Int = 400,
+    height: Int = 500
+): QMUIPopup {
 
     val recyclerView = RecyclerView(this).apply {
         overScrollMode = View.OVER_SCROLL_NEVER
         layoutManager = LinearLayoutManager(this@createListPopup)
-        adapter = mAdapter
-        layoutParams = FrameLayout.LayoutParams(matchParent, wrapContent).apply {
+        this.adapter = adapter
+        layoutParams = FrameLayout.LayoutParams(matchParent, matchParent).apply {
             setPadding(0, dp2px(12), 0, 0)
         }
     }

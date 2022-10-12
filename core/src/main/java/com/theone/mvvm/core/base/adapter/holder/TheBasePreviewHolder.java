@@ -77,6 +77,10 @@ public class TheBasePreviewHolder extends BaseViewHolder {
         this.coverImageView = itemView.findViewById(R.id.preview_image);
     }
 
+    public void clearCache(){
+        this.coverImageView.setImageBitmap(null);
+    }
+
     /**
      * bind Data
      *

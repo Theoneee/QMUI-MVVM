@@ -20,6 +20,7 @@ import com.theone.common.widget.TheMarqueeTextView
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.base.fragment.BaseWebFragment
 import com.theone.mvvm.core.base.callback.IWeb
+import com.theone.mvvm.ext.qmui.addLeftCloseImageBtn
 
 
 //  ┏┓　　　┏┓
@@ -64,9 +65,7 @@ class WebExplorerFragment private constructor() :
     override fun getTopBar(): QMUITopBarLayout = getDataBinding().topbar
 
     override fun QMUITopBarLayout.initTopBar() {
-        addLeftBackImageButton().setOnClickListener {
-            finish()
-        }
+        addLeftCloseImageBtn(this@WebExplorerFragment)
         // QMUI的Title用的是QMUIQQFaceView，无法使用跑马灯效果，这里重新设置一个
         mTitleView = TheMarqueeTextView(context).apply {
             layoutParams = RelativeLayout.LayoutParams(matchParent, wrapContent).apply {

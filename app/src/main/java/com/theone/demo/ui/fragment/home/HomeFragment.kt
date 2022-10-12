@@ -154,7 +154,7 @@ class HomeFragment : BaseArticleFragment<HomeViewModel>() {
     override fun initAdapter() {
         super.initAdapter()
         if (showBanner()) {
-            val mBannerHeight = dp2px(250)
+            val mBannerHeight = dp2px(260)
             mMaxOffsetHeight = (mBannerHeight - QMUIResHelper.getAttrDimen(
                 mActivity,
                 R.attr.qmui_topbar_height

@@ -53,6 +53,7 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
         if (null != onPreviewEventListener) {
             holder.setOnPreviewEventListener(onPreviewEventListener);
         }
+        holder.clearCache();
         IImageUrl media = getData().get(position);
         mHolderCache.put(position, holder);
         holder.bindData(media, position);

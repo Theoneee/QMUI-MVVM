@@ -57,7 +57,7 @@ class QMUIBottomSheetFragment : BaseVbFragment<FragmentGroupListViewBinding>(),
         setTitleWithBackBtn(TAG, this@QMUIBottomSheetFragment)
         mMoreBtn = addRightImageButton(R.drawable.mz_titlebar_ic_more_dark,R.id.topbar_right_view).apply {
             setOnClickListener {
-                showPopupDialog(it,mPopupDatas)
+                showPopupDialog(it,mPopupDatas,400,600)
             }
         }
     }
@@ -138,11 +138,11 @@ class QMUIBottomSheetFragment : BaseVbFragment<FragmentGroupListViewBinding>(),
             }).show()
     }
 
-    private fun showPopupDialog(view: View,items: List<QMUIItem>,width:Int = 400,height:Int = 600){
+    private fun showPopupDialog(view: View,items: List<QMUIItem>,width:Int ,height:Int){
         mActivity.createListPopup(items,
             { _, _, position ->
                 ToastUtils.show("Click $position")
-            }, width,height).show(view)
+            }, width = width, height = height).show(view)
     }
 
     override fun onClick(v: View?) {
