@@ -32,9 +32,7 @@ class SearchResultModel : ArticleViewModel() {
     var mKey: String? = null
 
     override fun requestServer() {
-        request({
-            onSuccess(ApiRepository.INSTANCE.search(page,mKey,getCacheMode()))
-        })
+        requestArticles(ApiRepository.INSTANCE.search(page,mKey,getCacheMode()))
     }
 
 }

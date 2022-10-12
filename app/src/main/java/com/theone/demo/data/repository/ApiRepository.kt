@@ -7,7 +7,7 @@ import com.theone.demo.data.model.bean.*
 import rxhttp.wrapper.cahce.CacheMode
 import rxhttp.wrapper.coroutines.Await
 import rxhttp.wrapper.param.RxHttp
-import rxhttp.wrapper.param.toResponse
+import rxhttp.wrapper.param.toAwaitResponse
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -47,20 +47,18 @@ class ApiRepository private constructor() {
         account: String,
         password: String,
         isRegister: Boolean
-    ) =  RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
-            .add("username", account)
-            .add("password", password)
-            .add("repassword", password, isRegister)
-            .toResponse<UserInfo>()
+    ) = RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
+        .add("username", account)
+        .add("password", password)
+        .add("repassword", password, isRegister)
+        .toAwaitResponse<UserInfo>()
 
     /**
      * 登出
      * @return String?
      */
-    fun loginOut(): Await<String> {
-        return RxHttp.get(Url.LOGIN_OUT)
-            .toResponse<String>()
-    }
+    fun loginOut() = RxHttp.get(Url.LOGIN_OUT)
+        .toAwaitResponse<String>()
 
     /**
      * 获取自己分享的文章
@@ -68,12 +66,10 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return ShareResponse?
      */
-    suspend fun getMyShareArticle(page: Int, cacheMode: CacheMode): ShareResponse {
-        return RxHttp.get(Url.MY_SHARE_ARTICLE, page)
+    fun getMyShareArticle(page: Int, cacheMode: CacheMode) =
+        RxHttp.get(Url.MY_SHARE_ARTICLE, page)
             .setCacheMode(cacheMode)
-            .toResponse<ShareResponse>()
-            .await()
-    }
+            .toAwaitResponse<ShareResponse>()
 
     /**
      *
@@ -82,16 +78,13 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<ArticleResponse>>?
      */
-    suspend fun getArticles(
+    fun getArticles(
         url: String?,
         page: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<ArticleResponse>> {
-        return RxHttp.get(url, page)
-            .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<ArticleResponse>>>()
-            .await()
-    }
+    ) = RxHttp.get(url, page)
+        .setCacheMode(cacheMode)
+        .toAwaitResponse<PagerResponse<List<ArticleResponse>>>()
 
     /**
      * 获取轮播图
@@ -99,27 +92,21 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<BannerResponse>>?
      */
-    suspend fun getBanners(
+    fun getBanners(
         url: String,
         cacheMode: CacheMode
-    ): List<BannerResponse> {
-        return RxHttp.get(url)
-            .setCacheMode(cacheMode)
-            .toResponse<List<BannerResponse>>()
-            .await()
-    }
+    ) = RxHttp.get(url)
+        .setCacheMode(cacheMode)
+        .toAwaitResponse<List<BannerResponse>>()
 
     /**
      * 获取搜索热词
      * @param cacheMode CacheMode
      * @return List<SearchResponse>?
      */
-    suspend fun getHotKeys(cacheMode: CacheMode): List<SearchResponse> {
-        return RxHttp.get(Url.HOT_KEYS)
-            .setCacheMode(cacheMode)
-            .toResponse<List<SearchResponse>>()
-            .await()
-    }
+    fun getHotKeys(cacheMode: CacheMode) = RxHttp.get(Url.HOT_KEYS)
+        .setCacheMode(cacheMode)
+        .toAwaitResponse<List<SearchResponse>>()
 
     /**
      * 获取积分记录
@@ -127,16 +114,13 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<IntegralHistoryResponse>>?
      */
-    suspend fun getIntegralHistory(
+    fun getIntegralHistory(
         page: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<IntegralHistoryResponse>> {
-        return RxHttp.get(Url.INTEGRAL_HISTORY, page)
-            .setCacheMode(cacheMode)
-            .setCacheValidTime(23 * 60 * 60 * 1000L) // 23个小时
-            .toResponse<PagerResponse<List<IntegralHistoryResponse>>>()
-            .await()
-    }
+    ) = RxHttp.get(Url.INTEGRAL_HISTORY, page)
+        .setCacheMode(cacheMode)
+        .setCacheValidTime(23 * 60 * 60 * 1000L) // 23个小时
+        .toAwaitResponse<PagerResponse<List<IntegralHistoryResponse>>>()
 
     /**
      * 获取积分排行
@@ -144,44 +128,31 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<IntegralResponse>>?
      */
-    suspend fun getIntegralRank(
+    fun getIntegralRank(
         page: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<IntegralResponse>> {
-        return RxHttp.get(Url.INTEGRAL_RANK, page)
-            .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<IntegralResponse>>>()
-            .await()
-    }
+    ) = RxHttp.get(Url.INTEGRAL_RANK, page)
+        .setCacheMode(cacheMode)
+        .toAwaitResponse<PagerResponse<List<IntegralResponse>>>()
 
     /**
      * 获取个人积分
      * @param cacheMode CacheMode
      * @return IntegralResponse?
      */
-    fun getUserCoin(cacheMode: CacheMode): Await<IntegralResponse> {
-        return RxHttp.get(Url.USER_COIN)
-            .setCacheMode(cacheMode)
-            .setCacheValidTime(Long.MAX_VALUE)
-            .toResponse<IntegralResponse>()
-    }
+    fun getUserCoin(cacheMode: CacheMode) = RxHttp.get(Url.USER_COIN)
+        .setCacheMode(cacheMode)
+        .setCacheValidTime(Long.MAX_VALUE)
+        .toAwaitResponse<IntegralResponse>()
 
     /**
      * 获取导航
      * @param cacheMode CacheMode
      * @return PagerResponse<List<NavigationResponse>>
      */
-    suspend fun getNavigation(cacheMode: CacheMode): PagerResponse<List<NavigationResponse>> {
-        val response = RxHttp.get(Url.NAVIGATION)
+     fun getNavigation(cacheMode: CacheMode) = RxHttp.get(Url.NAVIGATION)
             .setCacheMode(cacheMode)
-            .toResponse<List<NavigationResponse>>()
-            .await()
-        return PagerResponse<List<NavigationResponse>>().apply {
-            datas = response
-            curPage = 1
-            pageCount = 1
-        }
-    }
+            .toAwaitResponse<List<NavigationResponse>>()
 
     /**
      * 获取项目内容
@@ -190,41 +161,31 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<ArticleResponse>>?
      */
-    suspend fun getProjectList(
+    fun getProjectList(
         page: Int,
         id: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<ArticleResponse>> {
-        return RxHttp.get(Url.PROJECT_DATA, page, id)
+    )= RxHttp.get(Url.PROJECT_DATA, page, id)
             .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<ArticleResponse>>>()
-            .await()
-    }
+            .toAwaitResponse<PagerResponse<List<ArticleResponse>>>()
 
     /**
      * 获取项目分类
      * @return List<ClassifyResponse>?
      */
     fun getProjectItems() = RxHttp.get(Url.PROJECT_ITEM)
-            .setCacheMode(getCacheMode(true))
-            .toResponse<List<ClassifyResponse>>()
+        .setCacheMode(getCacheMode(true))
+        .toAwaitResponse<List<ClassifyResponse>>()
 
     /**
      * 获取体系
      * @param cacheMode CacheMode
      * @return PagerResponse<List<SystemResponse>>
      */
-    suspend fun getTree(cacheMode: CacheMode): PagerResponse<List<SystemResponse>> {
-        val response = RxHttp.get(Url.TREE)
+    fun getTree(cacheMode: CacheMode)= RxHttp.get(Url.TREE)
             .setCacheMode(cacheMode)
-            .toResponse<List<SystemResponse>>()
-            .await()
-        return PagerResponse<List<SystemResponse>>().apply {
-            datas = response
-            curPage = 1
-            pageCount = 1
-        }
-    }
+            .toAwaitResponse<List<SystemResponse>>()
+
 
     /**
      * 获取体系数据
@@ -233,16 +194,13 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<ArticleResponse>>?
      */
-    suspend fun getTreeData(
+    fun getTreeData(
         page: Int,
         id: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<ArticleResponse>> {
-        return RxHttp.get(Url.TREE_DATA, page, id)
+    )= RxHttp.get(Url.TREE_DATA, page, id)
             .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<ArticleResponse>>>()
-            .await()
-    }
+            .toAwaitResponse<PagerResponse<List<ArticleResponse>>>()
 
     /**
      * 获取微信公众号
@@ -251,7 +209,7 @@ class ApiRepository private constructor() {
      */
     fun getWxGzh(cacheMode: CacheMode) = RxHttp.get(Url.WX_GZH)
         .setCacheMode(cacheMode)
-        .toResponse<List<ClassifyResponse>>()
+        .toAwaitResponse<List<ClassifyResponse>>()
 
     /**
      * 获取微信公众号内容
@@ -260,16 +218,13 @@ class ApiRepository private constructor() {
      * @param cacheMode CacheMode
      * @return PagerResponse<List<ArticleResponse>>?
      */
-    suspend fun getWxGzhItems(
+    fun getWxGzhItems(
         page: Int,
         id: Int,
         cacheMode: CacheMode
-    ): PagerResponse<List<ArticleResponse>> {
-        return RxHttp.get(Url.WX_GZH_DATA, id, page)
+    )= RxHttp.get(Url.WX_GZH_DATA, id, page)
             .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<ArticleResponse>>>()
-            .await()
-    }
+            .toAwaitResponse<PagerResponse<List<ArticleResponse>>>()
 
     /**
      * 搜索
@@ -277,17 +232,14 @@ class ApiRepository private constructor() {
      * @param key String
      * @param cacheMode CacheMode
      */
-    suspend fun search(
+    fun search(
         page: Int,
         key: String?,
         cacheMode: CacheMode
-    ): PagerResponse<List<ArticleResponse>> {
-        return RxHttp.postForm(Url.SEARCH, page)
+    )= RxHttp.postForm(Url.SEARCH, page)
             .add("k", key)
             .setCacheMode(cacheMode)
-            .toResponse<PagerResponse<List<ArticleResponse>>>()
-            .await()
-    }
+            .toAwaitResponse<PagerResponse<List<ArticleResponse>>>()
 
     /**
      * 分享文章
@@ -298,7 +250,7 @@ class ApiRepository private constructor() {
     fun shareArticle(title: String, link: String) = RxHttp.postForm(Url.SHARE_ARTICLE)
         .add("title", title)
         .add("link", link)
-        .toResponse<String>()
+        .toAwaitResponse<String>()
 
     /**
      * 收藏文章
@@ -306,12 +258,9 @@ class ApiRepository private constructor() {
      * @param isCollect Boolean
      * @return CollectBus
      */
-    suspend fun collectionArticle(articleId: Int, isCollect: Boolean): CollectBus {
-        val url = if (isCollect) Url.UN_LIST_COLLECTION else Url.COLLECTION_ARTICLE
-        RxHttp.postForm(url, articleId)
-            .toResponse<String>()
-            .await()
-        return CollectBus(articleId, !isCollect)
-    }
+    fun collectionArticle(articleId: Int, isCollect: Boolean)=
+        RxHttp.postForm(if (isCollect) Url.UN_LIST_COLLECTION else Url.COLLECTION_ARTICLE, articleId)
+            .toAwaitResponse<String>()
+
 
 }

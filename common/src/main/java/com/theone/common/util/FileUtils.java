@@ -63,6 +63,22 @@ public class FileUtils {
         return destDir;
     }
 
+    public static File createExternalFileDir(Context context, String dirName) {
+        String filePath;
+        // 如SD卡已存在，则存储；反之存在data目录下
+        if (isMountedSDCard()) {
+            // SD卡路径
+            filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            filePath = context.getCacheDir().getPath();
+        }
+        File destDir = new File(filePath + File.separator + dirName);
+        if (!destDir.exists()) {
+            boolean isCreate = destDir.mkdirs();
+        }
+        return destDir;
+    }
+
     /**
      * 删除文件（若为目录，则递归删除子目录和文件）
      *

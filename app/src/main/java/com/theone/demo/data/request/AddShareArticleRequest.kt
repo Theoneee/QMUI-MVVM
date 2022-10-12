@@ -27,10 +27,10 @@ import com.theone.mvvm.core.base.request.BaseRequest
  * @email 625805189@qq.com
  * @remark
  */
-class AddShareArticleRequest:BaseRequest<String>() {
+class AddShareArticleRequest : BaseRequest<String>() {
 
     suspend fun requestServer(vararg params: Any) {
-      requestAwait(ApiRepository.INSTANCE.shareArticle(params[0] as String,params[0] as String))
+        requestAwait(ApiRepository.INSTANCE.shareArticle(params[0] as String, params[0] as String))
     }
 
 }

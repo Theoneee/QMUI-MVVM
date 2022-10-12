@@ -8,9 +8,8 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
 import com.theone.common.ext.*
 import com.theone.demo.R
 import com.theone.demo.databinding.FragmentSampleStringExtBinding
-import com.theone.demo.ui.state.StringExtViewModel
+import com.theone.demo.viewmodel.StringExtViewModel
 import com.theone.mvvm.base.fragment.BaseVmDbFragment
-import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.addToGroup
 import com.theone.mvvm.ext.qmui.createItem
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn

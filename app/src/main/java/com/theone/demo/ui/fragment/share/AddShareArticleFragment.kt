@@ -10,7 +10,7 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopups
 import com.theone.demo.R
 import com.theone.demo.app.ext.isShareAutoPass
 import com.theone.demo.databinding.FragmentArticleAddBinding
-import com.theone.demo.ui.state.AddShareArticleViewModel
+import com.theone.demo.viewmodel.AddShareArticleViewModel
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.mvvm.ext.getAppViewModel
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn

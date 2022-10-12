@@ -36,9 +36,7 @@ class HotSearchViewModel:BaseRequestViewModel<List<SearchResponse>>() {
      val isFirst:BooleanObservableField = BooleanObservableField(true)
 
     override fun requestServer() {
-        request({
-            onSuccess(ApiRepository.INSTANCE.getHotKeys(getCacheMode(isFirst.get())))
-        })
+        requestAwait(ApiRepository.INSTANCE.getHotKeys(getCacheMode(isFirst.get())))
     }
 
 }

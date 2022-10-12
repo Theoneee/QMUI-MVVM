@@ -39,7 +39,7 @@ class IntegralRankViewModel:BasePagerViewModel<IntegralResponse>() {
 
     override fun requestServer() {
         request({
-            onSuccess(ApiRepository.INSTANCE.getIntegralRank(page,getCacheMode()))
+            onSuccess(ApiRepository.INSTANCE.getIntegralRank(page,getCacheMode()).await())
             showMineRank.set(true)
         })
     }

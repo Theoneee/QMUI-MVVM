@@ -1,7 +1,8 @@
-package com.theone.demo
+package com.theone.demo.app
 
 import android.app.Application
 import com.theone.common.util.ThemeUtil
+import com.theone.demo.BuildConfig
 import com.theone.demo.ui.activity.ErrorActivity
 import com.theone.demo.ui.activity.LauncherActivity
 import com.theone.mvvm.core.app.CoreApplication

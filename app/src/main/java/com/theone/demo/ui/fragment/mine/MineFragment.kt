@@ -22,7 +22,7 @@ import com.theone.demo.ui.fragment.integral.IntegralHistoryFragment
 import com.theone.demo.ui.fragment.integral.IntegralRankFragment
 import com.theone.demo.ui.fragment.share.ShareArticleFragment
 import com.theone.demo.viewmodel.AppViewModel
-import com.theone.demo.ui.state.MineViewModel
+import com.theone.demo.viewmodel.MineViewModel
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.getAppViewModel
 import com.theone.mvvm.ext.qmui.*

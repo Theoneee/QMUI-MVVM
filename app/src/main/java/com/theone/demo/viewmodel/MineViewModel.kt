@@ -1,8 +1,9 @@
-package com.theone.demo.ui.state
+package com.theone.demo.viewmodel
 
-import com.theone.common.callback.databind.StringObservableField
-import com.theone.demo.data.request.AddShareArticleRequest
+import com.theone.demo.app.util.ColorUtil
 import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.common.callback.databind.StringObservableField
+import com.theone.demo.data.request.MineRequest
 import com.theone.mvvm.core.app.ext.request
 
 
@@ -25,22 +26,31 @@ import com.theone.mvvm.core.app.ext.request
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/18 0018
+ * @date 2021/3/4 0004
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class AddShareArticleViewModel:BaseViewModel() {
+class MineViewModel : BaseViewModel() {
 
-    val title :StringObservableField = StringObservableField("")
-    val url :StringObservableField = StringObservableField("")
-    val publisher :StringObservableField = StringObservableField("")
+    var name = StringObservableField("-")
 
-    val mRequest = AddShareArticleRequest()
+    var id = StringObservableField()
 
-    fun requestServer() {
+    var level = StringObservableField("等级")
+
+    var integral = StringObservableField("积分")
+
+    var rank = StringObservableField("排名")
+
+    var imageUrl = StringObservableField(ColorUtil.randomImage())
+
+    val mRequest = MineRequest()
+
+    fun requestData() {
         request({
-            mRequest.requestServer(title.get(),url.get())
-        },"提交中")
+            mRequest.getUserIntegral()
+        })
     }
+
 }

@@ -33,7 +33,7 @@ class SystemArticleViewModel:ArticleViewModel() {
 
     override fun requestServer() {
        request({
-            onSuccess(ApiRepository.INSTANCE.getTreeData(page,mId,getCacheMode()))
+            onSuccess(ApiRepository.INSTANCE.getTreeData(page,mId,getCacheMode()).await())
         })
     }
 

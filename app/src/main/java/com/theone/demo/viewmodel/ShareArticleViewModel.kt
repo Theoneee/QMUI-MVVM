@@ -35,7 +35,7 @@ class ShareArticleViewModel:ArticleViewModel() {
 
     override fun requestServer() {
         request({
-            val response = ApiRepository.INSTANCE.getMyShareArticle(page,getCacheMode())
+            val response = ApiRepository.INSTANCE.getMyShareArticle(page,getCacheMode()).await()
             onSuccess(response.shareArticles)
         })
     }

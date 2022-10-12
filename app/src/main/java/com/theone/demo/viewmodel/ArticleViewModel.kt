@@ -5,7 +5,10 @@ import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.demo.data.model.bean.ArticleResponse
 import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.app.util.CacheUtil
+import com.theone.demo.data.model.bean.CollectBus
 import com.theone.demo.data.repository.ApiRepository
+import kotlinx.coroutines.CoroutineScope
+import rxhttp.wrapper.coroutines.Await
 
 abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<ArticleResponse>() {
 
@@ -15,8 +18,12 @@ abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<Ar
     fun getCollectionError(): ProtectedUnPeekLiveData<String> = collectionError
 
     override fun requestServer() {
+        requestArticles(ApiRepository.INSTANCE.getArticles(url,page,getCacheMode()))
+    }
+
+    protected fun requestArticles( block: Await<PagerResponse<List<ArticleResponse>>>){
         request({
-            onSuccess(ApiRepository.INSTANCE.getArticles(url,page,getCacheMode()))
+            onSuccess(block.await())
         })
     }
 
@@ -40,7 +47,8 @@ abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<Ar
 
     fun collection(article: ArticleResponse, event: AppViewModel) {
         request({
-            event.collectEvent.value = ApiRepository.INSTANCE.collectionArticle(article.getArticleId(),article.collect)
+            ApiRepository.INSTANCE.collectionArticle(article.getArticleId(),article.collect).await()
+            event.collectEvent.value = CollectBus(article.getArticleId(), !article.collect)
         }, null, collectionError)
     }
 

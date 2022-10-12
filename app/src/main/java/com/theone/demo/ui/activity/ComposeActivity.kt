@@ -1,9 +1,7 @@
-package com.theone.demo.app.ext
+package com.theone.demo.ui.activity
 
-import com.qmuiteam.qmui.arch.QMUIFragment
-import com.theone.demo.app.util.CacheUtil
-import com.theone.demo.ui.fragment.login.LoginRegisterFragment
-
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -24,15 +22,17 @@ import com.theone.demo.ui.fragment.login.LoginRegisterFragment
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/5 0005
+ * @date 2022-10-10 14:17
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-fun QMUIFragment.checkLogin(isLoginAction: () -> Unit = {}) {
-    if (CacheUtil.isLogin()) {
-        isLoginAction.invoke()
-    } else {
-        startFragment(LoginRegisterFragment())
+class ComposeActivity :AppCompatActivity(){
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
+
+
 }

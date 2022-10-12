@@ -37,7 +37,7 @@ class ProjectItemViewModel : ArticleViewModel() {
 
     override fun requestServer() {
        request({
-            onSuccess(ApiRepository.INSTANCE.getProjectList(page,mId,getCacheMode()))
+            onSuccess(ApiRepository.INSTANCE.getProjectList(page,mId,getCacheMode()).await())
         })
     }
 

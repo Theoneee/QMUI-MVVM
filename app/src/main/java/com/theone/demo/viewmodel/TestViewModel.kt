@@ -1,11 +1,7 @@
-package com.theone.demo.ui.state
+package com.theone.demo.viewmodel
 
-import com.theone.demo.app.util.ColorUtil
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.common.callback.databind.StringObservableField
-import com.theone.demo.data.request.MineRequest
-import com.theone.mvvm.core.app.ext.request
-
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -26,31 +22,13 @@ import com.theone.mvvm.core.app.ext.request
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021/3/4 0004
+ * @date 2021-03-30 17:10
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class MineViewModel : BaseViewModel() {
+class TestViewModel:BaseViewModel() {
 
-    var name = StringObservableField("-")
-
-    var id = StringObservableField()
-
-    var level = StringObservableField("等级")
-
-    var integral = StringObservableField("积分")
-
-    var rank = StringObservableField("排名")
-
-    var imageUrl = StringObservableField(ColorUtil.randomImage())
-
-    val mRequest = MineRequest()
-
-    fun requestData() {
-        request({
-            mRequest.getUserIntegral()
-        })
-    }
+    val cover = StringObservableField("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png")
 
 }

@@ -1,7 +1,10 @@
-package com.theone.demo.ui.state
+package com.theone.demo.viewmodel
 
+import com.theone.common.callback.databind.StringObservableField
+import com.theone.demo.data.request.AddShareArticleRequest
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.common.callback.databind.SpannableStringObservableField
+import com.theone.mvvm.core.app.ext.request
+
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,17 +25,22 @@ import com.theone.common.callback.databind.SpannableStringObservableField
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-04-09 10:18
+ * @date 2021/3/18 0018
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class StringExtViewModel:BaseViewModel() {
+class AddShareArticleViewModel:BaseViewModel() {
 
-    val fruitName: SpannableStringObservableField = SpannableStringObservableField()
-    val superscript: SpannableStringObservableField = SpannableStringObservableField()
-    val subscript: SpannableStringObservableField = SpannableStringObservableField()
-    val price: SpannableStringObservableField = SpannableStringObservableField()
+    val title :StringObservableField = StringObservableField("")
+    val url :StringObservableField = StringObservableField("")
+    val publisher :StringObservableField = StringObservableField("")
 
+    val mRequest = AddShareArticleRequest()
 
+    fun requestServer() {
+        request({
+            mRequest.requestServer(title.get(),url.get())
+        },"提交中")
+    }
 }

@@ -1,7 +1,7 @@
-package com.theone.demo.ui.state
+package com.theone.demo.viewmodel
 
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.common.callback.databind.StringObservableField
+import com.theone.common.callback.databind.SpannableStringObservableField
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,13 +22,17 @@ import com.theone.common.callback.databind.StringObservableField
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-03-30 17:10
+ * @date 2021-04-09 10:18
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class TestViewModel:BaseViewModel() {
+class StringExtViewModel:BaseViewModel() {
 
-    val cover = StringObservableField("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png")
+    val fruitName: SpannableStringObservableField = SpannableStringObservableField()
+    val superscript: SpannableStringObservableField = SpannableStringObservableField()
+    val subscript: SpannableStringObservableField = SpannableStringObservableField()
+    val price: SpannableStringObservableField = SpannableStringObservableField()
+
 
 }

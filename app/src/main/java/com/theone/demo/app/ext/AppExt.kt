@@ -7,6 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.gson.Gson
+import com.qmuiteam.qmui.arch.QMUIFragment
+import com.theone.demo.app.util.CacheUtil
+import com.theone.demo.ui.fragment.login.LoginRegisterFragment
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import rxhttp.wrapper.cahce.CacheMode
 import java.util.*
@@ -49,6 +53,21 @@ fun getCacheModeOnly(isFirst: Boolean): CacheMode {
         CacheMode.ONLY_CACHE
     else
         CacheMode.NETWORK_SUCCESS_WRITE_CACHE
+}
+
+fun QMUIFragment.checkLogin(isLoginAction: () -> Unit = {}) {
+    if (CacheUtil.isLogin()) {
+        isLoginAction.invoke()
+    } else {
+        startFragment(LoginRegisterFragment())
+    }
+}
+
+/**
+ * 将对象转为JSON字符串
+ */
+fun Any?.toJson():String{
+    return Gson().toJson(this)
 }
 
 /**

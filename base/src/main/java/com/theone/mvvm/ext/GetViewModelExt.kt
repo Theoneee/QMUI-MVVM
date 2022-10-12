@@ -17,11 +17,18 @@ fun <T> Any.getClazz(index: Int = 0): T {
 }
 
 /**
- * 在Activity中得到Application上下文的ViewModel
+ * 使用getAppViewModelProvider获取Application上下文的ViewModel
+ */
+inline fun <reified VM : BaseViewModel> AppViewModelProviderOwner.getApplicationViewModel(): VM {
+    return getAppViewModelProvider()[VM::class.java]
+}
+
+/**
+ * 获取Application上下文的ViewModel
  */
 inline fun <reified VM : BaseViewModel> Application.getAppViewModel(): VM {
     if (this is AppViewModelProviderOwner) {
-        return getAppViewModelProvider()[VM::class.java]
+        return getApplicationViewModel()
     }
     throw NullPointerException("你的Application没有实现AppViewModelProviderOwner，暂时无法使用getAppViewModel该方法")
 }
