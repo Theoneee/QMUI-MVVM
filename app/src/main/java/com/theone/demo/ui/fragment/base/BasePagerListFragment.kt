@@ -2,12 +2,11 @@ package com.theone.demo.ui.fragment.base
 
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import com.theone.common.ext.appViewModels
 import com.theone.common.ext.delay
 import com.theone.demo.app.ext.setAdapterAnimation
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.BasePagerViewModel
-import com.theone.mvvm.core.app.appContext
-import com.theone.mvvm.core.app.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BasePagerSwipeRefreshFragment
 
 
@@ -38,7 +37,7 @@ import com.theone.mvvm.core.base.fragment.BasePagerSwipeRefreshFragment
 abstract class BasePagerListFragment<T, VM : BasePagerViewModel<T>, DB : ViewDataBinding> :
     BasePagerSwipeRefreshFragment<T, VM, DB>() {
 
-    protected val mAppVm: AppViewModel by appViewModels(appContext)
+    protected val mAppVm: AppViewModel by appViewModels()
 
     /**
      * 第一次请求成功后是否自动刷新（第一次的数据从Cache里获取的)

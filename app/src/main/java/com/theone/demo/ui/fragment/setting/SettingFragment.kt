@@ -16,7 +16,7 @@ import com.theone.demo.domain.work.LoginSignWorker
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.SettingViewModel
-import com.theone.mvvm.core.app.ext.appViewModels
+import com.theone.common.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
 import com.theone.mvvm.ext.qmui.*
 

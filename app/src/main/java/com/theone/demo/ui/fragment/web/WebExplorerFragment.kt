@@ -64,6 +64,8 @@ class WebExplorerFragment private constructor() :
 
     override fun getTopBar(): QMUITopBarLayout = getDataBinding().topbar
 
+    override fun getRootBackgroundColor(): Int = R.color.white
+
     override fun QMUITopBarLayout.initTopBar() {
         addLeftCloseImageBtn(this@WebExplorerFragment)
         // QMUI的Title用的是QMUIQQFaceView，无法使用跑马灯效果，这里重新设置一个

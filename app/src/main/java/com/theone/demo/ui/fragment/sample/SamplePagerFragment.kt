@@ -12,7 +12,7 @@ import com.theone.demo.data.model.bean.ArticleResponse
 import com.theone.demo.ui.adapter.ArticleAdapter
 import com.theone.demo.viewmodel.AppViewModel
 import com.theone.demo.viewmodel.HomeViewModel
-import com.theone.mvvm.core.app.ext.appViewModels
+import com.theone.common.ext.appViewModels
 import com.theone.mvvm.core.base.fragment.BasePagerPullRefreshFragment
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.app.widge.pullrefresh.PullRefreshLayout

@@ -9,7 +9,9 @@ import com.theone.demo.R
 import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.app.widget.TypeTextView
 import com.theone.demo.databinding.ActivityLauncherBinding
+import com.theone.demo.viewmodel.AppViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.common.ext.appViewModels
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
 import com.theone.mvvm.core.app.util.RxHttpManager
 

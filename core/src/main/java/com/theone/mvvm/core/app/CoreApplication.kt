@@ -1,11 +1,9 @@
 package com.theone.mvvm.core.app
 
 import android.app.Application
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import com.hjq.toast.ToastUtils
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager
-import com.theone.common.callback.AppViewModelProviderOwner
+import com.theone.common.util.AppViewModelManager
 import com.theone.common.ext.LogInit
 import com.theone.mvvm.core.app.ext.initLoaderDefault
 import com.theone.mvvm.core.app.util.MMKVUtil
@@ -39,7 +37,7 @@ import kotlin.properties.Delegates
 
 val appContext: CoreApplication by lazy { CoreApplication.app }
 
-abstract class CoreApplication : Application(), AppViewModelProviderOwner {
+abstract class CoreApplication : Application() {
 
     companion object {
         lateinit var app: CoreApplication
@@ -56,6 +54,7 @@ abstract class CoreApplication : Application(), AppViewModelProviderOwner {
     }
 
     protected open fun init(application: Application) {
+        AppViewModelManager.init(this)
         QMUISwipeBackActivityManager.init(this)
         MMKVUtil.init(application)
         LogInit(DEBUG)
@@ -63,11 +62,5 @@ abstract class CoreApplication : Application(), AppViewModelProviderOwner {
         ToastUtils.init(this)
         initLoaderDefault()
     }
-
-    private val mAppViewModelProvider: ViewModelProvider by lazy {
-        ViewModelProvider(ViewModelStore(), ViewModelProvider.AndroidViewModelFactory(this))
-    }
-
-    override fun getAppViewModelProvider(): ViewModelProvider = mAppViewModelProvider
 
 }

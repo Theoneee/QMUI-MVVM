@@ -12,7 +12,7 @@ import com.theone.demo.app.ext.isShareAutoPass
 import com.theone.demo.databinding.FragmentArticleAddBinding
 import com.theone.demo.viewmodel.AddShareArticleViewModel
 import com.theone.demo.viewmodel.AppViewModel
-import com.theone.mvvm.core.app.ext.appViewModels
+import com.theone.common.ext.appViewModels
 import com.theone.mvvm.ext.qmui.setTitleWithBackBtn
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import com.theone.mvvm.core.base.fragment.BaseCoreFragment
