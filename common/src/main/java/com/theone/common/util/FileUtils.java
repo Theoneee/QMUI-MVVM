@@ -47,30 +47,14 @@ public class FileUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    /**
-     * 创建目录
-     *
-     * @param context
-     * @param dirName 文件夹名称
-     * @return
-     */
-    public static File createFileDir(Context context, String dirName) {
-        String filePath = context.getExternalCacheDir().getPath();
-        File destDir = new File(filePath + File.separator + dirName);
-        if (!destDir.exists()) {
-            boolean isCreate = destDir.mkdirs();
-        }
-        return destDir;
-    }
-
-    public static File createExternalFileDir(Context context, String dirName) {
+    public static File createFileDir(Context context, String dirName,Boolean isExternal) {
         String filePath;
         // 如SD卡已存在，则存储；反之存在data目录下
-        if (isMountedSDCard()) {
+        if (isMountedSDCard() && isExternal) {
             // SD卡路径
             filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
         } else {
-            filePath = context.getCacheDir().getPath();
+            filePath = context.getExternalCacheDir().getPath();
         }
         File destDir = new File(filePath + File.separator + dirName);
         if (!destDir.exists()) {

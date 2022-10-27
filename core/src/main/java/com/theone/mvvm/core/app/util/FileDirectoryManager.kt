@@ -85,13 +85,13 @@ object FileDirectoryManager {
      * 获取根目录
      * @return String
      */
-    fun getIndexPath(): String = createDir()
+    fun getIndexPath(): String = createExternalFileDir()
 
     /**
      * 获取缓存目录
      * @return String
      */
-    fun getCachePath(): String = createDir(CACHE)
+    fun getCachePath(): String = createExternalFileDir(CACHE)
 
     /**
      * 获取缓存子文件目录
@@ -99,44 +99,44 @@ object FileDirectoryManager {
      * @return String
      */
     fun getCacheChildFilePath(childFileName: String): String =
-        createDir(CACHE + File.separator + childFileName)
+        createCacheDir(CACHE + File.separator + childFileName)
 
     /**
      * 获取下载目录
      * @return String
      */
-    fun getDownloadPath(): String = createDir(DOWNLOAD)
+    fun getDownloadPath(): String = createExternalFileDir(DOWNLOAD)
 
     /**
      * 图片目录
      * @return String
      */
-    fun getPicturePath(): String = createDir(PICTURE)
+    fun getPicturePath(): String = createCacheDir(PICTURE)
 
     /**
      * 视频目录
      * @return String
      */
-    fun getVideoPath(): String = createDir(VIDEO)
+    fun getVideoPath(): String = createCacheDir(VIDEO)
 
     /**
      * 临时文件目录
      * @return String
      */
-    fun getTempPath(): String = createDir(TEMP)
+    fun getTempPath(): String = createCacheDir(TEMP)
 
     /**
      * 补丁文件目录
      * @return String
      */
-    fun getPatchPath(): String = createDir(PATCH)
+    fun getPatchPath(): String = createCacheDir(PATCH)
 
     /**
      * APK更新文件下载目录
      * @return String
      */
     fun getUpdateAPKDownloadPath(): String =
-        createDir(DOWNLOAD + File.separator + UPDATE_APK_FILE_NAME)
+        createCacheDir(DOWNLOAD + File.separator + UPDATE_APK_FILE_NAME)
 
     /**
      * 压缩目录
@@ -144,8 +144,14 @@ object FileDirectoryManager {
      */
     fun getCompressPath(): String = getCacheChildFilePath(COMPRESS)
 
-    private fun createDir(name: String = ""): String =
-        FileUtils.createFileDir(appContext, name).path
+    fun createCacheDir(name: String = ""): String =
+        FileUtils.createFileDir(appContext, name,false).path
 
+    /**
+     * 创建外部存储文件夹
+     * @param name String
+     * @return (File..File?)
+     */
+    fun createExternalFileDir(name: String = ""):String = FileUtils.createFileDir(appContext, INDEX+File.separator+name,true).path
 
 }
