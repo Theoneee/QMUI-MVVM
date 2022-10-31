@@ -4,8 +4,7 @@ import com.theone.demo.app.ext.getCacheMode
 import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.data.net.Url
 import com.theone.demo.data.model.bean.*
-import rxhttp.wrapper.cahce.CacheMode
-import rxhttp.wrapper.coroutines.Await
+import rxhttp.wrapper.cache.CacheMode
 import rxhttp.wrapper.param.RxHttp
 import rxhttp.wrapper.param.toAwaitResponse
 
@@ -46,11 +45,11 @@ class ApiRepository private constructor() {
     fun loginOrRegister(
         account: String,
         password: String,
-        isRegister: Boolean
-    ) = RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
+        repassword: String? = null
+    ) = RxHttp.postForm(if (repassword.isNullOrEmpty()) Url.REGISTER else Url.LOGIN)
         .add("username", account)
         .add("password", password)
-        .add("repassword", password, isRegister)
+        .add("repassword",repassword)
         .toAwaitResponse<UserInfo>()
 
     /**

@@ -89,7 +89,8 @@ class LoginRegisterItemFragment private constructor() :
                 when {
                     account.get().isEmpty() -> showFailTipsDialog("请填写账号")
                     password.get().isEmpty() -> showFailTipsDialog("请填写密码")
-                    isRegister.get() && repassword.get().isEmpty() -> showFailTipsDialog("请填写确认密码")
+                    repassword.get().isEmpty() -> showFailTipsDialog("请填写确认密码")
+                    isRegister.get() && repassword.get() != password.get() -> showFailTipsDialog("两次密码输入不一致")
                     else -> {
                         requestServer()
                     }

@@ -2,12 +2,8 @@ ext {
 
     loaderVersion = '0.0.3-beta'
 
-    //net
-    okhttpVersion = '4.9.0'
-    okhttpUtilVersion = '2.6.2'
-
-    // rxHttp
-    rxhttpVersion = '3.0.0-rc1'
+    okhttpVersion = '4.10.0'
+    rxhttpVersion = '3.0.0'
 
     //util
     glideVersion = '4.12.0'

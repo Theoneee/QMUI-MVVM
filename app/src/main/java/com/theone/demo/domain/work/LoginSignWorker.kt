@@ -3,13 +3,9 @@ package com.theone.demo.domain.work
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
-import com.theone.demo.data.net.Url
 import com.theone.demo.data.repository.ApiRepository
-import okhttp3.internal.wait
-import rxhttp.awaitResult
-import rxhttp.wrapper.cahce.CacheMode
+import rxhttp.wrapper.cache.CacheMode
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -55,7 +51,7 @@ class LoginSignWorker(context: Context, workerParams: WorkerParameters) :
             if (account.isNullOrEmpty() || password.isNullOrEmpty()) {
                 Result.Failure()
             } else {
-                ApiRepository.INSTANCE.loginOrRegister(account, password, false).await()
+                ApiRepository.INSTANCE.loginOrRegister(account, password).await()
                 ApiRepository.INSTANCE.getUserCoin(CacheMode.NETWORK_SUCCESS_WRITE_CACHE).await()
                 Result.success()
             }

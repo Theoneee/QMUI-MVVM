@@ -19,7 +19,7 @@ class LoginRegisterViewModel : BaseRequestViewModel<UserInfo>() {
             ApiRepository.INSTANCE.loginOrRegister(
                 account.get(),
                 password.get(),
-                isRegister.get()
+                repassword.get()
             ),
             if (isRegister.get()) "注册中" else "登录中"
         )
