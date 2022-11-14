@@ -45,11 +45,11 @@ class ApiRepository private constructor() {
     fun loginOrRegister(
         account: String,
         password: String,
-        repassword: String? = null
-    ) = RxHttp.postForm(if (repassword.isNullOrEmpty()) Url.REGISTER else Url.LOGIN)
+        isRegister: Boolean = false
+    ) = RxHttp.postForm(if (isRegister) Url.REGISTER else Url.LOGIN)
         .add("username", account)
         .add("password", password)
-        .add("repassword",repassword)
+        .add("repassword",if(isRegister) password else null)
         .toAwaitResponse<UserInfo>()
 
     /**

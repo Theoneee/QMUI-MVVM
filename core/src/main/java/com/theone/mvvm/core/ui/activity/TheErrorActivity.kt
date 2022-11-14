@@ -48,10 +48,10 @@ open class TheErrorActivity :
 
     override fun getLayoutId(): Int = R.layout.activity_error
 
-    override fun showProgress(progress: ProgressBean) {
+    override fun showProgressDialog(progress: ProgressBean) {
     }
 
-    override fun hideProgress() {
+    override fun hideProgressDialog() {
     }
 
     override fun initView(root: View) {

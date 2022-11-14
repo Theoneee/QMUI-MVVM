@@ -1,9 +1,6 @@
 package com.theone.mvvm.ext
 
-import android.util.Log
 import android.util.SparseArray
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.core.util.forEach
 import androidx.databinding.ViewDataBinding
@@ -71,17 +68,17 @@ fun IQMUI.addLoadingObserveExt(
         with(viewModel){
             //显示弹窗
             getShowLoadingLiveData().observe(owner) {
-                showLoading(it)
+                this@addLoadingObserveExt.showLoadingDialog(it)
             }
             //关闭弹窗
             getHideLoadingLiveData().observe(owner) {
-                hideLoading()
+                this@addLoadingObserveExt.hideLoadingDialog()
             }
             getShowProgressLiveData().observe(owner) {
-                showProgress(it)
+                showProgressDialog(it)
             }
             getHideProgressLiveData().observe(owner) {
-                hideProgress()
+                this@addLoadingObserveExt.hideProgressDialog()
             }
         }
     }

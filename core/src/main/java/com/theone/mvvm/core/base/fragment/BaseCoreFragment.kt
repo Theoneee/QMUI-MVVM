@@ -8,8 +8,8 @@ import com.theone.loader.LoaderService
 import com.theone.mvvm.base.fragment.BaseVmDbFragment
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.R
+import com.theone.mvvm.core.app.ext.hideProgressDialogExt
 import com.theone.mvvm.core.base.callback.ICore
-import com.theone.mvvm.core.app.ext.hideProgressDialog
 import com.theone.mvvm.core.app.ext.registerLoader
 import com.theone.mvvm.core.app.ext.showProgressDialog
 import com.theone.mvvm.entity.ProgressBean
@@ -33,12 +33,12 @@ abstract class BaseCoreFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         super.onViewCreated(rootView)
     }
 
-    override fun showProgress(progress: ProgressBean) {
+    override fun showProgressDialog(progress: ProgressBean) {
         requireActivity().showProgressDialog(progress)
     }
 
-    override fun hideProgress() {
-        hideProgressDialog()
+    override fun hideProgressDialog() {
+        hideProgressDialogExt()
     }
 
     override fun showExitTips() {

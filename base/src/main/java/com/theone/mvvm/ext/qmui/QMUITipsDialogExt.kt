@@ -35,12 +35,12 @@ private var loadingDialog: QMUITipDialog? = null
 
 fun Context.showLoadingDialog(msg: CharSequence?) {
     if(null != loadingDialog){
-       hideLoadingDialog()
+       hideLoadingDialogExt()
     }
     loadingDialog = createQMUIDialog(msg, QMUITipDialog.Builder.ICON_TYPE_LOADING)
 }
 
-fun hideLoadingDialog() {
+fun hideLoadingDialogExt() {
     loadingDialog?.dismiss()
     loadingDialog = null
 }

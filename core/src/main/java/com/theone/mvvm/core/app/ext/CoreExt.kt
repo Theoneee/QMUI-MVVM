@@ -14,7 +14,7 @@ import com.theone.mvvm.core.app.widge.dialog.ProgressDialog
 import com.theone.mvvm.core.base.callback.IApkUpdate
 import com.theone.mvvm.core.ui.activity.AppUpdateActivity
 import com.theone.mvvm.entity.ProgressBean
-import com.theone.mvvm.ext.qmui.hideLoadingDialog
+import com.theone.mvvm.ext.qmui.hideLoadingDialogExt
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 
 //  ┏┓　　　┏┓
@@ -64,7 +64,7 @@ fun Activity.showProgressDialog(data: ProgressBean) {
 
 }
 
-fun hideProgressDialog() {
+fun hideProgressDialogExt() {
     progressDialog?.dismiss()
     progressDialog = null
 }
@@ -72,8 +72,8 @@ fun hideProgressDialog() {
 fun Fragment.addFailTipsObserve(vararg vms: BaseRequestViewModel<*>) {
     for (vm in vms) {
         vm.getErrorLiveData().observe(this, Observer {
-            hideLoadingDialog()
-            hideProgressDialog()
+            hideLoadingDialogExt()
+            hideProgressDialogExt()
             showFailTipsDialog(it)
         })
     }

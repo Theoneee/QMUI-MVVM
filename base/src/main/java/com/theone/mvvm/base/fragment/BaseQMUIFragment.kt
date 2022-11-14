@@ -2,12 +2,10 @@ package com.theone.mvvm.base.fragment
 
 import android.animation.Animator
 import android.content.Context
-import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import com.qmuiteam.qmui.arch.QMUIFragment
-import com.qmuiteam.qmui.util.QMUIKeyboardHelper
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.theone.mvvm.base.ViewConstructor
 import com.theone.mvvm.base.IQMUI
@@ -134,17 +132,17 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
     /**
      * 显示加载框
      * @param msg String? 提示语
-     * @remark 这了提供了默认的加载效果，如果需要更改，重写此方法以及[hideLoading]
+     * @remark 这了提供了默认的加载效果，如果需要更改，重写此方法以及[hideLoadingDialog]
      */
-    override fun showLoading(msg: String?) {
+    override fun showLoadingDialog(msg: String?) {
         context?.showLoadingDialog(msg)
     }
 
     /**
      * 隐藏加载框
      */
-    override fun hideLoading() {
-        hideLoadingDialog()
+    override fun hideLoadingDialog() {
+       hideLoadingDialogExt()
     }
 
     /**

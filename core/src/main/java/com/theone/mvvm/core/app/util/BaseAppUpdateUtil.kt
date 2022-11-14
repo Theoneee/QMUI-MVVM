@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.theone.common.ext.isServiceExisted
 import com.theone.mvvm.core.app.ext.startAppUpdateActivity
 import com.theone.mvvm.core.base.callback.IApkUpdate
-import com.theone.mvvm.ext.qmui.hideLoadingDialog
+import com.theone.mvvm.ext.qmui.hideLoadingDialogExt
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import com.theone.mvvm.ext.qmui.showLoadingDialog
 import com.theone.mvvm.ext.qmui.showSuccessTipsDialog
@@ -68,7 +68,7 @@ abstract class BaseAppUpdateUtil<T: IApkUpdate>(val context:AppCompatActivity, v
     }
 
     protected open fun hideCheckDialog(){
-        hideLoadingDialog()
+        hideLoadingDialogExt()
     }
 
     protected open fun showIsNewVersionDialog(){
