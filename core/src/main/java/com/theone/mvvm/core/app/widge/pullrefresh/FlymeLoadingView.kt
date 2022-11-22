@@ -1,7 +1,10 @@
 package com.theone.mvvm.core.app.widge.pullrefresh
 
 import android.content.Context
+import android.os.CombinedVibration
+import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatTextView
@@ -74,8 +77,12 @@ class FlymeLoadingView(context: Context) : RelativeLayout(context), IRefreshView
     override fun onPull(i: Int, i1: Int, i2: Int) {
         val percent = i * 1.0f / i1
         if (percent >= 1) {
-            if (!isPrepare && null != vibrator && vibrator!!.hasVibrator()) {
-                vibrator!!.vibrate(1)
+            if (!isPrepare ) {
+                vibrator?.let {
+                    if(it.hasVibrator()){
+                        it.vibrate(50)
+                    }
+                }
             }
             isPrepare = true
             mTips?.text = mPrepareTips
