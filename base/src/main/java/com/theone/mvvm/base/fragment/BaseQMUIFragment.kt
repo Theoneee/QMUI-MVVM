@@ -149,6 +149,9 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
      * 向外提供的关闭方法
      */
     open fun finish() {
+        // 结束前关闭Dialog，避免内存泄漏
+        hideLoadingDialog()
+        hideProgressDialog()
         onBackPressed()
     }
 
