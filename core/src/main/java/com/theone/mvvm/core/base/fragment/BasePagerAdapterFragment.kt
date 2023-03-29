@@ -118,7 +118,9 @@ abstract class BasePagerAdapterFragment
      * 数据加载后，当前的页数<总页数时会触发此方法
      */
     override fun onLoadMoreComplete() {
-        getAdapter().loadMoreModule.loadMoreComplete()
+        if(getAdapter() is LoadMoreModule){
+            getAdapter().loadMoreModule.loadMoreComplete()
+        }
     }
 
     /**
@@ -126,14 +128,18 @@ abstract class BasePagerAdapterFragment
      * @param errorMsg String?
      */
     override fun onLoadMoreError(errorMsg: String?) {
-        getAdapter().loadMoreModule.loadMoreFail()
+        if(getAdapter() is LoadMoreModule){
+            getAdapter().loadMoreModule.loadMoreFail()
+        }
     }
 
     /**
      * 当没有数据时会触发此方法
      */
     override fun onLoadMoreEnd() {
-        getAdapter().loadMoreModule.loadMoreEnd()
+        if(getAdapter() is LoadMoreModule) {
+            getAdapter().loadMoreModule.loadMoreEnd()
+        }
     }
 
 }
