@@ -12,4 +12,8 @@ class SpannableStringObservableField(value: SpannableString = SpannableString(""
         return super.get()!!
     }
 
+    override fun set(value: SpannableString?) {
+        super.set(value?:SpannableString(""))
+    }
+
 }

@@ -11,4 +11,8 @@ class FloatObservableField(value: Float = 0f) : ObservableField<Float>(value) {
         return super.get()!!
     }
 
+    override fun set(value: Float?) {
+        super.set(value?:0f)
+    }
+
 }

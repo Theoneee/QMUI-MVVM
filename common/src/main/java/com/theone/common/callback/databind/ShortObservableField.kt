@@ -11,4 +11,8 @@ class ShortObservableField(value: Short = 0) : ObservableField<Short>(value) {
         return super.get()!!
     }
 
+    override fun set(value: Short?) {
+        super.set(value?:0)
+    }
+
 }

@@ -11,4 +11,8 @@ class CharSequenceObservableField(value: CharSequence = "") : ObservableField<Ch
         return super.get()!!
     }
 
+    override fun set(value: CharSequence?) {
+        super.set(value?:"")
+    }
+
 }

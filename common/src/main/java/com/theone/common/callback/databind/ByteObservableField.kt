@@ -11,4 +11,8 @@ class ByteObservableField(value: Byte = 0) : ObservableField<Byte>(value) {
         return super.get()!!
     }
 
+    override fun set(value: Byte?) {
+        super.set(value?:0)
+    }
+
 }

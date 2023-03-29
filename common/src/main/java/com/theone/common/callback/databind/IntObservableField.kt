@@ -11,4 +11,8 @@ class IntObservableField(value: Int = 0) : ObservableField<Int>(value) {
         return super.get()!!
     }
 
+    override fun set(value: Int?) {
+        super.set(value?:0)
+    }
+
 }

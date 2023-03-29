@@ -11,4 +11,8 @@ class StringObservableField(value: String = "") : ObservableField<String>(value)
         return super.get()!!
     }
 
+    override fun set(value: String?) {
+        super.set(value?:"")
+    }
+
 }

@@ -11,4 +11,8 @@ class DoubleObservableField(value: Double = 0.0) : ObservableField<Double>(value
         return super.get()!!
     }
 
+    override fun set(value: Double?) {
+        super.set(value?:0.0)
+    }
+
 }
