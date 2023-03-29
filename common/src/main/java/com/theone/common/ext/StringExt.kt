@@ -221,7 +221,17 @@ fun String.isPhoneNumber(): Boolean {
     if (11 != length) {
         return false
     }
-    return match(PAT_YD) || match(PAT_LT) || match(PAT_DX) || match(PAT_XN)
+    return match(PAT_PHONE)
+//    return matches(PAT_YD, PAT_LT, PAT_DX, PAT_XN,*regexes)
+}
+
+private fun String.matches(vararg regexes: String): Boolean {
+    for (regex in regexes){
+        if(match(regex)){
+            return true
+        }
+    }
+    return false
 }
 
 private fun String.match(pat: String): Boolean {
@@ -242,11 +252,14 @@ fun String.hideIdCardNumber(): String {
     return replace("(\\d{4})\\d{10}(\\d{4})".toRegex(), "$1****$2")
 }
 
+
+private const val PAT_PHONE = "^1[0-9]{10}\$"
+
 /**
  * 移动号段正则表达式
  */
 private const val PAT_YD =
-    "^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$"
+    "^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8])|(198))\\d{8}|(1705)\\d{7}$"
 
 /**
  * 联通号段正则表达式
@@ -269,7 +282,7 @@ private const val PAT_XN = "^((170))\\d{8}|(1718)|(1719)\\d{7}$"
 private const val PAT_CHARS = "[\\u4e00-\\u9fa5]"
 
 /**
- * 文字
+ * 数字
  */
 private const val PAT_NUMBERS = "\"[0-9]\""
 
