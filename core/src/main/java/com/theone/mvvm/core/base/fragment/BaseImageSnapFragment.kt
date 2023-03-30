@@ -79,16 +79,6 @@ abstract class BaseImageSnapFragment<T : IImageUrl, VM : BaseListViewModel<T>, D
         updateBottomDivider(0, 0, 0, 0)
     }
 
-    override fun initAdapter() {
-        with(getAdapter()) {
-            if (this is LoadMoreModule) {
-                loadMoreModule.loadMoreView = getAdapterLoadMoreView()
-                loadMoreModule.setOnLoadMoreListener(this@BaseImageSnapFragment)
-            }
-            animationEnable = false
-        }
-    }
-
     override fun initRecyclerView() {
         super.initRecyclerView()
         getRecyclerView().let {

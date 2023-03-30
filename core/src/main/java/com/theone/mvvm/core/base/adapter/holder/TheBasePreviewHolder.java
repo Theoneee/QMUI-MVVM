@@ -54,7 +54,6 @@ public class TheBasePreviewHolder extends BaseViewHolder {
 
     public static TheBasePreviewHolder generate(ViewGroup parent, int viewType, int resource) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
-
         if (viewType == ADAPTER_TYPE_VIDEO) {
             return new ThePreviewVideoHolder(itemView);
         } else if (viewType == ADAPTER_TYPE_AUDIO) {

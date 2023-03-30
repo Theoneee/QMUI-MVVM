@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.luck.picture.lib.adapter.holder.BasePreviewHolder;
 import com.theone.common.callback.IImageUrl;
 import com.theone.mvvm.core.R;
@@ -24,13 +22,13 @@ import java.util.LinkedHashMap;
  * @email 625805189@qq.com
  * @remark
  */
-public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdapter<T, TheBasePreviewHolder>  implements LoadMoreModule {
+public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdapter<T, TheBasePreviewHolder>  {
 
     private final TheBasePreviewHolder.OnPreviewEventListener onPreviewEventListener;
     private final LinkedHashMap<Integer, TheBasePreviewHolder> mHolderCache = new LinkedHashMap<>();
 
     public ThePicturePreviewAdapter(TheBasePreviewHolder.OnPreviewEventListener onPreviewEventListener) {
-        super(-1);
+        super(0);
         this.onPreviewEventListener = onPreviewEventListener;
     }
 
@@ -119,12 +117,6 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
     @Override
     protected void convert(@NonNull TheBasePreviewHolder theBasePreviewHolder, T t) {
 
-    }
-
-    @NonNull
-    @Override
-    public BaseLoadMoreModule addLoadMoreModule(@NonNull BaseQuickAdapter<?, ?> baseQuickAdapter) {
-        return new BaseLoadMoreModule(baseQuickAdapter);
     }
 
 }
