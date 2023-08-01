@@ -1,7 +1,9 @@
 package com.theone.demo.ui.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.theone.demo.R
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -32,7 +34,10 @@ class ComposeActivity :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        LayoutInflater.from(this).inflate(R.layout.activity_launcher,root,attachToRoot)
     }
 
-
 }
+
+
+

@@ -46,8 +46,7 @@ fun Context.showMsgDialog(
     listener: QMUIDialogAction.ActionListener,
     @QMUIDialogAction.Prop prop: Int = ACTION_PROP_POSITIVE
 ): QMUIDialog {
-    val builder = QMUIDialog.MessageDialogBuilder(this)
-    return builder.run {
+    return QMUIDialog.MessageDialogBuilder(this).run {
         setTitle(title)
         if (!message.isNullOrEmpty()) {
             setMessage(message)
@@ -70,8 +69,7 @@ fun Context.showMenuDialog(
     items: Array<CharSequence?>,
     listener: DialogInterface.OnClickListener
 ): QMUIDialog {
-    val builder = MenuDialogBuilder(this)
-    return builder.run {
+    return MenuDialogBuilder(this).run {
         setTitle(title)
         addItems(items, listener)
         show()
@@ -87,8 +85,7 @@ fun <T:CharSequence> Context.showSingleChoiceDialog(
     checkedIndex: Int,
     listener: DialogInterface.OnClickListener? = null
 ): QMUIDialog {
-    val builder = QMUIDialog.CheckableDialogBuilder(this)
-    return builder.run {
+    return QMUIDialog.CheckableDialogBuilder(this).run {
         setTitle(title)
         setCheckedIndex(checkedIndex)
         addItems(items, listener)
@@ -107,15 +104,14 @@ fun <T:CharSequence>  Context.showMultiChoiceDialog(
     rightAction: String,
     listener: OnMultiChoiceConfirmClickListener
 ): QMUIDialog {
-    val builder = QMUIDialog.MultiCheckableDialogBuilder(this)
-    with(builder){
+    return QMUIDialog.MultiCheckableDialogBuilder(this).run {
         setTitle(title)
         addItems(items,null)
         setCheckedItems(checkedItems)
         addAction(leftAction) { dialog, _ -> dialog?.dismiss() }
-        addAction(rightAction) { dialog, _ -> listener.onItemSelected(dialog,builder.checkedItemIndexes) }
+        addAction(rightAction) { dialog, _ -> listener.onItemSelected(dialog,checkedItemIndexes) }
+        show()
     }
-    return builder.show()
 }
 
 interface OnMultiChoiceConfirmClickListener{

@@ -8,16 +8,21 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.SelectMimeType
 import com.theone.common.callback.IImageUrl
+import com.theone.common.util.SdkUtils
+import com.theone.mvvm.core.BuildConfig
 import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
 import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.service.startDownloadService
 import com.theone.mvvm.core.app.util.imagepreview.ImageLoader
 import com.theone.mvvm.core.app.util.imagepreview.ImageUtil
+import com.theone.mvvm.core.base.callback.CoreOnPermission
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -46,57 +51,52 @@ import com.theone.mvvm.core.app.util.imagepreview.ImageUtil
 object DownloadUtil {
 
     @JvmStatic
-    fun startDownload(context: Activity, data: IImageUrl) {
-        val mineType = when (data.resType()) {
-            IImageUrl.Type.VIDEO -> SelectMimeType.SYSTEM_VIDEO
-            IImageUrl.Type.IMAGE -> SelectMimeType.SYSTEM_IMAGE
-            else -> SelectMimeType.SYSTEM_AUDIO
-        }
-
-        val fileName = getDownloadFileName(data.getImageUrl(), data.resType() == IImageUrl.Type.VIDEO)
-
-        val cv = ContentValues().apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(
-                    MediaStore.Files.FileColumns.RELATIVE_PATH,
-                    "Download/" + context.getString(R.string.app_name)
-                )
-            }
-            put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
-            put(MediaStore.Files.FileColumns.MIME_TYPE, mineType)
-        }
-
-        val downloadPath = context.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)
-
+    fun startDownload(context: Activity, url: String,fileName: String) {
         val download = DownloadBean(
-            data.getImageUrl(),
-            downloadPath[0].path,
+            url,
+            FileDirectoryManager.getDownloadPath(),
             fileName
         )
-        ToastUtils.show("开始下载")
-        context.startDownloadService(download)
+
+        XXPermissions.with(context)
+            .permission(if(SdkUtils.isAndroidS()) Permission.MANAGE_EXTERNAL_STORAGE else Permission.WRITE_EXTERNAL_STORAGE)
+            .request(object :CoreOnPermission(context){
+                override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
+                    if(all){
+                        ToastUtils.show("开始下载")
+                        context.startDownloadService(download)
+                    }
+                }
+            })
+
     }
 
     @JvmStatic
-    fun getDownloadFileName(url: String, isVideo: Boolean): String {
+    fun startDownload(context: Activity, data: IImageUrl) {
+        val fileName = getDownloadFileName(data.getImageUrl(), data.mineType())
+        startDownload(context,data.getImageUrl(),fileName)
+    }
+
+    @JvmStatic
+    fun getDownloadFileName(url: String, mineType: String): String {
         return StringBuffer()
             .append("download_")
             .append(System.currentTimeMillis())
-            .append(getFileSuffix(url, isVideo))
+            .append(getFileSuffix(url, mineType))
             .toString()
     }
 
     @JvmStatic
-    fun getFileSuffix(url: String, isVideo: Boolean): String {
+    fun getFileSuffix(url: String,mineType: String): String {
         var suffix = "jpg"
         val cacheFile = ImageLoader.getGlideCacheFile(appContext, url)
         if (null != cacheFile && cacheFile.exists()) {
             if (ImageUtil.isGifImageWithMime(cacheFile.absolutePath)) {
                 suffix = "gif"
             }
-        } else if (isVideo) {
+        } else if (PictureMimeType.isHasVideo(mineType) || PictureMimeType.isUrlHasVideo(url)) {
             suffix = "mp4"
-        } else if (PictureMimeType.isUrlHasImage(url)) {
+        } else if (PictureMimeType.isHasImage(mineType) || PictureMimeType.isUrlHasImage(url)) {
             try {
                 val position = url.lastIndexOf(".")
                 suffix = url.substring(position + 1)

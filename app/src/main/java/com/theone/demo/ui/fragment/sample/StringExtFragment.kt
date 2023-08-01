@@ -1,6 +1,7 @@
 package com.theone.demo.ui.fragment.sample
 
 import android.text.SpannableString
+import android.util.Log
 import android.view.View
 import com.qmuiteam.qmui.widget.QMUITopBarLayout
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
@@ -56,6 +57,9 @@ class StringExtFragment : BaseVmDbFragment<StringExtViewModel, FragmentSampleStr
     }
 
     override fun initView(root: View) {
+        val result = "19886746392".isPhoneNumber()
+        Log.e(TAG, "initView: $result" )
+
         getDataBinding().groupListView.run {
             ForegroundColorSpan =
                 createItem("前景色", SpanType.ForegroundColorSpan)

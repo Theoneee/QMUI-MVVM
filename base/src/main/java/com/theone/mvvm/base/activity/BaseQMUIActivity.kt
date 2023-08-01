@@ -66,14 +66,14 @@ abstract class BaseQMUIActivity : QMUIActivity(), IQMUI {
      * @remark 这了提供了默认的加载效果，如果需要更改，重写此方法以及[hideLoadingDialog]
      */
     override fun showLoadingDialog(msg: String?) {
-        showLoadingDialog(msg)
+        showLoadingDialogExt(msg)
     }
 
     /**
      * 隐藏加载框
      */
     override fun hideLoadingDialog() {
-        hideLoadingDialog()
+        hideLoadingDialogExt()
     }
 
     override fun onResume() {

@@ -33,9 +33,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 
 private var loadingDialog: QMUITipDialog? = null
 
-fun Context.showLoadingDialog(msg: CharSequence?) {
+fun Context.showLoadingDialogExt(msg: CharSequence?) {
     if(null != loadingDialog){
-       hideLoadingDialogExt()
+        hideLoadingDialogExt()
     }
     loadingDialog = createQMUIDialog(msg, QMUITipDialog.Builder.ICON_TYPE_LOADING)
 }

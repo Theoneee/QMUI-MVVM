@@ -49,17 +49,7 @@ interface IImageUrl {
 
     fun getFileName():String = ""
 
-    /**
-     * @return 是否为视频，如果为视频，视频播放图标会显示
-     */
-    @Deprecated("使用mineType替代", replaceWith = ReplaceWith("mineType"))
-    fun isVideo(): Boolean = false
-
-    /**
-     * 资源类型
-     * @return Type
-     */
-    fun resType():Type = if(isVideo()) Type.VIDEO else Type.IMAGE
+    fun mineType():String
 
     /**
      * 图片的宽度

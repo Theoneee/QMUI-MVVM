@@ -3,9 +3,6 @@ package com.theone.demo.app.ext
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
-import androidx.annotation.MainThread
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.gson.Gson
 import com.qmuiteam.qmui.arch.QMUIFragment
@@ -13,7 +10,6 @@ import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.ui.fragment.login.LoginRegisterFragment
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
 import rxhttp.wrapper.cache.CacheMode
-import java.util.*
 
 
 //  ┏┓　　　┏┓

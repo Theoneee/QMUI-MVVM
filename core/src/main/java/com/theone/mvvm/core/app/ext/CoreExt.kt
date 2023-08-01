@@ -45,10 +45,10 @@ import com.theone.mvvm.ext.qmui.showFailTipsDialog
 @SuppressLint("StaticFieldLeak")
 private var progressDialog: ProgressDialog? = null
 
-fun Activity.showProgressDialog(data: ProgressBean) {
+fun Context.showProgressDialogExt(data: ProgressBean) {
     with(data) {
         if (null == progressDialog) {
-            progressDialog = ProgressDialog(this@showProgressDialog).apply {
+            progressDialog = ProgressDialog(this@showProgressDialogExt).apply {
                 setCanceledOnTouchOutside(outSideCancel)
                 setOnKeyListener(OnKeyBackClickListener(!keyBackCancel))
             }

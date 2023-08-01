@@ -56,7 +56,7 @@ public class FileDownloadUtil {
         return downloadUtil;
     }
 
-    public FileDownloadUtil() {
+    private FileDownloadUtil() {
         okHttpClient = RxHttpPlugins.getOkHttpClient();
         mPlatform = Platform.get();
     }
@@ -96,7 +96,7 @@ public class FileDownloadUtil {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File file = new File(dir, destFileName);
+                final File file = new File(dir, destFileName);
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();

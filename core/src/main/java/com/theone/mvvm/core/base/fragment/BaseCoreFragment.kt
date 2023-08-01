@@ -11,7 +11,7 @@ import com.theone.mvvm.core.R
 import com.theone.mvvm.core.app.ext.hideProgressDialogExt
 import com.theone.mvvm.core.base.callback.ICore
 import com.theone.mvvm.core.app.ext.registerLoader
-import com.theone.mvvm.core.app.ext.showProgressDialog
+import com.theone.mvvm.core.app.ext.showProgressDialogExt
 import com.theone.mvvm.entity.ProgressBean
 
 /**
@@ -34,7 +34,7 @@ abstract class BaseCoreFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     }
 
     override fun showProgressDialog(progress: ProgressBean) {
-        requireActivity().showProgressDialog(progress)
+        context?.showProgressDialogExt(progress)
     }
 
     override fun hideProgressDialog() {

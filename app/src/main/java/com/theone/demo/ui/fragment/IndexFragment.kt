@@ -1,5 +1,6 @@
 package com.theone.demo.ui.fragment
 
+import android.view.View
 import com.qmuiteam.qmui.arch.QMUIFragment
 import com.qmuiteam.qmui.widget.tab.QMUITabBuilder
 import com.theone.demo.R
@@ -39,15 +40,6 @@ import com.theone.mvvm.core.base.fragment.BaseTabIndexFragment
  * @remark
  */
 class IndexFragment : BaseTabIndexFragment<BaseViewModel>() {
-
-    override fun isExitPage(): Boolean = true
-
-    override fun isNeedChangeStatusBarMode(): Boolean = false
-
-    override fun QMUITabBuilder.applyTabBuilder() {
-        // TODO Tips1 更改选中图标的颜色
-        skinChangeSelectedWithTintColor(true)
-    }
 
     override fun initTabAndFragments(
         tabs: MutableList<QMUIItemBean>,

@@ -135,7 +135,7 @@ abstract class BaseQMUIFragment : QMUIFragment(), IQMUI {
      * @remark 这了提供了默认的加载效果，如果需要更改，重写此方法以及[hideLoadingDialog]
      */
     override fun showLoadingDialog(msg: String?) {
-        context?.showLoadingDialog(msg)
+        context?.showLoadingDialogExt(msg)
     }
 
     /**

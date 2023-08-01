@@ -4,8 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.mvvm.base.viewmodel.BaseViewModel
+import com.theone.mvvm.core.app.ext.code
 import com.theone.mvvm.core.app.ext.launch
 import com.theone.mvvm.core.app.ext.msg
+import com.theone.mvvm.core.data.entity.ErrorInfo
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -52,8 +54,15 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
     /**
      * 错误原因
      */
+    @Deprecated(message = "优化返回code和msg", replaceWith = ReplaceWith(expression = "使用带code和msg的errorInfo替代"))
     private val error: UnPeekLiveData<String> =
         UnPeekLiveData.Builder<String>().setAllowNullValue(true).create()
+
+    /**
+     * 错误原因
+     */
+    private val errorInfo: UnPeekLiveData<ErrorInfo> =
+        UnPeekLiveData.Builder<ErrorInfo>().setAllowNullValue(true).create()
 
     /**
      * 请求无论成功或者失败之后的回调
@@ -65,7 +74,10 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
      * from: KunMinX  https://xiaozhuanlan.com/topic/0168753249
      */
     fun getResponseLiveData(): ProtectedUnPeekLiveData<T> = response
+
+    @Deprecated(message = "返回code和msg", replaceWith = ReplaceWith(expression = "使用带getErrorInfoLiveData()替代"))
     fun getErrorLiveData(): ProtectedUnPeekLiveData<String> = error
+    fun getErrorInfoLiveData(): ProtectedUnPeekLiveData<ErrorInfo> = errorInfo
     fun getFinallyLiveData(): ProtectedUnPeekLiveData<Boolean> = finally
 
     /***  下面的方法不向外曝露，只供内部使用，保证数据只能从ViewModel到UI层  **/
@@ -83,11 +95,15 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
      * @param errorMsg 错误信息
      * @param errorLiveData 错误接收的LiveData
      */
-    protected fun onError(errorMsg: String?, errorLiveData: UnPeekLiveData<String>? = null) {
+    private fun onError(errorMsg: String?, errorLiveData: UnPeekLiveData<String>? = null) {
         (errorLiveData ?: error).value = errorMsg
     }
 
-    protected fun onFinally() {
+    private fun onError(info: ErrorInfo?, errorLiveData: UnPeekLiveData<ErrorInfo>? = null) {
+        (errorLiveData ?: errorInfo).value = info
+    }
+
+    private fun onFinally() {
         finally.value = true
     }
 
@@ -100,6 +116,7 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
     protected fun request(
         block: suspend CoroutineScope.() -> Unit,
         loadingMsg: String? = null,
+        errorInfoLiveData: UnPeekLiveData<ErrorInfo>? = null,
         errorLiveData: UnPeekLiveData<String>? = null
     ) {
         launch({
@@ -109,6 +126,7 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
             // 这里可以给不同的请求设置不同的错误接收
             it.printStackTrace()
             onError(it.msg, errorLiveData)
+            onError(ErrorInfo(it.msg, it.code), errorInfoLiveData)
         }, {
             // 请求开始
             // 求时的提示语句不为空时才开启弹窗提示
@@ -129,6 +147,7 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
     protected fun requestAwait(
         wait: Await<T>,
         loadingMsg: String? = null,
+        errorInfoLiveData: UnPeekLiveData<ErrorInfo>? = null,
         errorLiveData: UnPeekLiveData<String>? = null
     ) {
         viewModelScope.launch {
@@ -144,6 +163,7 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
                 // 这里可以给不同的请求设置不同的错误接收
                 it.printStackTrace()
                 onError(it.msg, errorLiveData)
+                onError(ErrorInfo(it.msg, it.code), errorInfoLiveData)
             }
             // 关闭loading
             loadingMsg?.let {
@@ -157,11 +177,13 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
     protected fun requestFlow(
         flow: Flow<T>,
         loadingMsg: String?,
-        errorLiveData: UnPeekLiveData<String>? = error
+        errorLiveData: UnPeekLiveData<String>? = error,
+        errorInfoLiveData: UnPeekLiveData<ErrorInfo>? = errorInfo
     ) {
         viewModelScope.launch {
             flow.catch {
                 onError(it.msg, errorLiveData)
+                onError(ErrorInfo(it.msg, it.code), errorInfoLiveData)
             }.onStart {
                 // 请求开始
                 // 求时的提示语句不为空时才开启弹窗提示

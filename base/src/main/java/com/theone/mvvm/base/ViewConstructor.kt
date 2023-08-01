@@ -51,7 +51,6 @@ abstract class ViewConstructor(val context: Context, private val factory: Factor
     abstract fun createRootView(): ViewGroup
     abstract fun createView(): View
     abstract fun createTopBar(): QMUITopBarLayout?
-
     fun getFactory(): Factory = factory
     fun getRootView(): ViewGroup = mRootView
     fun getContentView(): View = mContentView

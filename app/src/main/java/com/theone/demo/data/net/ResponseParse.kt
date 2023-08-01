@@ -37,11 +37,8 @@ import java.lang.reflect.Type
 
 @Parser(name = "Response")
 open class ResponseParse<T> : TypeParser<T> {
-
     protected constructor() : super()
-
     constructor(type: Type) : super(type)
-
     @Throws(IOException::class)
     override fun onParse(response: okhttp3.Response): T {
         //第一步，解析code、msg字段，把data当成String对象

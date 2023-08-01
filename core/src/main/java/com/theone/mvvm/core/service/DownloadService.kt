@@ -3,17 +3,14 @@ package com.theone.mvvm.core.service
 import android.app.Activity
 import android.app.IntentService
 import android.app.Notification
-import android.app.Service
 import android.content.Intent
-import android.content.IntentSender
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.hjq.permissions.Permission
 import com.hjq.toast.ToastUtils
 import com.theone.common.constant.BundleConstant
+import com.theone.common.ext.delay
 import com.theone.common.ext.installApk
 import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
@@ -58,6 +55,7 @@ fun Activity.startDownloadService(download: DownloadBean) {
 class DownloadService : IntentService(this::class.java.canonicalName) {
 
     companion object {
+        const val TAG = "DownloadService"
         const val DOWNLOAD_OK = "download_ok"
         const val DOWNLOAD_PATH = "download_path"
         const val DOWNLOAD_ERROR = "download_error"
@@ -78,7 +76,7 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             mDownload = intent.getParcelableExtra(BundleConstant.DATA)
             initNotification()
             startDown()
-        }else{
+        } else {
             ToastUtils.show("等待当前任务下载完成")
         }
     }
@@ -97,53 +95,55 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
 
     private fun startDown() {
         mDownload?.run {
-            FileDownloadUtil.get().download(url,downloadPath,name,object :FileDownloadUtil.OnDownloadListener{
-                override fun onDownloadSuccess(file: File?) {
-                    file?.let {
-                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, it.absolutePath)
-                        updateNotification("下载完成", true)
-                        if (it.name.endsWith(".apk"))
-                            installApk(it)
-                        else
-                            updateLocationFile(it)
-                    }
-                }
+            FileDownloadUtil.get()
+                .download(url, downloadPath, name, object : FileDownloadUtil.OnDownloadListener {
+                    override fun onDownloadSuccess(file: File) {
+                            sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, file.absolutePath)
+                            if (file.name.endsWith(".apk"))
+                                installApk(file)
+                            else
+                                updateLocationFile(file)
+                            delay(1200) {
+                                updateNotification("下载完成", true)
+                            }
 
-                override fun onDownloading(progress: Int) {
-                    if (progress != mOldPercent) {
-                        mOldPercent = progress
-                        updateProgress(progress)
-                        sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, progress)
                     }
-                }
 
-                override fun onDownloadFailed(e: java.lang.Exception?) {
-                    val error = e?.localizedMessage
-                    sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
-                    updateNotification("下载失败", false)
-                    ToastUtils.show("下载失败 $error")
-                    val file = File(downloadPath, name)
-                    if (file.exists()) {
-                        file.delete()
+                    override fun onDownloading(progress: Int) {
+                        if (progress != mOldPercent) {
+                            mOldPercent = progress
+                            updateProgress(progress)
+                            sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, progress)
+                        }
                     }
-                }
-            })
+
+                    override fun onDownloadFailed(e: java.lang.Exception?) {
+                        val error = e?.localizedMessage
+                        sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
+                        updateNotification("下载失败", false)
+                        ToastUtils.show("下载失败 $error")
+                        val file = File(downloadPath, name)
+                        if (file.exists()) {
+                            file.delete()
+                        }
+                    }
+                })
         }
     }
 
-    private fun updateNotification(title: String, isFinish: Boolean) {
-        stopForeground(true)
+    private fun updateNotification(title: String, isSuccess: Boolean) {
         val builder = NotificationManager.getInstance().createNotification(
             NOTIFICATION_ID, title, title, mDownload?.url,
-            smallIcon = if (isFinish) R.drawable.service_down_finish else R.drawable.service_down
+            smallIcon = if (isSuccess) R.drawable.service_down_finish else R.drawable.service_down
         ).apply {
             setDefaults(Notification.DEFAULT_VIBRATE)
-            setAutoCancel(isFinish)
+            setAutoCancel(true)
         }
         builder.build().run {
             flags = Notification.FLAG_AUTO_CANCEL
         }
         NotificationManager.getInstance().notify(NOTIFICATION_ID, builder)
+        stopForeground(true)
         stopSelf()
     }
 

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.adapter.holder.BasePreviewHolder;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.theone.common.callback.IImageUrl;
 import com.theone.mvvm.core.R;
 import com.theone.mvvm.core.base.adapter.holder.TheBasePreviewHolder;
@@ -61,10 +62,10 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
 
     @Override
     public int getItemViewType(int position) {
-        IImageUrl.Type type = getData().get(position).resType();
-        if (type == IImageUrl.Type.VIDEO) {
+        String mineType = getData().get(position).mineType();
+        if (PictureMimeType.isHasVideo(mineType)) {
             return BasePreviewHolder.ADAPTER_TYPE_VIDEO;
-        } else if (type == IImageUrl.Type.AUDIO) {
+        } else if (PictureMimeType.isHasAudio(mineType)) {
             return BasePreviewHolder.ADAPTER_TYPE_AUDIO;
         } else {
             return BasePreviewHolder.ADAPTER_TYPE_IMAGE;

@@ -86,6 +86,7 @@ abstract class BaseArticleFragment<VM : ArticleViewModel> :
                         if (isCollection) {
                             getAdapter().data.removeAt(index)
                             getAdapter().notifyItemRemoved(index)
+                            onAutoRefresh()
                         } else {
                             getAdapter().notifyItemChanged(index + getAdapter().headerLayoutCount)
                         }

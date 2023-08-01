@@ -57,7 +57,7 @@ abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<Ar
                         collectIds.remove(article.getArticleId().toString())
                 })
             event.collectEvent.value = CollectBus(article.getArticleId(), !article.collect)
-        }, null, collectionError)
+        }, null, errorLiveData = collectionError)
     }
 
 }

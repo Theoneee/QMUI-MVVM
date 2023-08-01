@@ -1,11 +1,10 @@
 package com.theone.mvvm.core.app.widge.dialog
 
-import android.app.Activity
+import android.content.Context
 import androidx.appcompat.widget.AppCompatTextView
 import com.qmuiteam.qmui.widget.QMUIProgressBar
 import com.qmuiteam.qmui.widget.QMUIProgressBar.QMUIProgressBarTextGenerator
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
-import com.theone.common.ext.logI
 import com.theone.mvvm.core.R
 
 //  ┏┓　　　┏┓
@@ -32,7 +31,7 @@ import com.theone.mvvm.core.R
  * @email 625805189@qq.com
  * @remark
  */
-class ProgressDialog(context: Activity, themeId: Int = R.style.QMUI_Dialog) :
+class ProgressDialog(context: Context, themeId: Int = R.style.QMUI_Dialog) :
     QMUIDialog(context, themeId), QMUIProgressBarTextGenerator {
 
     private var mProgressBar: QMUIProgressBar? = null

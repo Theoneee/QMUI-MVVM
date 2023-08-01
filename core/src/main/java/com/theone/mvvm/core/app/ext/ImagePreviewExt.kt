@@ -92,7 +92,7 @@ fun <T:IImageUrl> List<T>.getImagePreviewList():ArrayList<ImagePreviewBean>{
                 url = getImageUrl()
                 mThumbnail = getThumbnail()
                 mRefer = getRefer()
-                mIsVideo = isVideo()
+                mineType = mineType()
                 mWidth = getWidth()
                 mHeight = getHeight()
             }

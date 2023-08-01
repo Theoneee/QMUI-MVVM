@@ -34,9 +34,9 @@ data class ImagePreviewBean(
     var url: String = "",
     var mThumbnail: String? = "",
     var mRefer: String? = "",
-    var mIsVideo: Boolean = false,
     var mWidth: Int = 0,
-    var mHeight: Int = 0
+    var mHeight: Int = 0,
+    var mineType:String = ""
 ) : IImageUrl, Parcelable {
 
     override fun getImageUrl(): String = url
@@ -44,15 +44,14 @@ data class ImagePreviewBean(
     override fun getThumbnail(): String? = mThumbnail
 
     override fun getRefer(): String? = mRefer
-
-    override fun isVideo(): Boolean = mIsVideo
+    override fun mineType(): String  = mineType
 
     override fun getWidth(): Int = mWidth
 
     override fun getHeight(): Int = mHeight
 
     override fun toString(): String {
-        return "ImagePreviewBean(url='$url', mThumbnail=$mThumbnail, mRefer=$mRefer, mIsVideo=$mIsVideo, mWidth=$mWidth, mHeight=$mHeight)"
+        return "ImagePreviewBean(url='$url', mThumbnail=$mThumbnail, mRefer=$mRefer, mWidth=$mWidth, mHeight=$mHeight)"
     }
 
 

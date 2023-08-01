@@ -6,7 +6,7 @@ import com.theone.mvvm.core.app.ext.startAppUpdateActivity
 import com.theone.mvvm.core.base.callback.IApkUpdate
 import com.theone.mvvm.ext.qmui.hideLoadingDialogExt
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
-import com.theone.mvvm.ext.qmui.showLoadingDialog
+import com.theone.mvvm.ext.qmui.showLoadingDialogExt
 import com.theone.mvvm.ext.qmui.showSuccessTipsDialog
 
 //  ┏┓　　　┏┓
@@ -64,7 +64,7 @@ abstract class BaseAppUpdateUtil<T: IApkUpdate>(val context:AppCompatActivity, v
     }
 
     protected open fun showCheckDialog(){
-        context.showLoadingDialog("检查中")
+        context.showLoadingDialogExt("检查中")
     }
 
     protected open fun hideCheckDialog(){
