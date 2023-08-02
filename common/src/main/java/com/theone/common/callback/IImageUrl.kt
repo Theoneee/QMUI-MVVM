@@ -43,7 +43,7 @@ interface IImageUrl {
 
     fun getFileName():String = ""
 
-    fun mineType():String
+    fun mineType():String? = null
 
     /**
      * 图片的宽度

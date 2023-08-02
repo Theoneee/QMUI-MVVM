@@ -78,7 +78,7 @@ object DownloadUtil {
     }
 
     @JvmStatic
-    fun getDownloadFileName(url: String, mineType: String): String {
+    fun getDownloadFileName(url: String, mineType: String?): String {
         return StringBuffer()
             .append("download_")
             .append(System.currentTimeMillis())
@@ -87,16 +87,16 @@ object DownloadUtil {
     }
 
     @JvmStatic
-    fun getFileSuffix(url: String,mineType: String): String {
+    fun getFileSuffix(url: String,mineType: String?): String {
         var suffix = "jpg"
         val cacheFile = ImageLoader.getGlideCacheFile(appContext, url)
         if (null != cacheFile && cacheFile.exists()) {
             if (ImageUtil.isGifImageWithMime(cacheFile.absolutePath)) {
                 suffix = "gif"
             }
-        } else if (PictureMimeType.isHasVideo(mineType) || PictureMimeType.isUrlHasVideo(url)) {
+        } else if (PictureMimeType.isUrlHasVideo(url) || PictureMimeType.isHasVideo(mineType)) {
             suffix = "mp4"
-        } else if (PictureMimeType.isHasImage(mineType) || PictureMimeType.isUrlHasImage(url)) {
+        } else if (PictureMimeType.isUrlHasImage(url) || PictureMimeType.isHasImage(mineType)) {
             try {
                 val position = url.lastIndexOf(".")
                 suffix = url.substring(position + 1)
