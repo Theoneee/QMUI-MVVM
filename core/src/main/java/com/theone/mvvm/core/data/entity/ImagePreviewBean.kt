@@ -36,7 +36,7 @@ data class ImagePreviewBean(
     var mRefer: String? = "",
     var mWidth: Int = 0,
     var mHeight: Int = 0,
-    var mineType:String = ""
+    var mineType:String? = null
 ) : IImageUrl, Parcelable {
 
     override fun getImageUrl(): String = url
@@ -44,7 +44,7 @@ data class ImagePreviewBean(
     override fun getThumbnail(): String? = mThumbnail
 
     override fun getRefer(): String? = mRefer
-    override fun mineType(): String  = mineType
+    override fun mineType(): String?  = mineType
 
     override fun getWidth(): Int = mWidth
 

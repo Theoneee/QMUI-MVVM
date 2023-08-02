@@ -3,10 +3,10 @@ ext {
     loaderVersion = '0.0.3-beta'
 
     okhttpVersion = '4.10.0'
-    rxhttpVersion = '3.0.0'
+    rxhttpVersion = '3.0.4'
 
     //util
-    glideVersion = '4.12.0'
+    glideVersion = '4.15.1'
     multidexVersion = '2.0.1'
     xxpermissions = '8.2'
     mmkvVersion = '1.1.0'
@@ -17,7 +17,7 @@ ext {
     cookieJarVersion = 'v1.0.1'
     mmkvVersion = '1.1.0'
     crashCatchVersion = '2.3.0'
-    exoplayer = '2.17.1'
+    exoplayer = '2.18.1'
 
     BaseRecyclerViewAdapterHelperVersion = '3.0.7'
     MagicIndicatorVersion = '1.6.0'
