@@ -95,15 +95,15 @@ abstract class BaseRequestViewModel<T> : BaseViewModel() {
      * @param errorMsg 错误信息
      * @param errorLiveData 错误接收的LiveData
      */
-    private fun onError(errorMsg: String?, errorLiveData: UnPeekLiveData<String>? = null) {
+    protected fun onError(errorMsg: String?, errorLiveData: UnPeekLiveData<String>? = null) {
         (errorLiveData ?: error).value = errorMsg
     }
 
-    private fun onError(info: ErrorInfo?, errorLiveData: UnPeekLiveData<ErrorInfo>? = null) {
+    protected fun onError(info: ErrorInfo?, errorLiveData: UnPeekLiveData<ErrorInfo>? = null) {
         (errorLiveData ?: errorInfo).value = info
     }
 
-    private fun onFinally() {
+    protected fun onFinally() {
         finally.value = true
     }
 

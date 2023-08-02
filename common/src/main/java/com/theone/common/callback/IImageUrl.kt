@@ -26,12 +26,6 @@ package com.theone.common.callback
  */
 interface IImageUrl {
 
-    enum class Type{
-        IMAGE,
-        VIDEO,
-        AUDIO
-    }
-
     /**
      * @return 图片地址
      */
@@ -67,15 +61,11 @@ interface IImageUrl {
      * 设置宽度
      * @param size Int
      */
-    fun setWidth(size:Int){
-
-    }
+    fun setWidth(size:Int){ }
     /**
      * 设置高度
      * @param size Int
      */
-    fun setHeight(size:Int){
-
-    }
+    fun setHeight(size:Int){}
 
 }
