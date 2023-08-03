@@ -60,7 +60,7 @@ object DownloadUtil {
         XXPermissions.with(context)
             .permission(if(SdkUtils.isAndroidS()) Permission.MANAGE_EXTERNAL_STORAGE else Permission.WRITE_EXTERNAL_STORAGE)
             .request(object :CoreOnPermission(context){
-                override fun hasPermission(granted: MutableList<String>?, all: Boolean) {
+                override fun onGranted(granted: MutableList<String>, all: Boolean) {
                     if(all){
                         ToastUtils.show("开始下载")
                         context.startDownloadService(download)

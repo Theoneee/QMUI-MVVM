@@ -7,26 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.photoview.OnViewTapListener;
 import com.luck.picture.lib.photoview.PhotoView;
 import com.luck.picture.lib.utils.BitmapUtils;
 import com.luck.picture.lib.utils.DensityUtil;
 import com.luck.picture.lib.utils.MediaUtils;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.widget.QMUIProgressBar;
 import com.theone.common.callback.IImageUrl;
 import com.theone.mvvm.core.R;
 import com.theone.mvvm.core.app.util.glide.GlideEngine;
-import com.theone.mvvm.core.app.widge.ProgressWheel;
 
 
 public class TheBasePreviewHolder extends BaseViewHolder {

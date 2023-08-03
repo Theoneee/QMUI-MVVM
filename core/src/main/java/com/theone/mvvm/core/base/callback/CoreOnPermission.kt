@@ -1,7 +1,7 @@
 package com.theone.mvvm.core.base.callback
 
 import android.content.Context
-import com.hjq.permissions.OnPermission
+import com.hjq.permissions.OnPermissionCallback
 import com.theone.mvvm.core.app.ext.showNoPermissionDialog
 
 //  ┏┓　　　┏┓
@@ -28,9 +28,9 @@ import com.theone.mvvm.core.app.ext.showNoPermissionDialog
  * @email 625805189@qq.com
  * @remark
  */
-abstract class CoreOnPermission (val context: Context) : OnPermission {
+abstract class CoreOnPermission (val context: Context) : OnPermissionCallback {
 
-    override fun noPermission(denied: MutableList<String>?, quick: Boolean) {
+    override fun onDenied(denied: MutableList<String>, quick: Boolean) {
         context.showNoPermissionDialog(quick, denied)
     }
 

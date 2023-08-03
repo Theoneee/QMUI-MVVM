@@ -33,8 +33,8 @@ import java.lang.StringBuilder
  * @email 625805189@qq.com
  * @remark
  */
-fun Context.showNoPermissionDialog(quick: Boolean, denied: MutableList<String>?) {
-    val permissions = denied?.getPermissionName()
+fun Context.showNoPermissionDialog(quick: Boolean, denied: MutableList<String>) {
+    val permissions = denied.getPermissionName()
     if (quick) {
         showMsgDialog(
             "提示",
