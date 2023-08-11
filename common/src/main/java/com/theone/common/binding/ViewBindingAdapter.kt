@@ -34,6 +34,32 @@ import androidx.databinding.BindingAdapter
  */
 object ViewBindingAdapter {
 
+    @BindingAdapter(value = ["gone"], requireAll = false)
+    @JvmStatic
+    @Deprecated(message = "",ReplaceWith("使用goneText替代"))
+    fun viewGone(view: View, text: String?) {
+        view.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
+    }
+
+    @BindingAdapter(value = ["gone","goneText"], requireAll = false)
+    @JvmStatic
+    fun viewGone(view: View, gone: Boolean?,goneText:String?) {
+        view.visibility = if (gone == true || TextUtils.isEmpty(goneText)) View.GONE else View.VISIBLE
+    }
+
+    @BindingAdapter(value = ["invisible"], requireAll = false)
+    @JvmStatic
+    @Deprecated(message = "", ReplaceWith("使用invisibleText替代"))
+    fun viewInvisible(view: View, text: String?) {
+        view.visibility = if (TextUtils.isEmpty(text)) View.INVISIBLE else View.VISIBLE
+    }
+
+    @BindingAdapter(value = ["invisible","invisibleText"], requireAll = false)
+    @JvmStatic
+    fun viewInvisible(view: View, invisible: Boolean = false,invisibleText:String?=null) {
+        view.visibility = if (invisible || TextUtils.isEmpty(invisibleText)) View.INVISIBLE else View.VISIBLE
+    }
+
     @BindingAdapter(value = ["checkChangeListener"])
     @JvmStatic
     fun checkChange(checkbox: CheckBox, listener: CompoundButton.OnCheckedChangeListener) {
@@ -49,19 +75,6 @@ object ViewBindingAdapter {
             view.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         }
         view.setSelection(view.text.length)
-    }
-
-
-    @BindingAdapter(value = ["visible"], requireAll = false)
-    @JvmStatic
-    fun visible(view: View, visible: Boolean) {
-        view.visibility = if (visible) View.VISIBLE else View.GONE
-    }
-
-    @BindingAdapter(value = ["visible"], requireAll = false)
-    @JvmStatic
-    fun visibleNoEmpty(view: View, text: String) {
-        view.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
     }
 
 }

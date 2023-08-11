@@ -1,4 +1,4 @@
-package com.theone.common.ui.binding;
+package com.theone.common.binding;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;

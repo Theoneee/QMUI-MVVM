@@ -1,4 +1,4 @@
-package com.theone.common.widget;
+package com.theone.common.widget.edittext;
 
 
 import android.content.Context;
