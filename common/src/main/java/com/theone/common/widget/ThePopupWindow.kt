@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.PopupWindow
+import com.theone.common.ext.notNull
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -32,14 +33,14 @@ import android.widget.PopupWindow
  * @email 625805189@qq.com
  * @remark
  */
-class ThePopupWindow(context: Context, rootView: View, val anchor: View, content: View) :
+class ThePopupWindow(context: Context,private val rootView: View, content: View,private val anchor: View?=null) :
     PopupWindow(context),Animation.AnimationListener {
 
 
     /**
      * 动画效果样式
      */
-    private var mAnimStyle: AnimStyle = AnimStyle.TOP_BOTTOM
+    var mAnimStyle: AnimStyle = AnimStyle.TOP_BOTTOM
         set(value) {
             initAnimalStyle()
             field = value
@@ -90,7 +91,7 @@ class ThePopupWindow(context: Context, rootView: View, val anchor: View, content
     init {
         contentView = content
         setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        height = rootView.height - anchor.height
+        height = rootView.height - (anchor?.height ?: 0)
         width = rootView.width
     }
 
@@ -98,7 +99,13 @@ class ThePopupWindow(context: Context, rootView: View, val anchor: View, content
      * 显示
      */
     fun show() {
-        showAsDropDown(anchor)
+        anchor.notNull(
+            {
+                showAsDropDown(it)
+            }, {
+                showAsDropDown(rootView)
+            }
+        )
         contentView.startAnimation(mEnterAnim)
     }
 
