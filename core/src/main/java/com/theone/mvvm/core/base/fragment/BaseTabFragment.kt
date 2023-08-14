@@ -15,6 +15,7 @@ import com.theone.mvvm.core.app.widge.indicator.SkinLinePagerIndicator
 import com.theone.mvvm.core.app.widge.indicator.SkinPagerTitleView
 import com.theone.mvvm.core.base.callback.ITab
 import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
+import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -48,7 +49,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  * @remark
  */
 abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
-    BaseCoreFragment<VM, DB>(),ITab {
+    BaseCoreFragment<VM, DB>(), ITab {
 
     private var mTabs: MutableList<QMUIItemBean> = mutableListOf()
     private var mFragments: MutableList<QMUIFragment> = mutableListOf()
@@ -70,17 +71,22 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
      * @return Boolean
      */
     private val isTabFromNet by lazy {
-        getViewModel() is BaseRequestVM<*>
+        getViewModel() is BaseRequestViewModel<*> || getViewModel() is BaseRequestVM<*>
     }
 
-    override fun loaderRegisterView(): View?  = if(isTabFromNet) getViewConstructor().getRootView() else null
+    override fun loaderRegisterView(): View? =
+        if (isTabFromNet) getViewConstructor().getRootView() else null
 
     override fun initView(root: View) {
         // 如果Tab的内容不是从网络获取，是否也需要延迟初始化？
         if (!isTabFromNet) {
             startInit()
         } else if (!isLazyLoadData()) {
-            (getViewModel() as BaseRequestVM<*>).requestServer()
+            if (getViewModel() is BaseRequestVM<*>) {
+                (getViewModel() as BaseRequestVM<*>).requestServer()
+            } else if (getViewModel() is BaseRequestViewModel<*>) {
+                (getViewModel() as BaseRequestViewModel<*>).requestServer()
+            }
         }
     }
 
@@ -92,20 +98,33 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     override fun onPageReLoad() {
         showLoadingPage()
-        (getViewModel() as BaseRequestVM<*>).requestServer()
+        (getViewModel() as BaseRequestViewModel<*>).requestServer()
     }
 
     override fun createObserver() {
-        if(isTabFromNet){
-            (getViewModel() as BaseRequestVM<*>).getRequest().run {
-                getResponseLiveData().observe(this@BaseTabFragment, Observer {
-                    startInit()
-                })
-                getErrorLiveData().observe(this@BaseTabFragment, Observer {
-                    showErrorPage(it.msg) {
-                        onPageReLoad()
-                    }
-                })
+        if (isTabFromNet) {
+            if (getViewModel() is BaseRequestVM<*>) {
+                (getViewModel() as BaseRequestVM<*>).getRequest().run {
+                    getResponseLiveData().observe(this@BaseTabFragment, Observer {
+                        startInit()
+                    })
+                    getErrorLiveData().observe(this@BaseTabFragment, Observer {
+                        showErrorPage(it.msg) {
+                            onPageReLoad()
+                        }
+                    })
+                }
+            } else if (getViewModel() is BaseRequestViewModel<*>) {
+                (getViewModel() as BaseRequestViewModel<*>).run {
+                    getResponseLiveData().observe(this@BaseTabFragment, Observer {
+                        startInit()
+                    })
+                    getErrorInfoLiveData().observe(this@BaseTabFragment, Observer {
+                        showErrorPage(it.msg) {
+                            onPageReLoad()
+                        }
+                    })
+                }
             }
         }
     }
@@ -143,7 +162,7 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     // MagicIndicator
 
-    private fun initMagicIndicator() {
+    protected fun initMagicIndicator() {
         getMagicIndicator()?.run {
             navigator = createNavigator()
             ViewPagerHelper.bind(this, getViewPager())
