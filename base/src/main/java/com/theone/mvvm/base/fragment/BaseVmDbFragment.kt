@@ -1,12 +1,9 @@
 package com.theone.mvvm.base.fragment
 
 import androidx.databinding.ViewDataBinding
-import com.theone.mvvm.BR
 import com.theone.mvvm.base.IDataBinding
 import com.theone.mvvm.base.ViewConstructor
-import com.theone.mvvm.base.ViewConstructorImpl
 import com.theone.mvvm.base.viewmodel.BaseViewModel
-import com.theone.mvvm.ext.getClazz
 import com.theone.mvvm.ext.initDataBinding
 
 

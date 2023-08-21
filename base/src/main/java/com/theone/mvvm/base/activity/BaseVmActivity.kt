@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.theone.mvvm.base.IViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.ext.addLoadingObserveExt
-import com.theone.mvvm.ext.createViewModel
-import com.theone.mvvm.ext.getClazz
-import com.theone.mvvm.ext.getViewModelClazz
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓

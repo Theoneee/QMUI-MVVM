@@ -1,6 +1,5 @@
 package com.theone.mvvm.base.activity
 
-import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.theone.mvvm.base.IViewBinding
 import com.theone.mvvm.base.ViewConstructor
