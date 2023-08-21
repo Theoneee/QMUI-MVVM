@@ -105,7 +105,7 @@ object CacheUtil {
     /**
      * 是否开启启动页文字
      */
-    fun isOpenLauncherText(): Boolean = MMKVUtil.getBoolean(LAUNCHER, true)
+    fun isOpenLauncherText(): Boolean = MMKVUtil.getBoolean(LAUNCHER, false)
 
     /**
      * 设置启动页文字开关

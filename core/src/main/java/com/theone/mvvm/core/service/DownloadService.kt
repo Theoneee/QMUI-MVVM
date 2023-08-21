@@ -6,7 +6,10 @@ import android.app.Notification
 import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.Message
 import androidx.core.app.NotificationCompat
 import com.hjq.toast.ToastUtils
 import com.theone.common.constant.BundleConstant
@@ -98,15 +101,15 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             FileDownloadUtil.get()
                 .download(url, downloadPath, name, object : FileDownloadUtil.OnDownloadListener {
                     override fun onDownloadSuccess(file: File) {
-                            sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, file.absolutePath)
-                            if (file.name.endsWith(".apk"))
-                                installApk(file)
-                            else
-                                updateLocationFile(file)
-                            delay(1200) {
-                                updateNotification("下载完成", true)
-                            }
-
+                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, file.absolutePath)
+                        if (file.name.endsWith(".apk")&&apkInstall)
+                            installApk(file)
+                        else
+                            updateLocationFile(file)
+                        mHandler.sendMessage(Message.obtain().apply {
+                            what = DOWNLOAD_SUCCESS
+                            obj = DownloadInfo("下载成功", file.absolutePath)
+                        })
                     }
 
                     override fun onDownloading(progress: Int) {
@@ -120,20 +123,45 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
                     override fun onDownloadFailed(e: java.lang.Exception?) {
                         val error = e?.localizedMessage
                         sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
-                        updateNotification("下载失败", false)
-                        ToastUtils.show("下载失败 $error")
                         val file = File(downloadPath, name)
-                        if (file.exists()) {
+                        if(file.exists()){
                             file.delete()
                         }
+                        mHandler.sendMessage(Message.obtain().apply {
+                            what = DOWNLOAD_FAIL
+                            obj = DownloadInfo(error,file.absolutePath)
+                        })
                     }
                 })
         }
     }
 
-    private fun updateNotification(title: String, isSuccess: Boolean) {
+    private val DOWNLOAD_SUCCESS = 1
+    private val DOWNLOAD_FAIL = 0
+
+    private data class DownloadInfo(val msg: String, val filePath: String)
+
+    private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
+
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            val obj = msg.obj as DownloadInfo
+            when (msg.what) {
+                DOWNLOAD_SUCCESS -> {
+                    updateNotification("下载完成", obj.filePath,true)
+                }
+                DOWNLOAD_FAIL -> {
+                    updateNotification("下载失败", obj.filePath,false)
+                    ToastUtils.show(obj.msg)
+                }
+            }
+        }
+
+    }
+
+    private fun updateNotification(title: String, content: String, isSuccess: Boolean) {
         val builder = NotificationManager.getInstance().createNotification(
-            NOTIFICATION_ID, title, title, mDownload?.url,
+            NOTIFICATION_ID, title, title, content,
             smallIcon = if (isSuccess) R.drawable.service_down_finish else R.drawable.service_down
         ).apply {
             setDefaults(Notification.DEFAULT_VIBRATE)

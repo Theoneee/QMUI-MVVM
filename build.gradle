@@ -4,8 +4,8 @@ apply from: "configs.gradle"
 buildscript {
     ext {
         minSdkVersion = 21
-        targetSdkVersion = 31
-        compileSdkVersion = 31
+        targetSdkVersion = 32
+        compileSdkVersion = 33
 
         kotlin_version = "1.7.10"
         ktx_version = "1.7.0"

@@ -76,10 +76,6 @@ fun SimplePagerTitleView.init(
     viewPager: ViewPager
 ): IPagerTitleView {
     text = tabs[index].title
-    setTextSize(
-        TypedValue.COMPLEX_UNIT_PX,
-        QMUIResHelper.getAttrDimen(context, R.attr.app_skin_tab_indicator_text_size).toFloat()
-    )
     setOnClickListener { viewPager.currentItem = index }
     return this
 }

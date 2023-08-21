@@ -1,23 +1,13 @@
 package com.theone.mvvm.core.app.util
 
 import android.app.Activity
-import android.app.ActivityManager
-import android.content.ContentValues
-import android.content.Context
 import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
 import com.luck.picture.lib.config.PictureMimeType
-import com.luck.picture.lib.config.SelectMimeType
 import com.theone.common.callback.IImageUrl
-import com.theone.common.util.SdkUtils
-import com.theone.mvvm.core.BuildConfig
 import com.theone.mvvm.core.app.appContext
-import com.theone.mvvm.core.R
 import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.service.startDownloadService
 import com.theone.mvvm.core.app.util.imagepreview.ImageLoader
@@ -57,8 +47,9 @@ object DownloadUtil {
             FileDirectoryManager.getDownloadPath(),
             fileName
         )
+        val targetVer = context.applicationInfo.targetSdkVersion
         XXPermissions.with(context)
-            .permission(if(SdkUtils.isAndroidS()) Permission.MANAGE_EXTERNAL_STORAGE else Permission.WRITE_EXTERNAL_STORAGE)
+            .permission(if(targetVer >= Build.VERSION_CODES.R) Permission.MANAGE_EXTERNAL_STORAGE else Permission.WRITE_EXTERNAL_STORAGE)
             .request(object :CoreOnPermission(context){
                 override fun onGranted(granted: MutableList<String>, all: Boolean) {
                     if(all){

@@ -96,18 +96,18 @@ class TheSelectImageView @JvmOverloads constructor(
     private fun startAnimation() {
         if (animationEnable)
             createViewPropertyAnimation(0f, object : AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     createViewPropertyAnimation(1.0f).start()
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
 
                 }
 
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
 
                 }
 

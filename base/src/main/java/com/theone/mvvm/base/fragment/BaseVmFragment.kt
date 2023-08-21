@@ -1,13 +1,10 @@
 package com.theone.mvvm.base.fragment
 
-import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.theone.mvvm.base.IViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.ext.addLoadingObserveExt
-import com.theone.mvvm.ext.createViewModel
-import com.theone.mvvm.ext.getClazz
 
 
 //  ┏┓　　　┏┓
@@ -38,8 +35,10 @@ abstract class BaseVmFragment<VM : BaseViewModel> : BaseQMUIFragment(),
     IViewModel<VM> {
 
     private val mViewModel: VM by lazy {
-        createViewModel(this)
+        createViewModel()
     }
+
+    override fun createViewModel(): VM  = ViewModelProvider(this)[getViewModelClass()]
 
     override fun getViewModel(): VM = mViewModel
 

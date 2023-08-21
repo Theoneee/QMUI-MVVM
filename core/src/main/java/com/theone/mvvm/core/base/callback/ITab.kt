@@ -40,6 +40,8 @@ interface ITab {
 
     fun isLazyLoadData(): Boolean = true
 
+    fun startInit()
+
     fun initTabAndFragments(
         tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>

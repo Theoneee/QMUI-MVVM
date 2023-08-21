@@ -2,29 +2,31 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+    <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
-
-        <com.qmuiteam.qmui.widget.QMUIViewPager
-            android:id="@+id/mQMUIViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/qmui_skin_segment_tab_height_size"
-            android:overScrollMode="never" />
 
         <com.qmuiteam.qmui.widget.tab.QMUITabSegment
             android:id="@+id/mTabSegment"
             android:layout_width="match_parent"
             android:layout_height="?attr/qmui_skin_segment_tab_height_size"
             android:background="?attr/qmui_skin_segment_tab_background_color"
-            android:layout_gravity="bottom"
             app:qmui_tab_mode="fixed"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:textSize="12sp"
             app:qmui_tab_icon_position="top"
             app:qmui_topDividerColor="?attr/qmui_skin_support_color_separator"
             app:qmui_topDividerHeight="1px" />
 
-    </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+        <com.qmuiteam.qmui.widget.QMUIViewPager
+            android:id="@+id/mQMUIViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/mTabSegment"
+            android:overScrollMode="never" />
+
+
+    </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2>
 </layout>

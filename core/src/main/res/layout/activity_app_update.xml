@@ -123,7 +123,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/center"
-            app:visible="@{!vm.isForce()}"
+            app:gone="@{!vm.isForce()}"
             tools:layout_height="35dp"
             tools:layout_width="35dp" />
 

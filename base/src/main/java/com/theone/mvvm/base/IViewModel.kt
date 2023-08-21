@@ -2,6 +2,7 @@ package com.theone.mvvm.base
 
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.ext.getClazz
+import com.theone.mvvm.ext.getViewModelClazz
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -28,6 +29,8 @@ import com.theone.mvvm.ext.getClazz
  * @remark
  */
 interface IViewModel<VM : BaseViewModel> {
+
+    fun createViewModel():VM
 
     /**
      * 获取ViewModel，供子类调用

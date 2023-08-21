@@ -38,7 +38,6 @@ class LauncherActivity : BaseCoreActivity<BaseViewModel, ActivityLauncherBinding
             RxHttpManager.clearCookieCache()
             CacheUtil.isEnterApp()
         }
-
         val tips = mTypes[(mTypes.indices).random()]
         getDataBinding().tvType.run {
             if (CacheUtil.isOpenLauncherText()) {

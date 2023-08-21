@@ -1,10 +1,13 @@
 package com.theone.mvvm.ext
 
+import android.os.Build
+import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.NonNull
 import androidx.core.util.forEach
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.theone.mvvm.base.IDataBinding
@@ -99,4 +102,18 @@ fun SparseArray<Any>.addParams(
 @Suppress("UNCHECKED_CAST")
 fun <T> Any.getClazz(index: Int = 0): T {
     return (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[index] as T
+}
+
+fun <T> Any.getViewModelClazz(): T {
+    val TAG = "getViewModelClazz"
+   val augments =  (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
+    augments.forEach {
+       try {
+           it as T
+           return it
+       }catch (e:Exception){
+           e.printStackTrace()
+       }
+    }
+    throw RuntimeException("")
 }

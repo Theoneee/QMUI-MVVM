@@ -20,6 +20,7 @@ package com.theone.mvvm.core.app.widge.indicator;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.qmuiteam.qmui.skin.IQMUISkinHandlerView;
 import com.qmuiteam.qmui.skin.QMUISkinHelper;
 import com.qmuiteam.qmui.skin.QMUISkinManager;
 import com.qmuiteam.qmui.util.QMUIColorHelper;
+import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.theone.mvvm.core.R;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
@@ -47,17 +49,18 @@ public class SkinPagerTitleView extends SimplePagerTitleView implements IQMUISki
 
     public SkinPagerTitleView(Context context) {
         super(context);
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, QMUIResHelper.getAttrDimen(context, R.attr.app_skin_tab_indicator_text_size));
         mSelectedColor = getSelectedColor();
         mNormalColor = getNormalColor();
     }
 
     @Override
-    public int getSelectedColor(){
+    public int getSelectedColor() {
         return QMUISkinHelper.getSkinColor(this, R.attr.app_skin_tab_indicator_select_color);
     }
 
     @Override
-    public int getNormalColor(){
+    public int getNormalColor() {
         return QMUISkinHelper.getSkinColor(this, R.attr.app_skin_tab_indicator_normal_color);
     }
 
@@ -74,8 +77,8 @@ public class SkinPagerTitleView extends SimplePagerTitleView implements IQMUISki
         updateTextColor();
     }
 
-    private void updateTextColor(){
-        setTextColor(isSelect?mSelectedColor:mNormalColor);
+    private void updateTextColor() {
+        setTextColor(isSelect ? mSelectedColor : mNormalColor);
     }
 
     @Override
@@ -87,13 +90,13 @@ public class SkinPagerTitleView extends SimplePagerTitleView implements IQMUISki
 
     @Override
     public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
-        setTextColor(QMUIColorHelper.computeColor(mSelectedColor,mNormalColor,leavePercent));
+        setTextColor(QMUIColorHelper.computeColor(mSelectedColor, mNormalColor, leavePercent));
 
     }
 
     @Override
     public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
-        setTextColor(QMUIColorHelper.computeColor(mNormalColor,mSelectedColor,enterPercent));
+        setTextColor(QMUIColorHelper.computeColor(mNormalColor, mSelectedColor, enterPercent));
     }
 
 }

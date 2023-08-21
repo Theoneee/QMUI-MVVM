@@ -1,7 +1,7 @@
-package com.theone.mvvm.core.data.entity
+package com.theone.demo.viewmodel
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.theone.common.callback.databind.StringObservableField
+import com.theone.mvvm.base.viewmodel.BaseViewModel
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,15 +22,13 @@ import kotlinx.android.parcel.Parcelize
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-05-08 13:31
+ * @date 2023-08-16 08:29
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-@Parcelize
-data class DownloadBean(
-    var url: String,
-    var downloadPath: String = "",
-    var name: String,
-    var apkInstall: Boolean = false
-) : Parcelable
+class TestEditTextViewModel:BaseViewModel() {
+
+    val text = StringObservableField()
+
+}
