@@ -1,6 +1,8 @@
 package com.theone.mvvm.core.base.adapter
 
+import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.PagerAdapter
 import com.qmuiteam.qmui.arch.QMUIFragment
 import com.qmuiteam.qmui.arch.QMUIFragmentPagerAdapter
@@ -30,10 +32,11 @@ import com.qmuiteam.qmui.arch.QMUIFragmentPagerAdapter
  * @email 625805189@qq.com
  * @remark
  */
-class TabFragmentAdapter(fm:FragmentManager,private val mFragments : List<QMUIFragment>) :
+class TabFragmentAdapter(val fm:FragmentManager,private val mFragments : List<QMUIFragment>) :
     QMUIFragmentPagerAdapter(fm) {
 
     private var mChildCount = 0
+    private var mCurTransaction: FragmentTransaction? = null
 
     override fun getCount(): Int  = mFragments.size
 
@@ -48,6 +51,24 @@ class TabFragmentAdapter(fm:FragmentManager,private val mFragments : List<QMUIFr
     override fun notifyDataSetChanged() {
         mChildCount = count
         super.notifyDataSetChanged()
+    }
+
+    fun clear(container:ViewGroup){
+        if(null == mCurTransaction){
+            mCurTransaction = fm.beginTransaction()
+        }
+        for((index) in mFragments.withIndex()){
+            val name = makeFragmentName(container.id,index)
+            val fragment = fm.findFragmentByTag(name)
+            if(fragment != null){
+                mCurTransaction?.remove(fragment)
+            }
+        }
+        mCurTransaction?.commitNowAllowingStateLoss()
+    }
+
+    private fun makeFragmentName(viewId:Int,id:Int):String{
+        return "QMUIFragmentPagerAdapter:$viewId:$id"
     }
 
 }

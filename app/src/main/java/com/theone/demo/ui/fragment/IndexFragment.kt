@@ -3,12 +3,14 @@ package com.theone.demo.ui.fragment
 import android.view.View
 import com.qmuiteam.qmui.arch.QMUIFragment
 import com.qmuiteam.qmui.widget.tab.QMUITabBuilder
+import com.theone.common.ext.appViewModels
 import com.theone.demo.R
 import com.theone.demo.ui.fragment.category.ClassificationFragment
 import com.theone.demo.ui.fragment.home.HomeFragment
 import com.theone.demo.ui.fragment.mine.MineFragment
 import com.theone.demo.ui.fragment.project.ProjectFragment
 import com.theone.demo.ui.fragment.gzh.WxGzhFragment
+import com.theone.demo.viewmodel.AppViewModel
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.qmui.addTab
 import com.theone.mvvm.core.data.entity.QMUIItemBean
@@ -41,6 +43,8 @@ import com.theone.mvvm.core.base.fragment.BaseTabIndexFragment
  */
 class IndexFragment : BaseTabIndexFragment<BaseViewModel>() {
 
+    private val appVm: AppViewModel by appViewModels()
+
     override fun initTabAndFragments(
         tabs: MutableList<QMUIItemBean>,
         fragments: MutableList<QMUIFragment>
@@ -63,6 +67,13 @@ class IndexFragment : BaseTabIndexFragment<BaseViewModel>() {
             add(MineFragment())
         }
 
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        appVm.notifyFragment.observe(this){
+            getViewPager().setCurrentItem(1,false)
+        }
     }
 
 }

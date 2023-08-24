@@ -62,6 +62,7 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
     private lateinit var mAPI: QMUICommonListItemView
     private lateinit var mJoinUs: QMUICommonListItemView
     private lateinit var mSample: QMUICommonListItemView
+    private lateinit var mTest: QMUICommonListItemView
 
     override fun isNeedChangeStatusBarMode(): Boolean = true
 
@@ -75,11 +76,13 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
             mSetting = createItem("系统设置", "", R.drawable.svg_mine_setting)
 
             mSample = createItem("一些示例", drawable = R.drawable.svg_mine_sample)
+            mTest = createItem("更换Tab内容", drawable = R.drawable.svg_mine_sample)
 
             showTips(mSample)
+            showTips(mTest, isDot = false)
 
             addToGroup(mCollection, mShare, listener = this@MineFragment)
-            addToGroup(mAPI, mJoinUs, mSample, title = "", listener = this@MineFragment)
+            addToGroup(mAPI, mJoinUs, mSample,mTest, title = "", listener = this@MineFragment)
             addToGroup(mSetting, title = "", listener = this@MineFragment)
 
         }
@@ -165,6 +168,11 @@ class MineFragment : BaseCoreFragment<MineViewModel, FragmentMineBinding>(), Vie
 
     override fun onClick(p0: View?) {
         when (p0) {
+            mTest ->{
+                showSuccessTipsDialog("切换成功"){
+                    true.also { appVm.notifyFragment.value = it }
+                }
+            }
             mShare -> checkLogin {
                 startFragment(ShareArticleFragment())
             }

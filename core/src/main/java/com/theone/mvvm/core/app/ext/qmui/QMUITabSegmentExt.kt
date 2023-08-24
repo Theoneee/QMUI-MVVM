@@ -53,11 +53,10 @@ fun QMUITabBuilder.createTab(context: Context, tab: QMUIItemBean): QMUITab {
     return createTab(context, tab.title, tab.normalRes, tab.selectRes)
 }
 
-fun QMUITabSegment.init(viewPager: ViewPager, tabs: List<QMUIItemBean>, builder: QMUITabBuilder) {
+fun QMUITabSegment.initTabs(tabs: List<QMUIItemBean>, builder: QMUITabBuilder) {
     for (tab in tabs) {
         addTab(builder.createTab(context, tab))
     }
-    setupWithViewPager(viewPager, false)
 }
 
 fun MutableList<QMUIItemBean>.addTab(title: String, normal: Int = NO_SET, select: Int = NO_SET) {

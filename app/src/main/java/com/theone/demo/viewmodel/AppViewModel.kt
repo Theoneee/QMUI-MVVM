@@ -20,6 +20,10 @@ class AppViewModel: BaseViewModel() {
     // 分享文章
     var shareArticle = UnPeekLiveData<Boolean>()
 
+
+    // 分享文章
+    var notifyFragment = UnPeekLiveData<Boolean>()
+
     init {
         userInfo.value = CacheUtil.getUser()
         //初始化列表动画

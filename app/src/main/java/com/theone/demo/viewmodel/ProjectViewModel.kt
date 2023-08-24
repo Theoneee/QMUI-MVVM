@@ -3,6 +3,7 @@ package com.theone.demo.viewmodel
 import com.theone.demo.data.model.bean.ClassifyResponse
 import com.theone.demo.data.repository.ApiRepository
 import com.theone.demo.data.request.ProjectRequest
+import com.theone.demo.data.request.WxGzhRequest
 import com.theone.mvvm.core.app.ext.request
 import com.theone.mvvm.core.base.viewmodel.BaseRequestVM
 import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
@@ -34,9 +35,17 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
  */
 class ProjectViewModel : BaseRequestVM<ProjectRequest>() {
 
+    var isReload = false
+
+    val wxRequest: WxGzhRequest  = WxGzhRequest()
+
     override fun requestServer() {
         request({
-            getRequest().getProjectList()
+            if(isReload){
+                wxRequest.getWxGzhItems()
+            }else{
+                getRequest().getProjectList()
+            }
         })
     }
 

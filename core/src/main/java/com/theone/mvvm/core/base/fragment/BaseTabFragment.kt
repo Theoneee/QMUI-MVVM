@@ -10,7 +10,7 @@ import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.core.app.ext.*
 import com.theone.mvvm.core.base.adapter.TabFragmentAdapter
 import com.theone.mvvm.core.data.entity.QMUIItemBean
-import com.theone.mvvm.core.app.ext.qmui.init
+import com.theone.mvvm.core.app.ext.qmui.initTabs
 import com.theone.mvvm.core.app.widge.indicator.SkinLinePagerIndicator
 import com.theone.mvvm.core.app.widge.indicator.SkinPagerTitleView
 import com.theone.mvvm.core.base.callback.ITab
@@ -54,10 +54,7 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
     private var mTabs: MutableList<QMUIItemBean> = mutableListOf()
     private var mFragments: MutableList<QMUIFragment> = mutableListOf()
 
-    private val mPagerAdapter: TabFragmentAdapter by lazy {
-        TabFragmentAdapter(childFragmentManager, mFragments)
-    }
-
+    private lateinit var mPagerAdapter: TabFragmentAdapter
     override fun getPagerAdapter(): TabFragmentAdapter = mPagerAdapter
 
     /**
@@ -82,11 +79,15 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         if (!isTabFromNet) {
             startInit()
         } else if (!isLazyLoadData()) {
-            if (getViewModel() is BaseRequestVM<*>) {
-                (getViewModel() as BaseRequestVM<*>).requestServer()
-            } else if (getViewModel() is BaseRequestViewModel<*>) {
-                (getViewModel() as BaseRequestViewModel<*>).requestServer()
-            }
+            requestServe()
+        }
+    }
+
+    private fun requestServe(){
+        if (getViewModel() is BaseRequestVM<*>) {
+            (getViewModel() as BaseRequestVM<*>).requestServer()
+        } else if (getViewModel() is BaseRequestViewModel<*>) {
+            (getViewModel() as BaseRequestViewModel<*>).requestServer()
         }
     }
 
@@ -98,7 +99,7 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     override fun onPageReLoad() {
         showLoadingPage()
-        (getViewModel() as BaseRequestViewModel<*>).requestServer()
+        requestServe()
     }
 
     override fun createObserver() {
@@ -133,6 +134,8 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         mTabs.clear()
         mFragments.clear()
         initTabAndFragments(mTabs, mFragments)
+        mPagerAdapter=  TabFragmentAdapter(childFragmentManager, mFragments)
+        getPagerAdapter().clear(getViewPager())
         initViewPager()
         initTabSegment()
         initMagicIndicator()
@@ -149,7 +152,8 @@ abstract class BaseTabFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     private fun initTabSegment() {
         getTabSegment()?.run {
-            init(getViewPager(), mTabs, tabBuilder().apply { applyTabBuilder() })
+            initTabs( mTabs, tabBuilder().apply { applyTabBuilder() })
+            setupWithViewPager(getViewPager(),false)
         }
     }
 
