@@ -101,14 +101,9 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             FileDownloadUtil.get()
                 .download(url, downloadPath, name, object : FileDownloadUtil.OnDownloadListener {
                     override fun onDownloadSuccess(file: File) {
-                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, file.absolutePath)
-                        if (file.name.endsWith(".apk")&&apkInstall)
-                            installApk(file)
-                        else
-                            updateLocationFile(file)
                         mHandler.sendMessage(Message.obtain().apply {
                             what = DOWNLOAD_SUCCESS
-                            obj = DownloadInfo("下载成功", file.absolutePath)
+                            obj = DownloadInfo("下载成功", file)
                         })
                     }
 
@@ -122,14 +117,11 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
 
                     override fun onDownloadFailed(e: java.lang.Exception?) {
                         val error = e?.localizedMessage
-                        sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error!!)
                         val file = File(downloadPath, name)
-                        if(file.exists()){
-                            file.delete()
-                        }
+
                         mHandler.sendMessage(Message.obtain().apply {
                             what = DOWNLOAD_FAIL
-                            obj = DownloadInfo(error,file.absolutePath)
+                            obj = DownloadInfo(error?:"", file)
                         })
                     }
                 })
@@ -139,7 +131,7 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
     private val DOWNLOAD_SUCCESS = 1
     private val DOWNLOAD_FAIL = 0
 
-    private data class DownloadInfo(val msg: String, val filePath: String)
+    private data class DownloadInfo(val msg: String, val file: File)
 
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
 
@@ -148,13 +140,26 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             val obj = msg.obj as DownloadInfo
             when (msg.what) {
                 DOWNLOAD_SUCCESS -> {
-                    updateNotification("下载完成", obj.filePath,true)
+                    if (obj.file.name.endsWith(".apk") && mDownload?.apkInstall == true) {
+                        installApk(obj.file)
+                    } else {
+                        updateLocationFile(obj.file)
+                        updateNotification("下载完成", obj.file.absolutePath, true)
+                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, obj.file.absolutePath)
+                    }
                 }
+
                 DOWNLOAD_FAIL -> {
-                    updateNotification("下载失败", obj.filePath,false)
+                    updateNotification("下载失败", obj.file.absolutePath, false)
+                    sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, obj.msg)
                     ToastUtils.show(obj.msg)
+                    if (obj.file.exists()) {
+                        obj.file.delete()
+                    }
                 }
             }
+            stopForeground(true)
+            stopSelf()
         }
 
     }
@@ -171,8 +176,6 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             flags = Notification.FLAG_AUTO_CANCEL
         }
         NotificationManager.getInstance().notify(NOTIFICATION_ID, builder)
-        stopForeground(true)
-        stopSelf()
     }
 
     private fun updateProgress(percent: Int) {

@@ -41,7 +41,7 @@ class AppUpdate : IApkUpdate, Parcelable {
     override fun getAppVersionName(): String = "1.0.0"
 
     override fun getAppApkUrl(): String =
-        "https://bmob-cdn-24989.bmobpay.com/2022/07/25/e2997b6c40ee6ce980a0ae3c4cd3c5bd.apk"
+        "https://cos.pgyer.com/08e403833045055e3bf6ebf9e41d7b85.apk?sign=5ecc4077f22b35569f2e3f3611cea080&sign2=71764402c1ba6dcf30fa1d7533136a7b&t=1693535366&response-content-disposition=attachment%3Bfilename%3D%E9%9B%AA%E9%9B%AA%E9%9B%AA_3.7.1.apk"
 
     override fun getAppUpdateLog(): String =
         "【新增1】短视频首页增加今日热门\n" +

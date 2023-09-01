@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.view.KeyEvent
 import android.view.View
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.delay
@@ -84,7 +85,7 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     override fun initData() {
         getViewModel().run {
             updateInfo.set(mUpdate.getAppUpdateLog())
-            verCode.set("Ver ${mUpdate.getAppVersionName()}")
+            verCode.set(mUpdate.getAppVersionName())
             isForce.set(mUpdate.isForceUpdate())
         }
     }
@@ -119,7 +120,8 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
         DownloadBean(
             mUpdate.getAppApkUrl(),
             mDownloadPath,
-            getApkDownloadName()
+            getApkDownloadName(),
+            true
         ).let {
             startDownloadService(it)
         }
@@ -154,8 +156,6 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
     }
 
     private fun checkUpdateApkFile(): File? {
-        getDataBinding().tvUpdate.state = ProgressButton.NORMAL
-        getDataBinding().tvUpdate.setCurrentText(STATUS_START)
         val file = File(mDownloadPath, getApkDownloadName())
         if (file.exists()) {
             // 判断服务器APK大小，可能没有返回大小
@@ -174,13 +174,16 @@ class AppUpdateActivity : BaseCoreActivity<AppUpdateViewModel, ActivityAppUpdate
                 file.delete()
             }
         }
+        getDataBinding().tvUpdate.state = ProgressButton.NORMAL
+        getDataBinding().tvUpdate.setCurrentText(STATUS_START)
         return null
     }
 
-
-    override fun doOnBackPressed() {
-        if (!mUpdate.isForceUpdate())
-            super.doOnBackPressed()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mUpdate.isForceUpdate()) {
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onResume() {

@@ -110,8 +110,8 @@ class SampleFragment : BaseVbFragment<FragmentSampleBinding>(),
             mDownload -> {
                 DownloadUtil.startDownload(
                     mActivity,
-                    "https://qdbh-ct01.baidupcs.com/file/74c3122c4t7e3cac6a08e05c7d9c9824?bkt=en-d3a65691252603d3977699d2819e1cd162c901d2c54797631a80877347e358cf48ff510c8853e754&fid=3180483061-250528-1093130434092558&time=1692582304&sign=FDTAXUbGERLQlBHSKfWqiu-DCb740ccc5511e5e8fedcff06b081203-wdZSwMCG2VdvSS6cQoympWNT9LM%3D&to=411&size=11349651&sta_dx=11349651&sta_cs=1178&sta_ft=mp3&sta_ct=7&sta_mt=7&fm2=MH%2CXian%2CAnywhere%2C%2C%E8%B4%B5%E5%B7%9E%2Cct&ctime=1609748400&mtime=1609748400&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=11349651&vuk=1008605584&iv=0&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-66306e9c5851c30475ddec61f12723b9ae2feff981b65e6fb9611f6ae27443374e60ecc44117ebd8&sl=76480590&expires=8h&rt=sh&r=835723520&vbdid=2634615794&fin=%E4%BF%A1%E4%B9%90%E5%9B%A2+-+%E7%A6%BB%E6%AD%8C.mp3&fn=%E4%BF%A1%E4%B9%90%E5%9B%A2+-+%E7%A6%BB%E6%AD%8C.mp3&rtype=1&clienttype=0&dp-logid=8848922631141341270&dp-callid=0.1&hps=1&tsl=80&csl=80&fsl=-1&csign=X6vhK4ap3IV6KWHoaIEsgTM1dsM%3D&so=0&ut=6&uter=4&serv=0&uc=32672573&ti=05df9239daa40647ade621ac09fc1d13ae5fedcb06a57a51305a5e1275657320&hflag=30&from_type=1&adg=c_1a5ba858e615c032fee5537331f23e0b&reqlabel=250528_f_ebc98dce94eb9425239b6d60fcc9744d_-1_bfcbcddd31ddfccf5799dfad007036f4&fpath=File%2F2020%2F17&by=themis&resvsflag=1-0-0-1-1-1",
-                    "download_music_${System.currentTimeMillis()}.mp3"
+                    "http://xiaobubox.cn:11100/d/music/%E7%A6%BB%E6%AD%8C-%E4%BF%A1%E4%B9%90%E5%9B%A2-28665489.flac",
+                    "信乐团-离歌_${System.currentTimeMillis()}.mp3"
                 )
             }
 
