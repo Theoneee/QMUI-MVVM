@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
+import com.theone.common.ext.notNull
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -34,30 +35,28 @@ import androidx.databinding.BindingAdapter
  */
 object ViewBindingAdapter {
 
-    @BindingAdapter(value = ["gone"], requireAll = false)
+    @BindingAdapter(value = ["gone"])
     @JvmStatic
-    @Deprecated(message = "",ReplaceWith("使用goneText替代"))
-    fun viewGone(view: View, text: String?) {
-        view.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
+    fun viewGone(view: View, gone: Boolean) {
+        view.visibility = if (gone) View.GONE else View.VISIBLE
     }
 
-    @BindingAdapter(value = ["gone","goneText"], requireAll = false)
+    @BindingAdapter(value = ["goneText"])
     @JvmStatic
-    fun viewGone(view: View, gone: Boolean?,goneText:String?) {
-        view.visibility = if (gone == true || TextUtils.isEmpty(goneText)) View.GONE else View.VISIBLE
+    fun viewGoneText(view: View,goneText:String?) {
+        view.visibility = if (TextUtils.isEmpty(goneText)) View.GONE else View.VISIBLE
     }
 
-    @BindingAdapter(value = ["invisible"], requireAll = false)
+    @BindingAdapter(value = ["invisible"])
     @JvmStatic
-    @Deprecated(message = "", ReplaceWith("使用invisibleText替代"))
-    fun viewInvisible(view: View, text: String?) {
-        view.visibility = if (TextUtils.isEmpty(text)) View.INVISIBLE else View.VISIBLE
+    fun viewInvisible(view: View, invisible: Boolean ) {
+        view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
     }
 
-    @BindingAdapter(value = ["invisible","invisibleText"], requireAll = false)
+    @BindingAdapter(value = ["invisibleText"])
     @JvmStatic
-    fun viewInvisible(view: View, invisible: Boolean = false,invisibleText:String?=null) {
-        view.visibility = if (invisible || TextUtils.isEmpty(invisibleText)) View.INVISIBLE else View.VISIBLE
+    fun viewInvisibleText(view: View,invisibleText:String?) {
+        view.visibility = if (TextUtils.isEmpty(invisibleText)) View.GONE else View.INVISIBLE
     }
 
     @BindingAdapter(value = ["checkChangeListener"])
