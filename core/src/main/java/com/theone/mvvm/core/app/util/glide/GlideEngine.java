@@ -2,28 +2,23 @@ package com.theone.mvvm.core.app.util.glide;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
-import com.qmuiteam.qmui.widget.QMUIProgressBar;
 import com.theone.mvvm.core.R;
 
 
@@ -35,6 +30,7 @@ import com.theone.mvvm.core.R;
 public class GlideEngine implements ImageEngine {
 
     private static final String TAG = "GlideEngine";
+
     /**
      * 加载图片
      *
@@ -73,13 +69,32 @@ public class GlideEngine implements ImageEngine {
      * @param call      回调接口
      */
     public void loadImageBitmap(@NonNull Context context, @NonNull String url, int maxWidth, int maxHeight, OnCallbackListener<Bitmap> call) {
+       loadImageBitmap(context,url,null,maxWidth,maxHeight,call);
+    }
+
+
+    /**
+     * 加载指定url并返回bitmap
+     *
+     * @param context   上下文
+     * @param url       资源url
+     * @param referer   资源referer
+     * @param maxWidth  资源最大加载尺寸
+     * @param maxHeight 资源最大加载尺寸
+     * @param call      回调接口
+     */
+    public void loadImageBitmap(@NonNull Context context, @NonNull String url,String referer, int maxWidth, int maxHeight, OnCallbackListener<Bitmap> call) {
         if (!ActivityCompatHelper.assertValidRequest(context)) {
             return;
+        }
+        Object objUrl = url;
+        if (!TextUtils.isEmpty(referer)) {
+            objUrl = new GlideUrl(url, new LazyHeaders.Builder().addHeader("Referer", referer).build());
         }
         Glide.with(context)
                 .asBitmap()
                 .override(maxWidth, maxHeight)
-                .load(url)
+                .load(objUrl)
                 .into(new CustomTarget<Bitmap>() {
 
                     @Override

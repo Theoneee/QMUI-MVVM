@@ -111,7 +111,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     }
 
     protected void loadImageBitmap(final IImageUrl media, int maxWidth, int maxHeight) {
-        imageEngine.loadImageBitmap(coverImageView.getContext(), media.getImageUrl(), maxWidth, maxHeight,
+        imageEngine.loadImageBitmap(coverImageView.getContext(), media.getImageUrl(),media.getRefer(), maxWidth, maxHeight,
                 new OnCallbackListener<Bitmap>() {
                     @Override
                     public void onCall(Bitmap bitmap) {
