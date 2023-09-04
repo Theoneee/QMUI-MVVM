@@ -75,7 +75,11 @@ class NotificationManager private constructor() {
 
     }
 
-    private var mNotificationManager: android.app.NotificationManager? = null
+    private val mNotificationManager: android.app.NotificationManager by lazy {
+        appContext.getSystemService(
+            Context.NOTIFICATION_SERVICE
+        ) as android.app.NotificationManager
+    }
 
     /**
      * 注册 8.0 通知栏等级，应用开始时调用
@@ -102,15 +106,7 @@ class NotificationManager private constructor() {
         importance: Int
     ) {
         val channel = NotificationChannel(channelId, channelName, importance)
-        getNotificationManager()!!.createNotificationChannel(channel)
-    }
-
-    private fun getNotificationManager(): android.app.NotificationManager? {
-        if (null == mNotificationManager) mNotificationManager =
-            appContext.getSystemService(
-                Context.NOTIFICATION_SERVICE
-            ) as android.app.NotificationManager
-        return mNotificationManager
+        mNotificationManager.createNotificationChannel(channel)
     }
 
     /**
@@ -118,16 +114,17 @@ class NotificationManager private constructor() {
      * 会在通知设置界面显示所有被删除的通知渠道数量，会导致不美观，不推荐使用
      * @param id
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     fun deleteNotificationChannel(id: String?) {
-        getNotificationManager()!!.deleteNotificationChannel(id)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationManager.deleteNotificationChannel(id)
+        }
     }
 
     /**
      * 创建通知
      *
-     * @param ID           渠道ID
-     * @param LEVEL        通知等级
+     * @param id           渠道ID
+     * @param level        通知等级
      * @param ticker       提示语
      * @param title        标题
      * @param content      内容
@@ -135,18 +132,18 @@ class NotificationManager private constructor() {
      * @param smallIcon    小ICON
      */
     fun createNotification(
-        ID: Int,
+        id: Int,
         ticker: String?,
         title: String?,
         content: String?,
-        LEVEL: String? = LEVEL_DEFAULT_CHANNEL_ID,
+        level: String = LEVEL_DEFAULT_CHANNEL_ID,
         showWhen: Boolean = true,
         smallIcon: Int = R.drawable.service_down
     ): NotificationCompat.Builder {
         val builder =
             NotificationCompat.Builder(
                 appContext,
-                LEVEL!!
+                level
             )
         if (null != ticker) builder.setTicker(ticker)
         if (null != title) builder.setContentTitle(title)
@@ -154,7 +151,7 @@ class NotificationManager private constructor() {
         if (showWhen) builder.setWhen(System.currentTimeMillis())
         builder.setOnlyAlertOnce(true)
         setNotificationIcon(builder, smallIcon)
-        getNotificationManager()?.notify(ID, builder.build())
+        mNotificationManager.notify(id, builder.build())
         return builder
     }
 
@@ -185,8 +182,8 @@ class NotificationManager private constructor() {
      * @param ID
      * @param builder
      */
-    fun notify(ID: Int, builder: NotificationCompat.Builder) {
-        getNotificationManager()?.notify(ID, builder.build())
+    fun notify(id: Int, builder: NotificationCompat.Builder) {
+        mNotificationManager.notify(id, builder.build())
     }
 
 }
