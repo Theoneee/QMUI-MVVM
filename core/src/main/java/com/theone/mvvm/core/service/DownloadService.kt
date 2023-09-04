@@ -6,14 +6,10 @@ import android.app.Notification
 import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
-import android.os.Message
 import androidx.core.app.NotificationCompat
 import com.hjq.toast.ToastUtils
 import com.theone.common.constant.BundleConstant
-import com.theone.common.ext.delay
 import com.theone.common.ext.installApk
 import com.theone.mvvm.core.app.appContext
 import com.theone.mvvm.core.R
@@ -75,6 +71,7 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
 
     override fun onHandleIntent(intent: Intent?) {
         if (null != intent && null == mDownload) {
+            mOldPercent = 0
             NOTIFICATION_ID = UUID.randomUUID().hashCode()
             mDownload = intent.getParcelableExtra(BundleConstant.DATA)
             initNotification()
@@ -101,67 +98,40 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             FileDownloadUtil.get()
                 .download(url, downloadPath, name, object : FileDownloadUtil.OnDownloadListener {
                     override fun onDownloadSuccess(file: File) {
-                        mHandler.sendMessage(Message.obtain().apply {
-                            what = DOWNLOAD_SUCCESS
-                            obj = DownloadInfo("下载成功", file)
-                        })
+                        updateNotification("下载完成", file.absolutePath, true)
+                        if (file.name.endsWith(".apk") && mDownload?.apkInstall == true) {
+                            installApk(file)
+                        } else {
+                            updateLocationFile(file)
+                            sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, file.absolutePath)
+                        }
+                        stopSelf()
                     }
 
                     override fun onDownloading(progress: Int) {
-                        if (progress != mOldPercent) {
-                            mOldPercent = progress
-                            updateProgress(progress)
-                            sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, progress)
+                        // 解决下载速度过快，后面调用notify方法失效问题
+                        // https://blog.csdn.net/z529905310/article/details/81067272
+                        if (progress - mOldPercent < 5) {
+                            return
                         }
+                        mOldPercent = progress
+                        updateProgress(progress)
+                        sendBroadCast(DOWNLOAD_PROGRESS, DOWNLOAD_PROGRESS_PERCENT, progress)
                     }
 
                     override fun onDownloadFailed(e: java.lang.Exception?) {
-                        val error = e?.localizedMessage
+                        val error = e?.localizedMessage ?: ""
                         val file = File(downloadPath, name)
-
-                        mHandler.sendMessage(Message.obtain().apply {
-                            what = DOWNLOAD_FAIL
-                            obj = DownloadInfo(error?:"", file)
-                        })
+                        updateNotification("下载失败", file.absolutePath, false)
+                        sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, error)
+                        ToastUtils.show(error)
+                        if (file.exists()) {
+                            file.delete()
+                        }
+                        stopSelf()
                     }
                 })
         }
-    }
-
-    private val DOWNLOAD_SUCCESS = 1
-    private val DOWNLOAD_FAIL = 0
-
-    private data class DownloadInfo(val msg: String, val file: File)
-
-    private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
-
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            val obj = msg.obj as DownloadInfo
-            when (msg.what) {
-                DOWNLOAD_SUCCESS -> {
-                    if (obj.file.name.endsWith(".apk") && mDownload?.apkInstall == true) {
-                        installApk(obj.file)
-                    } else {
-                        updateLocationFile(obj.file)
-                        updateNotification("下载完成", obj.file.absolutePath, true)
-                        sendBroadCast(DOWNLOAD_OK, DOWNLOAD_PATH, obj.file.absolutePath)
-                    }
-                }
-
-                DOWNLOAD_FAIL -> {
-                    updateNotification("下载失败", obj.file.absolutePath, false)
-                    sendBroadCast(DOWNLOAD_ERROR, DOWNLOAD_ERROR_MSG, obj.msg)
-                    ToastUtils.show(obj.msg)
-                    if (obj.file.exists()) {
-                        obj.file.delete()
-                    }
-                }
-            }
-            stopForeground(true)
-            stopSelf()
-        }
-
     }
 
     private fun updateNotification(title: String, content: String, isSuccess: Boolean) {
@@ -176,7 +146,9 @@ class DownloadService : IntentService(this::class.java.canonicalName) {
             flags = Notification.FLAG_AUTO_CANCEL
         }
         NotificationManager.getInstance().notify(NOTIFICATION_ID, builder)
+        stopForeground(true)
     }
+
 
     private fun updateProgress(percent: Int) {
         mNotificationBuilder.run {
