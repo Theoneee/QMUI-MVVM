@@ -38,17 +38,12 @@ abstract class TheBaseQuickAdapter<T, BD : ViewDataBinding>(layout: Int) :
         layout
     ), LoadMoreModule {
 
-    protected open fun SparseArray<Any>.bindingParams() {}
+    protected open fun BD.bindingParams() {}
 
     override fun convert(holder: BaseDataBindingHolder<BD>, item: T) {
         holder.dataBinding?.run {
             this.setVariable(BR.item, item)
-            SparseArray<Any>().apply {
-                bindingParams()
-                forEach { key, any ->
-                    setVariable(key, any)
-                }
-            }.clear()
+            bindingParams()
         }
     }
 

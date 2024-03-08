@@ -40,8 +40,6 @@ import java.lang.reflect.ParameterizedType
  * @email 625805189@qq.com
  * @remark
  */
-fun <VM : BaseViewModel> IViewModel<VM>.createViewModel(owner: ViewModelStoreOwner): VM =
-    ViewModelProvider(owner)[getViewModelClass()]
 
 fun <DB : ViewDataBinding, VM : BaseViewModel> DB.initDataBinding(
     lifecycle: LifecycleOwner,
@@ -54,12 +52,7 @@ fun <DB : ViewDataBinding, VM : BaseViewModel> DB.initDataBinding(
         getBindingClick()?.let {
             setVariable(getBindingClickId(), it)
         }
-        SparseArray<Any>().apply {
-            applyBindingParams()
-            forEach { key, any ->
-                setVariable(key, any)
-            }
-        }.clear()
+        applyBindingParams()
     }
 }
 
@@ -87,15 +80,6 @@ fun IQMUI.addLoadingObserveExt(
     }
 }
 
-fun SparseArray<Any>.addParams(
-    @NonNull variableId: Int,
-    @NonNull any: Any
-) {
-    if (get(variableId) == null) {
-        put(variableId, any)
-    }
-}
-
 /**
  * 获取当前类绑定的泛型clazz
  */
@@ -104,16 +88,3 @@ fun <T> Any.getClazz(index: Int = 0): T {
     return (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[index] as T
 }
 
-fun <T> Any.getViewModelClazz(): T {
-    val TAG = "getViewModelClazz"
-   val augments =  (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
-    augments.forEach {
-       try {
-           it as T
-           return it
-       }catch (e:Exception){
-           e.printStackTrace()
-       }
-    }
-    throw RuntimeException("")
-}

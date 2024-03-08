@@ -7,12 +7,12 @@ buildscript {
         targetSdkVersion = 32
         compileSdkVersion = 33
 
-        kotlin_version = "1.7.10"
+        kotlin_version = "1.8.0"
         ktx_version = "1.7.0"
 
     }
     repositories {
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/public/' }
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/central/' }

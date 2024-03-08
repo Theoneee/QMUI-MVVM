@@ -4,6 +4,7 @@ dependencyResolutionManagement {
         maven {
             url 'https://jitpack.io'
         }
+        maven{ url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j' }
         maven { url'https://maven.aliyun.com/repository/public/'
         }
         maven { url'https://maven.aliyun.com/repository/google/'

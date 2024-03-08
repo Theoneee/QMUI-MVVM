@@ -7,7 +7,6 @@ import com.theone.demo.data.net.PagerResponse
 import com.theone.demo.app.util.CacheUtil
 import com.theone.demo.data.model.bean.CollectBus
 import com.theone.demo.data.repository.ApiRepository
-import kotlinx.coroutines.CoroutineScope
 import rxhttp.wrapper.coroutines.Await
 
 abstract class ArticleViewModel(val url: String? = null) : BasePagerViewModel<ArticleResponse>() {

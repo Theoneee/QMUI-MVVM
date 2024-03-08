@@ -56,7 +56,7 @@ object ViewBindingAdapter {
     @BindingAdapter(value = ["invisibleText"])
     @JvmStatic
     fun viewInvisibleText(view: View,invisibleText:String?) {
-        view.visibility = if (TextUtils.isEmpty(invisibleText)) View.GONE else View.INVISIBLE
+        view.visibility = if (TextUtils.isEmpty(invisibleText)) View.INVISIBLE else View.VISIBLE
     }
 
     @BindingAdapter(value = ["checkChangeListener"])

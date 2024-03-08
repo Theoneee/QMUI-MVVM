@@ -71,13 +71,7 @@ interface IDataBinding<DB:ViewDataBinding> {
 
     /**
      * 向DataBinding注入值
-     * @receiver SparseArray<Any>
-     *
-     * 示例:
-     *
-     *   addParams(BR.item,data)
-     *
      */
-    fun SparseArray<Any>.applyBindingParams(){}
+    fun DB.applyBindingParams(){}
 
 }

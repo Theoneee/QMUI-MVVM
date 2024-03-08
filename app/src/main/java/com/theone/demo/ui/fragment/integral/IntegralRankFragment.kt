@@ -18,7 +18,6 @@ import com.theone.demo.ui.adapter.IntegralRankAdapter
 import com.theone.demo.ui.fragment.base.BasePagerListFragment
 import com.theone.demo.ui.fragment.web.WebExplorerFragment
 import com.theone.demo.viewmodel.IntegralRankViewModel
-import com.theone.mvvm.ext.addParams
 import com.theone.mvvm.ext.qmui.setTitleWitchBackBtn
 
 
@@ -65,8 +64,8 @@ class IntegralRankFragment private constructor():
 
     override fun createAdapter(): BaseQuickAdapter<IntegralResponse, *> = IntegralRankAdapter()
 
-    override fun SparseArray<Any>.applyBindingParams() {
-        addParams(BR.bean,mIntegralRank)
+    override fun FragmentIntegralRankBinding.applyBindingParams() {
+        setVariable(BR.bean,mIntegralRank)
     }
 
     override fun initView(root: View) {

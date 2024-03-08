@@ -2,7 +2,6 @@ package com.theone.mvvm.base
 
 import com.theone.mvvm.base.viewmodel.BaseViewModel
 import com.theone.mvvm.ext.getClazz
-import com.theone.mvvm.ext.getViewModelClazz
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
