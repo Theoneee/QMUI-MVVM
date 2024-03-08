@@ -2,6 +2,7 @@ package com.theone.mvvm.core.base.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +13,7 @@ import com.theone.common.callback.IImageUrl;
 import com.theone.mvvm.core.R;
 import com.theone.mvvm.core.base.adapter.holder.TheBasePreviewHolder;
 import com.theone.mvvm.core.base.adapter.holder.ThePreviewAudioHolder;
+import com.theone.mvvm.core.base.adapter.holder.ThePreviewImageHolder;
 import com.theone.mvvm.core.base.adapter.holder.ThePreviewVideoHolder;
 
 import java.util.LinkedHashMap;
@@ -27,6 +29,7 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
 
     private final TheBasePreviewHolder.OnPreviewEventListener onPreviewEventListener;
     private final LinkedHashMap<Integer, TheBasePreviewHolder> mHolderCache = new LinkedHashMap<>();
+    private ImageView.ScaleType scaleType = ImageView.ScaleType.FIT_CENTER;
 
     public ThePicturePreviewAdapter(TheBasePreviewHolder.OnPreviewEventListener onPreviewEventListener) {
         super(0);
@@ -58,6 +61,7 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
         IImageUrl media = getData().get(position);
         mHolderCache.put(position, holder);
         holder.bindData(media, position);
+        holder.setImageViewScaleType(scaleType);
     }
 
     @Override
@@ -98,6 +102,11 @@ public class ThePicturePreviewAdapter<T extends IImageUrl> extends BaseQuickAdap
             }
         }
     }
+
+    public void setImageViewScaleType(ImageView.ScaleType scaleType){
+        this.scaleType = scaleType;
+    }
+
 
     /**
      * 释放当前视频相关

@@ -42,6 +42,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
     protected final int screenAppInHeight;
     protected final GlideEngine imageEngine;
     public PhotoView coverImageView;
+    private ImageView.ScaleType scaleType = ImageView.ScaleType.FIT_CENTER;
 
 
     public static TheBasePreviewHolder generate(ViewGroup parent, int viewType, int resource) {
@@ -66,6 +67,10 @@ public class TheBasePreviewHolder extends BaseViewHolder {
 
     protected void findViews(View itemView) {
         this.coverImageView = itemView.findViewById(R.id.preview_image);
+    }
+
+    public void setImageViewScaleType(ImageView.ScaleType scaleType){
+        this.scaleType = scaleType;
     }
 
     public void clearCache(){
@@ -130,7 +135,7 @@ public class TheBasePreviewHolder extends BaseViewHolder {
             if (PictureMimeType.isUrlHasWebp(path)
                     || PictureMimeType.isUrlHasGif(path)) {
                 if (imageEngine != null) {
-                    coverImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    coverImageView.setScaleType(scaleType);
                     imageEngine.loadImage(coverImageView.getContext(), path, coverImageView);
                 }
             } else {
@@ -143,13 +148,11 @@ public class TheBasePreviewHolder extends BaseViewHolder {
                 media.setHeight(bitmap.getHeight());
             }
             int width, height;
-            ImageView.ScaleType scaleType;
             if (MediaUtils.isLongImage(bitmap.getWidth(), bitmap.getHeight())) {
                 scaleType = ImageView.ScaleType.CENTER_CROP;
                 width = screenWidth;
                 height = screenHeight;
             } else {
-                scaleType = ImageView.ScaleType.FIT_CENTER;
                 int[] size = getSize(media);
                 boolean isHaveSize = bitmap.getWidth() > 0 && bitmap.getHeight() > 0;
                 width = isHaveSize ? bitmap.getWidth() : size[0];
